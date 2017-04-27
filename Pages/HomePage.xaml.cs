@@ -38,19 +38,23 @@ namespace LMS_Project.Pages
             Frame.Navigate(typeof(AllChapterPage), e.ClickedItem as Episode);
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void MainGridView_Loaded(object sender, RoutedEventArgs e)
         {
-
-            if (sourse.GetEpisodesList() == null || sourse.GetEpisodesList().Count == 0)
+            try
             {
-                sourse.LoadHTLM();
-                sourse.LoadData();
-            }
-            MainGridView.ItemsSource = sourse.GetEpisodesList();
-        }
+                LoadingIndicator.IsActive = true;
+                if (sourse.GetEpisodesList() == null || sourse.GetEpisodesList().Count == 0)
+                {
+                    await sourse.LoadHTLM();
+                    sourse.LoadData();
+                }
 
-        private void Page_Loading(FrameworkElement sender, object args)
-        {
+                MainGridView.ItemsSource = sourse.GetEpisodesList();
+            }
+            finally
+            {
+                LoadingIndicator.IsActive = false;
+            }
         }
     }
 }

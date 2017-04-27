@@ -12,7 +12,6 @@
       <RootProperty Name="Resources" />
       <RootProperty Name="Content" />
       <RootEvent Name="Loaded" />
-      <RootEvent Name="Loading" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
@@ -47,6 +46,7 @@
       <RootProperty Name="IsItemClickEnabled" />
       <RootProperty Name="ItemsPanel" />
       <RootEvent Name="ItemClick" />
+      <RootEvent Name="Loaded" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Data.Binding" />
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension">
@@ -68,6 +68,7 @@
       <RootEvent Name="ItemClick" />
     </RootType>
     <RootType FullName="LMS_Project.Pages.ChapterPage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ProgressRing" />
     <RootType FullName="LMS_Project.Pages.HomePage" />
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Foreground" />

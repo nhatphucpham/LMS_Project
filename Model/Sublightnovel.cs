@@ -12,19 +12,27 @@ namespace LMS_Project.Model
     {
         public static List<string> m_HTML;
 
+        private static List<Episode> episodes;
+        private static List<Chapter> chapters;
+        private static List<EpisodeDetail> details;
+
         public Sublightnovel()
         {
             if(m_HTML == null)
                 m_HTML = new List<string>();
+            if (episodes == null)
+            {
+                episodes = new List<Episode>();
+                chapters = new List<Chapter>();
+                details = new List<EpisodeDetail>();
+            }
         }
 
-        public void LoadHTLM()
+        public async Task LoadHTLM()
         {
             List<string> newcode = new List<string>();
 
             // Thread send request and receive html code to List String
-            Task.Run(async () =>
-            {
                 HttpWebRequest request = WebRequest.Create(@"http://www.sublightnovel.com/p/home.html") as HttpWebRequest;
                 HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
 
@@ -36,8 +44,6 @@ namespace LMS_Project.Model
                 {
                     newcode.Add(WebUtility.HtmlDecode(string.Format("{0}", read.ReadLine())));
                 }
-            }).Wait();
-
             if (m_HTML.Equals(newcode) && m_HTML.Count != 0)
                 return;
             m_HTML = newcode;
@@ -197,14 +203,14 @@ namespace LMS_Project.Model
                 
             }
         }
-        
+
         private Chapter GetChapterFromHtmlLine(string Line)
         {
             string[] spl = System.Text.RegularExpressions.Regex.Split(Line, @"<\W?\w{1,4}\W?\w?\d?(\s\w{4}\W""http://www.sublightnovel.com/\d{4,}/\d{2,}([\w-\W]*).html""( target=""_blank"")?)?\s?\W?>");
             string chap = "", title = "", address = "", ep = "";
             foreach (string s in spl)
             {
-                if (s.Contains("Tập") )
+                if (s.Contains("Tập"))
                 {
                     ep = s.Substring(s.IndexOf("T"), s.IndexOf(",") - (s.IndexOf("T")));
                 }
@@ -232,84 +238,89 @@ namespace LMS_Project.Model
             {
                 return null;
             }
-            using (var context = new ChapterManager())
+            int iEp = (ep != "") ? int.Parse(ep.Substring(ep.Length - 1)) : 0;
+            if (chapters.Where(b => b.Name == title).Count() == 0)
             {
-                int iEp = (ep != "") ? int.Parse(ep.Substring(ep.Length - 1)) : 0;
-                if (context.Chapters.Where(b => b.Name == title).Count() == 0)
+                Chapter chapter = new Chapter()
                 {
-                    Chapter chapter = new Chapter()
+                    ChapterId = chapters.Count() + 1,
+                    Name = title,
+                    Content = null,
+                    WebAddress = address
+                };
+                if (iEp > 0)
+                {
+                    if (details.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0)
                     {
-                        ChapterId = context.Chapters.Count() + 1,
-                        Name = title,
-                        Content = null,
-                        WebAddress = address
-                    };
-                    if (iEp > 0)
-                    {
-                        if (context.EpisodeDetails.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0)
-                        {
-                            context.EpisodeDetails.Add(new EpisodeDetail() { EpisodeId = iEp, ChapterId = chapter.ChapterId });
-                        }
+                        details.Add(new EpisodeDetail() { EpisodeId = iEp, ChapterId = chapter.ChapterId });
                     }
-                    return chapter;
                 }
+                return chapter;
             }
+
             return null;
         }
 
-        //Find and detect and set the chapters and the episodes
+        ///Find and detect and set the chapters and the episodes
         public void LoadData()
         {
-            bool Begin = false;
-            string strEpi = "";
-            int iEpi = -1;
-            foreach (string s in m_HTML)
+            using (var context = new ChapterManager())
             {
-                if (s.Contains("<h4>")) Begin = true;
-                if (s.Contains("</h4>")) break;
-                if (Begin)
+                string strEpi = "";
+                int iEpi = -1;
+                bool accept = false;
+                foreach (string s in m_HTML)
                 {
-                    if (s.Contains("Tập") || s.Contains(WebUtility.HtmlDecode("Tâ&#803;p")))
+                    if (!accept && s.Contains("<h4>")) accept = true;
+                    if (s.Contains("/h4")) break;
+                    if (accept)
                     {
-                        if (s.Contains(":"))
-                            strEpi = s.Substring(s.IndexOf("Tập"), s.IndexOf(":", s.IndexOf("Tập")) - (s.IndexOf("Tập")));
-                        else
-                            strEpi = s.Substring(s.IndexOf("Tập"), s.IndexOf("<", s.IndexOf("Tập")) - (s.IndexOf("Tập")));
-                        iEpi = int.Parse(strEpi.Substring(strEpi.IndexOf(" ") + 1));
-                    }
-                    if (char.IsNumber(s[0]) || s[0].Equals('C'))
-                    {
-                        Chapter chapter = GetChapterFromHtmlLine(s);
-                        if (chapter != null)
+                        if (s.Contains("Tập") || s.Contains(WebUtility.HtmlDecode("Tâ&#803;p")))
                         {
-                            using (var context = new ChapterManager())
+                            if (s.Contains(":"))
+                                strEpi = s.Substring(s.IndexOf("Tập"), s.IndexOf(":", s.IndexOf("Tập")) - (s.IndexOf("Tập")));
+                            else
+                                strEpi = s.Substring(s.IndexOf("Tập"), s.IndexOf("<", s.IndexOf("Tập")) - (s.IndexOf("Tập")));
+                            iEpi = int.Parse(strEpi.Substring(strEpi.IndexOf(" ") + 1));
+                        }
+                        if (char.IsNumber(s[0]) || s[0].Equals('C'))
+                        {
+                            Chapter chapter = GetChapterFromHtmlLine(s);
+                            if (chapter != null)
                             {
-                                if (context.Chapters.Where(b => b.ChapterId == chapter.ChapterId).Count() == 0)
+                                if (!chapters.Contains(chapter))
                                 {
-                                    if (context.Episodes.Where(b => b.EpisodeId == iEpi).Count() == 0)
+                                    if (episodes.Where(e=>e.EpisodeId == iEpi).Count() == 0)
                                     {
-                                        var newEpisode = new Episode()
+                                        episodes.Add(new Episode()
                                         {
                                             EpisodeId = iEpi,
                                             Name = string.Format("Tập {0}", iEpi),
                                             Image = ""
-                                        };
-                                        context.Episodes.Add(newEpisode);
-                                        context.SaveChanges();
+                                        });
                                     }
-                                    context.Chapters.Add(chapter);
-                                    if (context.EpisodeDetails.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEpi).Count() == 0)
-                                    {
-                                        context.EpisodeDetails.Add(new EpisodeDetail() { EpisodeId = iEpi, ChapterId = chapter.ChapterId });
-                                    }
-                                    context.SaveChanges();
+                                    chapters.Add(chapter);
+
+                                    if (details.Where(d=>d.ChapterId == chapter.ChapterId && d.EpisodeId == iEpi).Count() == 0)
+                                        details.Add(new EpisodeDetail()
+                                        {
+                                            EpisodeId = iEpi,
+                                            ChapterId = chapter.ChapterId
+                                        });
                                 }
                             }
                         }
                     }
                 }
-            }
 
+                if (episodes.Count > 0)
+                {
+                    context.Episodes.AddRange(episodes);
+                    context.Chapters.AddRange(chapters);
+                    context.EpisodeDetails.AddRange(details);
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
