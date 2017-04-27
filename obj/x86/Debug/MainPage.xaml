@@ -136,7 +136,7 @@
         </Style>
     </Page.Resources>
 
-    <SplitView x:ConnectionId='1' x:Name="MySplitView" DisplayMode="CompactInline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150"                                      >
+    <SplitView x:ConnectionId='1' x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150"                                      >
         <SplitView.Pane>
             <Grid x:ConnectionId='2' x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">
@@ -188,7 +188,22 @@
         </SplitView.Pane>
         <SplitView.Content>
             <Grid>
-                <Frame x:ConnectionId='7' x:Name="ContentFrame" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48"/>
+                    <RowDefinition Height="593*"/>
+                </Grid.RowDefinitions>
+                <Canvas Height="48" Background="{ThemeResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Top">
+                    <Button x:ConnectionId='8' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
+                        Content="&#xE700;" Padding="12,6,12,4" 
+                        Background="Transparent" 
+                        Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
+                                                   VerticalAlignment="Center" Height="48" Width="48">
+                        <Button.Style>
+                            <StaticResource ResourceKey="HumburgerStyle"/>
+                        </Button.Style>
+                    </Button>
+                </Canvas>
+                <Frame x:ConnectionId='7' x:Name="ContentFrame" Grid.Row="1" />
             </Grid>
         </SplitView.Content>
     </SplitView>
