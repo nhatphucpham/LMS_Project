@@ -39,7 +39,10 @@ namespace LMS_Project
             Menu = new Model.NavMenu();
             MenuItem.ItemsSource = Menu.MenuItems;
             MenuItem.SelectedIndex = 0;
-
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                ShowStatusBar();
+            }
             ContentFrame.Navigated += OnNavigated;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -55,6 +58,7 @@ namespace LMS_Project
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
+            HeaderButton.Visibility = Visibility.Visible;
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
@@ -71,27 +75,7 @@ namespace LMS_Project
 
         private void MySplitView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-            {
-                MySplitView.IsPaneOpen = false;
-                if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay))
-                    MySplitView.DisplayMode = SplitViewDisplayMode.CompactOverlay;
-            }
-            else
-            {
-                if (e.NewSize.Width >= 820)
-                {
-                    if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactInline))
-                        MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
-                    MySplitView.IsPaneOpen = true;
-                }
-                else
-                {
-                    if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay))
-                        MySplitView.DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                    MySplitView.IsPaneOpen = false;
-                }
-            }
+            MySplitView.IsPaneOpen = false;
         }
 
         private void MenuItem_ItemClick(object sender, ItemClickEventArgs e)
@@ -144,5 +128,25 @@ namespace LMS_Project
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
+
+        private void HeaderButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+            HeaderButton.Visibility = Visibility.Collapsed;
+        }
+
+        private async void ShowStatusBar()
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                var statusbar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
+                await statusbar.ShowAsync();
+                statusbar.BackgroundColor = (gridPane.Background as SolidColorBrush).Color;
+                statusbar.BackgroundOpacity = 1;
+                statusbar.ForegroundColor = Windows.UI.Colors.White;
+            }
+
+        }
+
     }
 }
