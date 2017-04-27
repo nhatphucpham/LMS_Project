@@ -36,10 +36,19 @@ namespace LMS_Project.Pages
             chapter = e.Parameter as Chapter;
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Grid_Loading(FrameworkElement sender, object args)
         {
-            chapter = model.GetChapterFromChapterId(chapter.ChapterId);
-            lvContent.ItemsSource = (await model.SetupContent(chapter.ChapterId)).ToList();
+            try
+            {
+                LoadingIndicator.IsActive = true;
+                chapter = model.GetChapterFromChapterId(chapter.ChapterId);
+                await model.SetupContent(chapter.ChapterId);
+                wpContent.NavigateToString(model.StringHtml);
+            }
+            finally
+            {
+                LoadingIndicator.IsActive = false;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -70,17 +71,26 @@ namespace LMS_Project
 
         private void MySplitView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width >= 820)
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
-                if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactInline))
-                    MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
-                MySplitView.IsPaneOpen = true;
+                MySplitView.IsPaneOpen = false;
+                if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay))
+                    MySplitView.DisplayMode = SplitViewDisplayMode.CompactOverlay;
             }
             else
             {
-                if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay))
-                    MySplitView.DisplayMode = SplitViewDisplayMode.CompactOverlay;
-                MySplitView.IsPaneOpen = false;
+                if (e.NewSize.Width >= 820)
+                {
+                    if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactInline))
+                        MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
+                    MySplitView.IsPaneOpen = true;
+                }
+                else
+                {
+                    if (!(MySplitView.DisplayMode == SplitViewDisplayMode.CompactOverlay))
+                        MySplitView.DisplayMode = SplitViewDisplayMode.CompactOverlay;
+                    MySplitView.IsPaneOpen = false;
+                }
             }
         }
 

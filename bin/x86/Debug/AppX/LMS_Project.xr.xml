@@ -11,7 +11,6 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Page">
       <RootProperty Name="Resources" />
       <RootProperty Name="Content" />
-      <RootEvent Name="Loaded" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.DataTemplate">
       <RootProperty Name="Template" />
@@ -38,6 +37,7 @@
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
       <RootProperty Name="Background" />
       <RootProperty Name="Children" />
+      <RootEvent Name="Loading" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
@@ -59,16 +59,9 @@
       <RootProperty Name="Orientation" />
     </RootType>
     <RootType FullName="LMS_Project.Pages.AllChapterPage" />
-    <RootType FullName="Windows.UI.Xaml.Controls.ListView">
-      <RootProperty Name="ItemsSource" />
-      <RootProperty Name="IsItemClickEnabled" />
-      <RootProperty Name="ItemContainerStyle" />
-      <RootProperty Name="ItemTemplate" />
-      <RootEvent Name="SelectionChanged" />
-      <RootEvent Name="ItemClick" />
-    </RootType>
-    <RootType FullName="LMS_Project.Pages.ChapterPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.ProgressRing" />
+    <RootType FullName="Windows.UI.Xaml.Controls.WebView" />
+    <RootType FullName="LMS_Project.Pages.ChapterPage" />
     <RootType FullName="LMS_Project.Pages.HomePage" />
     <RootType FullName="Windows.UI.Xaml.Controls.Button">
       <RootProperty Name="Foreground" />
@@ -204,6 +197,13 @@
       <RootProperty Name="Pane" />
       <RootProperty Name="Content" />
       <RootEvent Name="SizeChanged" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListView">
+      <RootProperty Name="IsItemClickEnabled" />
+      <RootProperty Name="ItemContainerStyle" />
+      <RootProperty Name="ItemTemplate" />
+      <RootEvent Name="SelectionChanged" />
+      <RootEvent Name="ItemClick" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Frame" />
     <RootType FullName="LMS_Project.MainPage" />

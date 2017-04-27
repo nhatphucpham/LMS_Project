@@ -11,6 +11,7 @@ namespace LMS_Project.Model
     public class Sublightnovel
     {
         public static List<string> m_HTML;
+        public string StringHtml { get; set; }
 
         private static List<Episode> episodes;
         private static List<Chapter> chapters;
@@ -127,17 +128,25 @@ namespace LMS_Project.Model
                 {
                     var result = await httpClient.GetStreamAsync(chapter.WebAddress);
                     StreamReader read = new StreamReader(result);
-                    bool write = false;
+                    bool Nope1 = false;
+                    bool Nope2 = false;
+                    StringHtml = "";
                     while (read.Peek() >= 0)
                     {
                         string str = await read.ReadLineAsync();
                         if (str.Contains("</style>"))
-                            write = true;
+                            Nope1 = true;
                         if (str.Contains("reaction-buttons"))
-                            write = false;
-                        if (write)
+                            Nope1 = false;
+                        if (Nope1)
                         {
-                            content_HTML.Add(WebUtility.HtmlDecode(str));
+                            if (str.Contains("h3"))
+                                Nope2 = true;
+                            if (Nope2)
+                            {
+                                StringHtml += str + "\n\r";
+                                content_HTML.Add(WebUtility.HtmlDecode(str));
+                            }
                         }
                     }
                     httpClient.Dispose();
@@ -148,12 +157,12 @@ namespace LMS_Project.Model
                         {
                             content_HTML.RemoveAt(i);
                             i--;
-                            write = true;
+                            Nope1 = true;
                             continue;
                         }
                         if (item.Contains("star-ratings"))
-                            write = false;
-                        if (write)
+                            Nope1 = false;
+                        if (Nope1)
                         {
                             while (item.Contains("<"))
                             {
