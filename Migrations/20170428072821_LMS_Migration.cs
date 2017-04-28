@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS_Project.Migrations
 {
-    public partial class LMSMigration : Migration
+    public partial class LMS_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,6 +49,20 @@ namespace LMS_Project.Migrations
                 {
                     table.PrimaryKey("PK_EpisodeDetails", x => new { x.ChapterId, x.EpisodeId });
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Sourse",
+                columns: table => new
+                {
+                    WebId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Address = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sourse", x => x.WebId);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -61,6 +75,9 @@ namespace LMS_Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "EpisodeDetails");
+
+            migrationBuilder.DropTable(
+                name: "Sourse");
         }
     }
 }

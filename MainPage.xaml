@@ -4,7 +4,7 @@
     xmlns:local="using:LMS_Project" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008 "
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Model="using:LMS_Project.Model"
+    xmlns:data="using:LMS_Project.Data"
     x:Class="LMS_Project.MainPage"
     mc:Ignorable="d" >
 
@@ -192,7 +192,7 @@
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="593*"/>
                 </Grid.RowDefinitions>
-                <Canvas Height="48" Background="{ThemeResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Top">
+                <Canvas x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0" SizeChanged="canvas_SizeChanged">
                     <Button x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
                         Content="&#xE700;" Padding="12,6,12,4" 
                         Background="Transparent" 
@@ -202,6 +202,21 @@
                             <StaticResource ResourceKey="HumburgerStyle"/>
                         </Button.Style>
                     </Button>
+                    <ComboBox x:Name="cbSourse" 
+                              Canvas.Left="55" Canvas.Top="5" 
+                              Height="36" 
+                              ItemsSource="{Binding}" 
+                              HorizontalContentAlignment="Center"
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"
+                              Loaded="cbSourse_Loaded" >
+                        <ProgressRing x:Name="LoadingIndicator"/>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="data:WebSourse">
+                                <TextBlock Text="{x:Bind Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Canvas>
                 <Frame x:Name="ContentFrame" Grid.Row="1" />
             </Grid>

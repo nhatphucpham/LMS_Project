@@ -42,7 +42,7 @@ namespace LMS_Project.Pages
             {
                 LoadingIndicator.IsActive = true;
                 chapter = model.GetChapterFromChapterId(chapter.ChapterId);
-                await model.SetupContent(chapter.ChapterId);
+                await model.SetContent(chapter.ChapterId);
                 wpContent.NavigateToString(model.StringHtml);
             }
             finally

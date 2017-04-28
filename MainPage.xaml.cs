@@ -42,7 +42,17 @@ namespace LMS_Project
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 ShowStatusBar();
+                MySplitView.IsPaneOpen = false;
+                HeaderButton.Visibility = Visibility.Visible;
+                MySplitView.DisplayMode = SplitViewDisplayMode.Overlay;
             }
+            else
+            {
+                MySplitView.IsPaneOpen = false;
+                HeaderButton.Visibility = Visibility.Collapsed;
+                MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
+            }
+
             ContentFrame.Navigated += OnNavigated;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -58,7 +68,8 @@ namespace LMS_Project
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            HeaderButton.Visibility = Visibility.Visible;
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+                HeaderButton.Visibility = Visibility.Visible;
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
@@ -86,7 +97,7 @@ namespace LMS_Project
         }
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         { 
-            //if (ChapterManager.Instance().UpdateInfomartion())
+            //if (SourseManager.Instance().UpdateInfomartion())
             //{
             //    await new MessageDialog("Updated!").ShowAsync();
             //}
@@ -99,7 +110,7 @@ namespace LMS_Project
         {
             //if (AllChapterPage.ChapterSelected != null)
             //{
-            //    ChapterManager.Instance().DeleteChapter(AllChapterPage.ChapterSelected);
+            //    SourseManager.Instance().DeleteChapter(AllChapterPage.ChapterSelected);
             //    AllChapterPage.Delete();
             //}
         }
@@ -148,5 +159,40 @@ namespace LMS_Project
 
         }
 
+        private async void cbSourse_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                LoadingIndicator.IsActive = true;
+                using (var context = new SourseManager())
+                {
+                    var sourse = new WebSourse() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" };
+                    if (context.Sourse.Where(s => s.Name == sourse.Name).Count() == 0)
+                    {
+                        context.Sourse.Add(sourse);
+                        await context.SaveChangesAsync();
+                    }
+                    cbSourse.ItemsSource = context.Sourse.ToList();
+                    cbSourse.SelectedIndex = 0;
+                }
+            }
+            finally
+            {
+                LoadingIndicator.IsActive = false;
+            }
+        }
+
+        private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                cbSourse.Width = canvas.ActualWidth - 60;
+            }
+            else
+            {
+                Canvas.SetLeft(cbSourse, 0);
+                cbSourse.Width = canvas.ActualWidth - 5;
+            }
+        }
     }
 }

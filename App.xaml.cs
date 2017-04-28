@@ -40,7 +40,7 @@ namespace LMS_Project
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            using (var db = new ChapterManager())
+            using (var db = new SourseManager())
             {
                 db.Database.Migrate();
             }

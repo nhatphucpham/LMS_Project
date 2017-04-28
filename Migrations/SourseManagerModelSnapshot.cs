@@ -7,8 +7,8 @@ using LMS_Project.Data;
 
 namespace LMS_Project.Migrations
 {
-    [DbContext(typeof(ChapterManager))]
-    partial class ChapterManagerModelSnapshot : ModelSnapshot
+    [DbContext(typeof(SourseManager))]
+    partial class SourseManagerModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,20 @@ namespace LMS_Project.Migrations
                     b.HasKey("ChapterId", "EpisodeId");
 
                     b.ToTable("EpisodeDetails");
+                });
+
+            modelBuilder.Entity("LMS_Project.Data.WebSourse", b =>
+                {
+                    b.Property<int>("WebId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("WebId");
+
+                    b.ToTable("Sourse");
                 });
         }
     }

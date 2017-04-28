@@ -4,7 +4,7 @@
     xmlns:local="using:LMS_Project" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008 "
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Model="using:LMS_Project.Model"
+    xmlns:data="using:LMS_Project.Data"
     x:Class="LMS_Project.MainPage"
     mc:Ignorable="d" >
 
@@ -192,8 +192,8 @@
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="593*"/>
                 </Grid.RowDefinitions>
-                <Canvas Height="48" Background="{ThemeResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Top">
-                    <Button x:ConnectionId='8' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
+                <Canvas x:ConnectionId='7' x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0"                                 >
+                    <Button x:ConnectionId='9' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
                         Content="&#xE700;" Padding="12,6,12,4" 
                         Background="Transparent" 
                         Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
@@ -202,8 +202,23 @@
                             <StaticResource ResourceKey="HumburgerStyle"/>
                         </Button.Style>
                     </Button>
+                    <ComboBox x:ConnectionId='10' x:Name="cbSourse" 
+                              Canvas.Left="55" Canvas.Top="5" 
+                              Height="36" 
+                              ItemsSource="{Binding}" 
+                              HorizontalContentAlignment="Center"
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"
+                                                       >
+                        <ProgressRing x:ConnectionId='11' x:Name="LoadingIndicator"/>
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate                            >
+                                <TextBlock x:ConnectionId='12'                     />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Canvas>
-                <Frame x:ConnectionId='7' x:Name="ContentFrame" Grid.Row="1" />
+                <Frame x:ConnectionId='8' x:Name="ContentFrame" Grid.Row="1" />
             </Grid>
         </SplitView.Content>
     </SplitView>

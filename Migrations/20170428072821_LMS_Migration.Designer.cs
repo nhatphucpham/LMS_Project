@@ -7,9 +7,9 @@ using LMS_Project.Data;
 
 namespace LMS_Project.Migrations
 {
-    [DbContext(typeof(ChapterManager))]
-    [Migration("20170422103712_LMSMigration")]
-    partial class LMSMigration
+    [DbContext(typeof(SourseManager))]
+    [Migration("20170428072821_LMS_Migration")]
+    partial class LMS_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,6 +57,20 @@ namespace LMS_Project.Migrations
                     b.HasKey("ChapterId", "EpisodeId");
 
                     b.ToTable("EpisodeDetails");
+                });
+
+            modelBuilder.Entity("LMS_Project.Data.WebSourse", b =>
+                {
+                    b.Property<int>("WebId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("WebId");
+
+                    b.ToTable("Sourse");
                 });
         }
     }

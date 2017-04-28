@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LMS_Project.Data
 {
-    public class ChapterManager : DbContext
+    public class SourseManager : DbContext
     {
         public string TitleE {
             get
@@ -49,8 +49,8 @@ namespace LMS_Project.Data
 
         public DbSet<Chapter> Chapters { get; set; }
         public DbSet<Episode> Episodes { get; set; }
-
         public DbSet<EpisodeDetail> EpisodeDetails { get; set; }
+        public DbSet<WebSourse> Sourse { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -60,6 +60,7 @@ namespace LMS_Project.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EpisodeDetail>().HasKey(t => new { t.ChapterId, t.EpisodeId });
+            modelBuilder.Entity<WebSourse>().HasKey(t => new { t.WebId});
         }
 
     }
