@@ -212,27 +212,12 @@
       <RootProperty Name="Height" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Canvas">
-      <RootProperty Name="Background" />
       <RootProperty Name="Height" />
-      <RootProperty Name="Margin" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Children" />
-      <RootEvent Name="SizeChanged" />
-      <RootMethod Name="GetLeft" />
-      <RootMethod Name="SetLeft" />
-      <RootMethod Name="GetTop" />
-      <RootMethod Name="SetTop" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Frame" />
-    <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
-      <RootProperty Name="Height" />
-      <RootProperty Name="ItemsSource" />
-      <RootProperty Name="HorizontalContentAlignment" />
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Items" />
-      <RootProperty Name="ItemTemplate" />
-      <RootEvent Name="Loaded" />
-    </RootType>
     <RootType FullName="LMS_Project.MainPage" />
   </Roots.RootTypes>
 </Roots>
