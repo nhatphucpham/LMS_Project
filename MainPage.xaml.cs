@@ -42,6 +42,7 @@ namespace LMS_Project
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 ShowStatusBar();
+<<<<<<< HEAD
                 MySplitView.IsPaneOpen = false;
                 HeaderButton.Visibility = Visibility.Visible;
                 MySplitView.DisplayMode = SplitViewDisplayMode.Overlay;
@@ -53,6 +54,9 @@ namespace LMS_Project
                 MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
             }
 
+=======
+            }
+>>>>>>> master
             ContentFrame.Navigated += OnNavigated;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -68,8 +72,12 @@ namespace LMS_Project
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
                 HeaderButton.Visibility = Visibility.Visible;
+=======
+            HeaderButton.Visibility = Visibility.Visible;
+>>>>>>> master
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
@@ -159,6 +167,7 @@ namespace LMS_Project
 
         }
 
+<<<<<<< HEAD
         private async void cbSourse_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -194,5 +203,7 @@ namespace LMS_Project
                 cbSourse.Width = canvas.ActualWidth - 5;
             }
         }
+=======
+>>>>>>> master
     }
 }
