@@ -192,13 +192,8 @@
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="593*"/>
                 </Grid.RowDefinitions>
-<<<<<<< HEAD
                 <Canvas x:ConnectionId='7' x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0"                                 >
                     <Button x:ConnectionId='9' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
-=======
-                <Canvas Height="48" Background="{ThemeResource SystemControlBackgroundAccentBrush}" VerticalAlignment="Top">
-                    <Button x:ConnectionId='8' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
->>>>>>> master
                         Content="&#xE700;" Padding="12,6,12,4" 
                         Background="Transparent" 
                         Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
@@ -207,7 +202,6 @@
                             <StaticResource ResourceKey="HumburgerStyle"/>
                         </Button.Style>
                     </Button>
-<<<<<<< HEAD
                     <ComboBox x:ConnectionId='10' x:Name="cbSourse" 
                               Canvas.Left="55" Canvas.Top="5" 
                               Height="36" 
@@ -225,10 +219,6 @@
                     </ComboBox>
                 </Canvas>
                 <Frame x:ConnectionId='8' x:Name="ContentFrame" Grid.Row="1" />
-=======
-                </Canvas>
-                <Frame x:ConnectionId='7' x:Name="ContentFrame" Grid.Row="1" />
->>>>>>> master
             </Grid>
         </SplitView.Content>
     </SplitView>

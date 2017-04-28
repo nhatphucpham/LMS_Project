@@ -99,16 +99,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Chapter.cs" />
-    <Compile Include="Data\SourseManager.cs" />
+    <Compile Include="Data\ChapterManager.cs" />
     <Compile Include="Data\Episode.cs" />
     <Compile Include="Data\EpisodeDetail.cs" />
-    <Compile Include="Data\WebSourse.cs" />
-    <Compile Include="Migrations\20170428072821_LMS_Migration.cs" />
-    <Compile Include="Migrations\20170428072821_LMS_Migration.designer.cs">
-      <DependentUpon>20170428072821_LMS_Migration.cs</DependentUpon>
+    <Compile Include="Migrations\20170422103712_LMSMigration.cs" />
+    <Compile Include="Migrations\20170422103712_LMSMigration.designer.cs">
+      <DependentUpon>20170422103712_LMSMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\SourseManagerModelSnapshot.cs" />
-    <Compile Include="Model\SourseAnalysis.cs" />
+    <Compile Include="Migrations\ChapterManagerModelSnapshot.cs" />
     <Compile Include="Model\Sublightnovel.cs" />
     <Compile Include="Pages\EpisodePage.xaml.cs">
       <DependentUpon>EpisodePage.xaml</DependentUpon>

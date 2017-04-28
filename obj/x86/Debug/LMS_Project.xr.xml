@@ -212,7 +212,6 @@
       <RootProperty Name="Height" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Canvas">
-<<<<<<< HEAD
       <RootProperty Name="Background" />
       <RootProperty Name="Height" />
       <RootProperty Name="Margin" />
@@ -222,12 +221,6 @@
       <RootMethod Name="SetLeft" />
       <RootMethod Name="GetTop" />
       <RootMethod Name="SetTop" />
-=======
-      <RootProperty Name="Height" />
-      <RootProperty Name="Background" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="Children" />
->>>>>>> master
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Frame" />
     <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">

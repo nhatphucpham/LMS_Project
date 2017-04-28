@@ -5,12 +5,18 @@ using System.Net;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System;
 
 namespace LMS_Project.Model
 {
-    public class Sublightnovel : SourseAnalysis
+    public class Sublightnovel
     {
+        public static List<string> m_HTML;
+        public string StringHtml { get; set; }
+
+        private static List<Episode> episodes;
+        private static List<Chapter> chapters;
+        private static List<EpisodeDetail> details;
+
         public Sublightnovel()
         {
             if(m_HTML == null)
@@ -23,12 +29,99 @@ namespace LMS_Project.Model
             }
         }
 
-        public override async Task<List<string>> SetContent(int id)
+        public async Task LoadHTLM()
         {
-            using (var context = new SourseManager())
+            List<string> newcode = new List<string>();
+
+            // Thread send request and receive html code to List String
+                HttpWebRequest request = WebRequest.Create(@"http://www.sublightnovel.com/p/home.html") as HttpWebRequest;
+                HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
+
+                Stream receive = response.GetResponseStream();
+
+                StreamReader read = new StreamReader(receive);
+
+                while (read.Peek() >= 0)
+                {
+                    newcode.Add(WebUtility.HtmlDecode(string.Format("{0}", read.ReadLine())));
+                }
+            if (m_HTML.Equals(newcode) && m_HTML.Count != 0)
+                return;
+            m_HTML = newcode;
+        }
+
+        public void UpdateChapter(int id, Chapter chapter)
+        {
+            using (var context = new ChapterManager())
+            {
+                Chapter member = context.Chapters.Single(b => b.ChapterId == id);
+                member.Name = chapter.Name;
+                member.Content = chapter.Content;
+                member.WebAddress = chapter.WebAddress;
+            }
+        }
+        public List<Chapter> GetChaptersList()
+        {
+            var chapters_List = new List<Chapter>();
+            using (var context = new ChapterManager())
+            {
+                chapters_List = context.Chapters.ToList();
+            }
+            return chapters_List;
+        }
+
+        public List<Episode> GetEpisodesList()
+        {
+            var episodes_List = new List<Episode>();
+            using (var context = new ChapterManager())
+            {
+                episodes_List = context.Episodes.ToList();
+            }
+            return episodes_List;
+        }
+
+        public List<Chapter> GetChaptersFromEpisodeId(int id)
+        {
+            var chapters_List = new List<Chapter>();
+            using (var context = new ChapterManager())
+            {
+                var chapters = context.EpisodeDetails.Where(b=>b.EpisodeId == id).ToList();
+                foreach (var chapter in chapters)
+                {
+                    chapters_List.Add(context.Chapters.Single(b=>b.ChapterId==chapter.ChapterId));
+                }
+            }
+            return chapters_List;
+        }
+
+        public Chapter GetChapterFromChapterId(int id)
+        {
+            var chapter = new Chapter();
+            using (var context = new ChapterManager())
+            {
+                chapter = context.Chapters.Single(b => b.ChapterId == id);
+            }
+            return chapter;
+        }
+
+        public Episode GetEpisodeFromEpisodeId(int id)
+        {
+            var episode = new Episode();
+            using (var context = new ChapterManager())
+            {
+                episode = context.Episodes.Single(b => b.EpisodeId == id);
+            }
+            return episode;
+        }
+
+        public async Task<List<string>> SetupContent(int id)
+        {
+            using (var context = new ChapterManager())
             {
                 var chapter = context.Chapters.Single(b => b.ChapterId == id);
                 List<string> content_HTML = new List<string>();
+                //HttpWebRequest request = WebRequest.Create(chapter.WebAddress) as HttpWebRequest;
+                //HttpWebResponse response = await request.GetResponseAsync() as HttpWebResponse;
 
                 var httpClient = new HttpClient();
                 try
@@ -120,7 +213,7 @@ namespace LMS_Project.Model
             }
         }
 
-        protected override Chapter GetChapterFromHtmlLine(string Line)
+        private Chapter GetChapterFromHtmlLine(string Line)
         {
             string[] spl = System.Text.RegularExpressions.Regex.Split(Line, @"<\W?\w{1,4}\W?\w?\d?(\s\w{4}\W""http://www.sublightnovel.com/\d{4,}/\d{2,}([\w-\W]*).html""( target=""_blank"")?)?\s?\W?>");
             string chap = "", title = "", address = "", ep = "";
@@ -178,9 +271,9 @@ namespace LMS_Project.Model
         }
 
         ///Find and detect and set the chapters and the episodes
-        public override void LoadData()
+        public void LoadData()
         {
-            using (var context = new SourseManager())
+            using (var context = new ChapterManager())
             {
                 string strEpi = "";
                 int iEpi = -1;
