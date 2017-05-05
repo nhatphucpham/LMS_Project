@@ -40,7 +40,7 @@ namespace LMS_Project
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-            using (var db = new SourseManager())
+            using (var db = new DataManager())
             {
                 db.Database.Migrate();
             }
@@ -90,22 +90,14 @@ namespace LMS_Project
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {
                 await ReadStateAsync();
-                var terminateDate = DateTime.Now;
-                if (_store.ContainsKey("timestamp"))
-                {
-                    terminateDate = (DateTime)_store["timestamp"];
-                }
             }
         }
         public async Task ReadStateAsync()
         {
-            var file = await ApplicationData.Current.LocalFolder.GetFileAsync(_saveFileName);
-            if (file == null) return;
-
-            using (IInputStream stream = await file.OpenSequentialReadAsync())
+            using (var context = new DataManager())
             {
-                var serializer = new DataContractSerializer(typeof(Dictionary<string, object>));
-                _store = (Dictionary<string, object>)serializer.ReadObject(stream.AsStreamForRead());
+                context.Dispose();
+                await context.SaveChangesAsync();
             }
         }
 

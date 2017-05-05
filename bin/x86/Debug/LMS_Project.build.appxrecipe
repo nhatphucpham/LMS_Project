@@ -451,8 +451,8 @@
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlSerializer\4.0.11\lib\netcore50\System.Xml.XmlSerializer.dll">
       <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\LoadingSpinner.gif">
-      <PackagePath>Assets\LoadingSpinner.gif</PackagePath>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\noimagefound.jpg">
+      <PackagePath>Assets\noimagefound.jpg</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>

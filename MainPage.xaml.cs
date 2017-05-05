@@ -6,8 +6,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System.Profile;
@@ -32,10 +34,15 @@ namespace LMS_Project
     public sealed partial class MainPage : Page
     {
         NavMenu Menu;
+        public static ComboBox cbTitle;
+        public static WebSource WebSource = new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" };
         public MainPage()
         {
             this.InitializeComponent();
             //&#xE700; Hamburger button
+
+            cbTitle = cbSourse;
+
             Menu = new Model.NavMenu();
             MenuItem.ItemsSource = Menu.MenuItems;
             MenuItem.SelectedIndex = 0;
@@ -57,7 +64,7 @@ namespace LMS_Project
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-            if (ContentFrame.CanGoBack && ContentFrame.GetType() != typeof(HomePage))
+            if (ContentFrame.CanGoBack && ContentFrame.CurrentSourcePageType != typeof(HomePage))
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
@@ -66,6 +73,7 @@ namespace LMS_Project
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
         }
+
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
@@ -91,13 +99,13 @@ namespace LMS_Project
 
         private void MenuItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame current = ContentFrame;
-            if(((NavItem)MenuItem.SelectedItem).Page.GetType() != current.GetType())
-                current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
+        //    Frame current = ContentFrame;
+        //    if(((NavItem)MenuItem.SelectedItem).Page.GetType() != current.GetType())
+        //        current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
         }
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         { 
-            //if (SourseManager.Instance().UpdateInfomartion())
+            //if (NovelManager.Instance().UpdateInfomartion())
             //{
             //    await new MessageDialog("Updated!").ShowAsync();
             //}
@@ -108,10 +116,10 @@ namespace LMS_Project
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (AllChapterPage.ChapterSelected != null)
+            //if (EpisodePage.ChapterSelected != null)
             //{
-            //    SourseManager.Instance().DeleteChapter(AllChapterPage.ChapterSelected);
-            //    AllChapterPage.Delete();
+            //    NovelManager.Instance().DeleteChapter(EpisodePage.ChapterSelected);
+            //    EpisodePage.Delete();
             //}
         }
 
@@ -159,30 +167,7 @@ namespace LMS_Project
 
         }
 
-        private async void cbSourse_Loaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                LoadingIndicator.IsActive = true;
-                using (var context = new SourseManager())
-                {
-                    var sourse = new WebSourse() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" };
-                    if (context.Sourse.Where(s => s.Name == sourse.Name).Count() == 0)
-                    {
-                        context.Sourse.Add(sourse);
-                        await context.SaveChangesAsync();
-                    }
-                    cbSourse.ItemsSource = context.Sourse.ToList();
-                    cbSourse.SelectedIndex = 0;
-                }
-            }
-            finally
-            {
-                LoadingIndicator.IsActive = false;
-            }
-        }
-
-        private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void Canvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
@@ -194,5 +179,119 @@ namespace LMS_Project
                 cbSourse.Width = canvas.ActualWidth - 5;
             }
         }
+
+        private void CbSourse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NovelPage.model != null)
+                NovelPage.model.RemoveEpisode();
+            MainPage.WebSource = (sender as ComboBox).SelectedItem as WebSource;
+            if (ContentFrame.CurrentSourcePageType != typeof(HomePage))
+                ContentFrame.Navigate(typeof(NovelPage));
+        }
+
+        private async void MySplitView_Loaded(object sender, RoutedEventArgs e)
+        {
+            TimeTrigger connectCheckTime = new TimeTrigger(15, false);
+
+            SystemCondition userCondition = new SystemCondition(SystemConditionType.UserPresent);
+
+            await BackgroundExecutionManager.RequestAccessAsync();
+
+            BackgroundTaskRegistration task = RegisterBackgroundTask("BackgroundTasks.TimerBackgroundTask", "Check connection every 5 seconds", connectCheckTime, userCondition);
+
+            if(task != null)
+            {
+                AttachProgressAndCompletedHandlers(task);
+            }
+
+
+            await new Sublightnovel().CheckConnection();
+            try
+            {
+                LoadingIndicator.IsActive = true;
+                using (var context = new DataManager())
+                {
+                    WebSource[] sourses =
+                    {
+                       new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" },
+                       new WebSource() { Name = "Valvrareteam", Address = @"http://valvrareteam.com/" }
+                    };
+                    foreach (var sourse in sourses)
+                    {
+                        if (context.WebSourses.Where(s => s.Name == sourse.Name).Count() == 0)
+                        {
+                            context.WebSourses.Add(sourse);
+                            context.SaveChanges();
+                        }
+                    }
+                    cbSourse.ItemsSource = (new DataManager()).WebSourses.ToList();
+                    cbSourse.SelectedIndex = 0;
+                }
+            }
+            finally
+            {
+                LoadingIndicator.IsActive = false;
+            }
+        }
+
+        private void AttachProgressAndCompletedHandlers(IBackgroundTaskRegistration task)
+        {
+            task.Progress += new BackgroundTaskProgressEventHandler(OnProgress);
+            task.Completed += new BackgroundTaskCompletedEventHandler(OnCompleted);
+        }
+
+        private void OnProgress(IBackgroundTaskRegistration task, BackgroundTaskProgressEventArgs args)
+        {
+            var progress = "Progress: " + args.Progress + "%";
+
+        }
+
+
+        private async void OnCompleted(IBackgroundTaskRegistration task, BackgroundTaskCompletedEventArgs args)
+        {
+            await new Sublightnovel().CheckConnection();
+        }
+
+        public static BackgroundTaskRegistration RegisterBackgroundTask(
+                                                string taskEntryPoint,
+                                                string taskName,
+                                                IBackgroundTrigger trigger,
+                                                IBackgroundCondition condition)
+        {
+
+            //
+            // Register the background task.
+            //
+
+            var builder = new BackgroundTaskBuilder()
+            {
+                Name = taskName,
+                TaskEntryPoint = taskEntryPoint
+            };
+
+            builder.SetTrigger(trigger);
+
+            if (condition != null)
+            {
+
+                builder.AddCondition(condition);
+            }
+
+            BackgroundTaskRegistration task = builder.Register();
+
+            return task;
+
+
+        }
+
+        //public static void SetCbSource()
+        //{
+        //    using (var context = new DataManager())
+        //    {
+        //        MainPage.cbTitle.ItemsSource = context.WebSourses.ToList();
+        //        MainPage.cbTitle.SelectedIndex = 0;
+        //        MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+        //    }
+        //}
     }
 }

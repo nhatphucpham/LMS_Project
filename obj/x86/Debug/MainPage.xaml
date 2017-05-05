@@ -136,7 +136,7 @@
         </Style>
     </Page.Resources>
 
-    <SplitView x:ConnectionId='1' x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150"                                      >
+    <SplitView x:ConnectionId='1' x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150"                                                                  >
         <SplitView.Pane>
             <Grid x:ConnectionId='2' x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">
@@ -187,7 +187,7 @@
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid>
+            <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="593*"/>
@@ -209,7 +209,7 @@
                               HorizontalContentAlignment="Center"
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"
-                                                       >
+                                                                          >
                         <ProgressRing x:ConnectionId='11' x:Name="LoadingIndicator"/>
                         <ComboBox.ItemTemplate>
                             <DataTemplate                            >

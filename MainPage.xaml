@@ -136,7 +136,7 @@
         </Style>
     </Page.Resources>
 
-    <SplitView x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150" SizeChanged="MySplitView_SizeChanged">
+    <SplitView x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150" SizeChanged="MySplitView_SizeChanged" Loaded="MySplitView_Loaded">
         <SplitView.Pane>
             <Grid x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">
@@ -187,12 +187,12 @@
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid>
+            <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="593*"/>
                 </Grid.RowDefinitions>
-                <Canvas x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0" SizeChanged="canvas_SizeChanged">
+                <Canvas x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0" SizeChanged="Canvas_SizeChanged">
                     <Button x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
                         Content="&#xE700;" Padding="12,6,12,4" 
                         Background="Transparent" 
@@ -209,10 +209,10 @@
                               HorizontalContentAlignment="Center"
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"
-                              Loaded="cbSourse_Loaded" >
+                              SelectionChanged="CbSourse_SelectionChanged">
                         <ProgressRing x:Name="LoadingIndicator"/>
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="data:WebSourse">
+                            <DataTemplate x:DataType="data:WebSource">
                                 <TextBlock Text="{x:Bind Name}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>

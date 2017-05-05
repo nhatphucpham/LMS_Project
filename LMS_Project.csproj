@@ -99,25 +99,35 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Chapter.cs" />
-    <Compile Include="Data\SourseManager.cs" />
+    <Compile Include="Data\Novel.cs" />
+    <Compile Include="Data\DataManager.cs" />
     <Compile Include="Data\Episode.cs" />
     <Compile Include="Data\EpisodeDetail.cs" />
-    <Compile Include="Data\WebSourse.cs" />
-    <Compile Include="Migrations\20170428072821_LMS_Migration.cs" />
-    <Compile Include="Migrations\20170428072821_LMS_Migration.designer.cs">
-      <DependentUpon>20170428072821_LMS_Migration.cs</DependentUpon>
+    <Compile Include="Data\NovelDetail.cs" />
+    <Compile Include="Data\WebDetail.cs" />
+    <Compile Include="Data\WebSource.cs" />
+    <Compile Include="Migrations\20170503035354_NovelMigration.cs" />
+    <Compile Include="Migrations\20170503035354_NovelMigration.designer.cs">
+      <DependentUpon>20170503035354_NovelMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\SourseManagerModelSnapshot.cs" />
-    <Compile Include="Model\SourseAnalysis.cs" />
+    <Compile Include="Migrations\DataManagerModelSnapshot.cs" />
+    <Compile Include="Model\SourceAnalysis.cs" />
     <Compile Include="Model\Sublightnovel.cs" />
-    <Compile Include="Pages\EpisodePage.xaml.cs">
-      <DependentUpon>EpisodePage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Valvrareteam.cs" />
     <Compile Include="Pages\ChapterPage.xaml.cs">
       <DependentUpon>ChapterPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\EpisodePage.xaml.cs">
+      <DependentUpon>EpisodePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ViewNovelPage.xaml.cs">
+      <DependentUpon>ViewNovelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NovelPage.xaml.cs">
+      <DependentUpon>NovelPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -132,7 +142,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\LoadingSpinner.gif" />
+    <Content Include="Assets\noimagefound.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -147,15 +157,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Pages\EpisodePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\ChapterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\EpisodePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ViewNovelPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NovelPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,6 +187,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

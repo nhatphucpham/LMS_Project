@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="LMS_Project.Pages.NovelPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LMS_Project.Pages"
+    xmlns:data ="using:LMS_Project.Data"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:DataType="data:Novel" x:Key="NovelsDataTemplate">
+            <Grid Width="240" Height="280" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                <Image HorizontalAlignment="Center" Source="{x:Bind ImageUrl}" VerticalAlignment="Center" Stretch="Fill" x:Phase="1"/>
+                <ProgressRing x:Name="LoadingImage"></ProgressRing>
+                <StackPanel Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Padding="10,0">
+                    <TextBlock FontSize="20" Text="{x:Bind Title}" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextWrapping="Wrap" x:Phase="0" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" TextAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" Padding="5" Margin="5">
+        <ProgressRing x:Name="LoadingIndicator"></ProgressRing>
+        <GridView x:Name="MainGridView" ItemsSource="{Binding}" 
+                  ItemTemplate="{StaticResource NovelsDataTemplate}" 
+                  IsItemClickEnabled="true"
+                  Padding="10"
+                  ItemClick="MainGridView_ItemClick" Loaded="MainGridView_Loaded" ShowsScrollingPlaceholders="True" ContainerContentChanging="MainGridView_ContainerContentChanging">
+            <GridView.ItemContainerStyle>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="0,0,20,20"/>
+                </Style>
+            </GridView.ItemContainerStyle>
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>
+    </Grid>
+</Page>

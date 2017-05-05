@@ -9,23 +9,25 @@ using System;
 
 namespace LMS_Project.Model
 {
-    public class Sublightnovel : SourseAnalysis
+    public class Sublightnovel : SourceAnalysis
     {
-        public Sublightnovel()
+        private Novel thisNovel;
+
+        public Sublightnovel():base()
         {
-            if(m_HTML == null)
-                m_HTML = new List<string>();
             if (episodes == null)
             {
+                novelDetails = new List<NovelDetail>();
+                thisNovel = new Novel();
                 episodes = new List<Episode>();
                 chapters = new List<Chapter>();
-                details = new List<EpisodeDetail>();
+                episodeDetails = new List<EpisodeDetail>();
             }
         }
 
         public override async Task<List<string>> SetContent(int id)
         {
-            using (var context = new SourseManager())
+            using (var context = new DataManager())
             {
                 var chapter = context.Chapters.Single(b => b.ChapterId == id);
                 List<string> content_HTML = new List<string>();
@@ -120,7 +122,7 @@ namespace LMS_Project.Model
             }
         }
 
-        protected override Chapter GetChapterFromHtmlLine(string Line)
+        protected override Chapter GetChapterFromHtmlLine(string Line, string TitleLine = "")
         {
             string[] spl = System.Text.RegularExpressions.Regex.Split(Line, @"<\W?\w{1,4}\W?\w?\d?(\s\w{4}\W""http://www.sublightnovel.com/\d{4,}/\d{2,}([\w-\W]*).html""( target=""_blank"")?)?\s?\W?>");
             string chap = "", title = "", address = "", ep = "";
@@ -160,17 +162,19 @@ namespace LMS_Project.Model
                 Chapter chapter = new Chapter()
                 {
                     ChapterId = chapters.Count() + 1,
+                    WebId = Sourse.WebId,
                     Name = title,
                     Content = null,
                     WebAddress = address
                 };
                 if (iEp > 0)
                 {
-                    if (details.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0)
+                    if (episodeDetails.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0)
                     {
-                        details.Add(new EpisodeDetail() { EpisodeId = iEp, ChapterId = chapter.ChapterId });
+                        episodeDetails.Add(new EpisodeDetail() { EpisodeId = iEp, ChapterId = chapter.ChapterId });
                     }
                 }
+                
                 return chapter;
             }
 
@@ -178,15 +182,26 @@ namespace LMS_Project.Model
         }
 
         ///Find and detect and set the chapters and the episodes
-        public override void LoadData()
+        public override void LoadEpisode(int NovelId)
         {
-            using (var context = new SourseManager())
+            using (var context = new DataManager())
             {
+                chapters = context.Chapters.ToList();
+                episodes = context.Episodes.ToList();
+                episodeDetails = context.EpisodeDetails.ToList();
+                var novel = context.Novels.Single(s => s.NovelId == NovelId);
+                novelDetails = context.NovelDetails.ToList();
+                List<Chapter> NewChapterList = new List<Chapter>();
+                List<Episode> NewEpisodeList = new List<Episode>();
+                List<EpisodeDetail> NewEpisodeDetailList = new List<EpisodeDetail>();
+                List<NovelDetail> NewNovelDetailList = new List<NovelDetail>();
+
                 string strEpi = "";
                 int iEpi = -1;
                 bool accept = false;
                 foreach (string s in m_HTML)
                 {
+                    // Toàn bộ nôi dung có ở tab <h4>
                     if (!accept && s.Contains("<h4>")) accept = true;
                     if (s.Contains("/h4")) break;
                     if (accept)
@@ -202,41 +217,145 @@ namespace LMS_Project.Model
                         if (char.IsNumber(s[0]) || s[0].Equals('C'))
                         {
                             Chapter chapter = GetChapterFromHtmlLine(s);
-                            if (chapter != null)
+                            if (chapter != null && chapters.Where(w=>w.WebAddress == chapter.WebAddress).Count() == 0)
                             {
-                                if (!chapters.Contains(chapter))
+                                if (chapters.Where(w=>w.Name == chapter.Name).Count() == 0)
                                 {
-                                    if (episodes.Where(e=>e.EpisodeId == iEpi).Count() == 0)
+                                    var episode = new Episode()
                                     {
-                                        episodes.Add(new Episode()
-                                        {
-                                            EpisodeId = iEpi,
-                                            Name = string.Format("Tập {0}", iEpi),
-                                            Image = ""
-                                        });
-                                    }
-                                    chapters.Add(chapter);
+                                        EpisodeId = episodes.Count + 1,
+                                        Name = string.Format("{0}: Tập {1}", novel.Title, iEpi),
+                                        Image = ""
+                                    };
 
-                                    if (details.Where(d=>d.ChapterId == chapter.ChapterId && d.EpisodeId == iEpi).Count() == 0)
-                                        details.Add(new EpisodeDetail()
-                                        {
-                                            EpisodeId = iEpi,
-                                            ChapterId = chapter.ChapterId
-                                        });
+                                    if (episodes.Where(w => w.Name == episode.Name).Count() == 0)
+                                    {
+                                        episodes.Add(episode);
+                                        NewEpisodeList.Add(episode);
+                                        var noDetail = new NovelDetail() { EpisodeId = episodes[episodes.Count - 1].EpisodeId, NovelId = novel.NovelId };
+                                        novelDetails.Add(noDetail);
+                                        NewNovelDetailList.Add(noDetail);
+                                    }
+
+                                    var epDetail = new EpisodeDetail()
+                                    {
+                                        EpisodeId = iEpi,
+                                        ChapterId = chapter.ChapterId
+                                    };
+
+                                    if (episodeDetails.Where(w => w.EpisodeId == episode.EpisodeId && w.ChapterId == epDetail.ChapterId).Count() == 0)
+                                    {
+                                        episodeDetails.Add(epDetail);
+                                        NewEpisodeDetailList.Add(epDetail);
+                                    }
+                                    chapter.NumberInEpisode = episodeDetails.Where(e => e.EpisodeId == episodes[episodes.Count - 1].EpisodeId).Count();
+                                    chapters.Add(chapter);
+                                    NewChapterList.Add(chapter);
                                 }
                             }
                         }
                     }
                 }
 
-                if (episodes.Count > 0)
+
+                if (NewEpisodeList.Count > 0)
                 {
-                    context.Episodes.AddRange(episodes);
-                    context.Chapters.AddRange(chapters);
-                    context.EpisodeDetails.AddRange(details);
+                    context.NovelDetails.AddRange(NewNovelDetailList);
+                    context.Episodes.AddRange(NewEpisodeList);
+                    context.Chapters.AddRange(NewChapterList);
+                    context.EpisodeDetails.AddRange(NewEpisodeDetailList);
                     context.SaveChanges();
                 }
+
+                episodes = context.Episodes.ToList();
+                chapters = context.Chapters.ToList();
+                episodeDetails = context.EpisodeDetails.ToList();
+                novelDetails = context.NovelDetails.ToList();
             }
+        }
+
+        public override void LoadNovel()
+        {
+            thisNovel.Address = Sourse.Address;
+            thisNovel.NovelId = (new DataManager()).Novels.Count() + 1;
+            using (var context = new DataManager())
+            {
+                bool tilte = false;
+                bool sumany = false;
+                foreach (string s in m_HTML)
+                {
+                    if (s.Contains("h1 class='title'"))
+                    {
+                        tilte = true;
+                        continue;
+                    }
+                    if (tilte)
+                    {
+                        int index = s.IndexOf(">") + 1;
+                        int leight = s.Substring(index).IndexOf("<");
+                        thisNovel.Title = s.Substring(index, leight);
+                        tilte = false;
+                    }
+
+                    if (s.Contains("img border=\"0\" src"))
+                    {
+                        int index = s.IndexOf("\"") + 1;
+                        int leight = s.Substring(index).IndexOf("\"");
+                        thisNovel.ImageUrl = s.Substring(index, leight);
+                    }
+
+                    if (s.Contains(">Tác giả:"))
+                    {
+                        int index = s.IndexOf(">") + 10;
+                        int leight = s.Substring(index).IndexOf("<");
+                        thisNovel.Author = s.Substring(index, leight);
+                    }
+
+                    if (s.Contains("text-align: justify;"))
+                    {
+                        sumany = true;
+                        continue;
+                    }
+                    if (sumany)
+                    {
+                        if (s.Contains("/span"))
+                        {
+                            int leight = s.IndexOf("<");
+                            thisNovel.Summany += s.Substring(0, leight);
+                            sumany = false;
+                        }
+                        else
+                        {
+                            if (s.Contains("<span"))
+                            {
+                                int index = s.IndexOf(">") + 1;
+                                thisNovel.Summany += string.Format("{0} ", s.Substring(index));
+                            }
+                            else thisNovel.Summany += string.Format("{0} ", s);
+                        }
+                    }
+                }
+
+                context.WebDetails.Add(new WebDetail() { WebId = Sourse.WebId, NovelId = thisNovel.NovelId });
+                context.Novels.Add(thisNovel);
+                context.SaveChanges();
+            }
+        }
+
+        public override void LoadNav()
+        {
+            SourceAnalysis.CurrentPages = 0;
+            SourceAnalysis.NavLinks = new Dictionary<int, string>();
+        }
+
+        public override void NextPage()
+        {
+            
+        }
+
+        public override void PreviousPage()
+        {
+
         }
     }
 }

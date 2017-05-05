@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace LMS_Project.Data
 {
-    public class WebSourse
+    public class NovelDetail
     {
-        public int WebId { get; set; }
-        public string Address { get; set; }
-        public string Name { get; set; }
+        public int NovelId { get; set; }
+        public int EpisodeId { get; set; }
     }
 }

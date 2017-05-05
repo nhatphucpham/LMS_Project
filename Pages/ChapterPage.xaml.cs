@@ -24,26 +24,35 @@ namespace LMS_Project.Pages
     /// </summary>
     public sealed partial class ChapterPage : Page
     {
-        Chapter chapter;
-        Sublightnovel model;
         public ChapterPage()
         {
             this.InitializeComponent();
-            model = new Sublightnovel();
-        }
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            chapter = e.Parameter as Chapter;
         }
 
-        private async void Grid_Loading(FrameworkElement sender, object args)
+        Episode episode;
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if(e.Parameter != null)
+            {
+                episode = (e.Parameter as Episode);
+            }
+        }
+
+        private void MainGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(ViewNovelPage), e.ClickedItem);
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 LoadingIndicator.IsActive = true;
-                chapter = model.GetChapterFromChapterId(chapter.ChapterId);
-                await model.SetContent(chapter.ChapterId);
-                wpContent.NavigateToString(model.StringHtml);
+                if(episode != null)
+                {
+                    MainGridView.ItemsSource = NovelPage.model.GetChaptersFromEpisodeId(episode.EpisodeId).ToList().OrderBy(o=>o.NumberInEpisode);
+                }
             }
             finally
             {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LMS_Project.Migrations
 {
-    public partial class LMS_Migration : Migration
+    public partial class NovelMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,8 @@ namespace LMS_Project.Migrations
                     Content = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     NumberInEpisode = table.Column<int>(nullable: false),
-                    WebAddress = table.Column<string>(nullable: true)
+                    WebAddress = table.Column<string>(nullable: true),
+                    WebId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +52,48 @@ namespace LMS_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Sourse",
+                name: "Novels",
+                columns: table => new
+                {
+                    NovelId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ImageUrl = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Author = table.Column<string>(nullable: true),
+                    Summany = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Novels", x => x.NovelId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NovelDetails",
+                columns: table => new
+                {
+                    NovelId = table.Column<int>(nullable: false),
+                    EpisodeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NovelDetails", x => new { x.NovelId, x.EpisodeId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WebDetails",
+                columns: table => new
+                {
+                    WebId = table.Column<int>(nullable: false),
+                    NovelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebDetails", x => new { x.WebId, x.NovelId });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WebSourses",
                 columns: table => new
                 {
                     WebId = table.Column<int>(nullable: false)
@@ -61,7 +103,7 @@ namespace LMS_Project.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sourse", x => x.WebId);
+                    table.PrimaryKey("PK_WebSourses", x => x.WebId);
                 });
         }
 
@@ -77,7 +119,16 @@ namespace LMS_Project.Migrations
                 name: "EpisodeDetails");
 
             migrationBuilder.DropTable(
-                name: "Sourse");
+                name: "Novels");
+
+            migrationBuilder.DropTable(
+                name: "NovelDetails");
+
+            migrationBuilder.DropTable(
+                name: "WebDetails");
+
+            migrationBuilder.DropTable(
+                name: "WebSourses");
         }
     }
 }

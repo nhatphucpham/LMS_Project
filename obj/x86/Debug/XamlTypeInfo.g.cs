@@ -132,21 +132,25 @@ namespace LMS_Project.LMS_Project_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[6];
-            _typeNameTable[0] = "LMS_Project.Pages.AllChapterPage";
+            _typeNameTable = new string[8];
+            _typeNameTable[0] = "LMS_Project.Pages.ChapterPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
-            _typeNameTable[3] = "LMS_Project.Pages.ChapterPage";
+            _typeNameTable[3] = "LMS_Project.Pages.EpisodePage";
             _typeNameTable[4] = "LMS_Project.Pages.HomePage";
-            _typeNameTable[5] = "LMS_Project.MainPage";
+            _typeNameTable[5] = "LMS_Project.Pages.ViewNovelPage";
+            _typeNameTable[6] = "LMS_Project.Pages.NovelPage";
+            _typeNameTable[7] = "LMS_Project.MainPage";
 
-            _typeTable = new global::System.Type[6];
-            _typeTable[0] = typeof(global::LMS_Project.Pages.AllChapterPage);
+            _typeTable = new global::System.Type[8];
+            _typeTable[0] = typeof(global::LMS_Project.Pages.ChapterPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
-            _typeTable[3] = typeof(global::LMS_Project.Pages.ChapterPage);
+            _typeTable[3] = typeof(global::LMS_Project.Pages.EpisodePage);
             _typeTable[4] = typeof(global::LMS_Project.Pages.HomePage);
-            _typeTable[5] = typeof(global::LMS_Project.MainPage);
+            _typeTable[5] = typeof(global::LMS_Project.Pages.ViewNovelPage);
+            _typeTable[6] = typeof(global::LMS_Project.Pages.NovelPage);
+            _typeTable[7] = typeof(global::LMS_Project.MainPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -181,10 +185,12 @@ namespace LMS_Project.LMS_Project_XamlTypeInfo
             return -1;
         }
 
-        private object Activate_0_AllChapterPage() { return new global::LMS_Project.Pages.AllChapterPage(); }
-        private object Activate_3_ChapterPage() { return new global::LMS_Project.Pages.ChapterPage(); }
+        private object Activate_0_ChapterPage() { return new global::LMS_Project.Pages.ChapterPage(); }
+        private object Activate_3_EpisodePage() { return new global::LMS_Project.Pages.EpisodePage(); }
         private object Activate_4_HomePage() { return new global::LMS_Project.Pages.HomePage(); }
-        private object Activate_5_MainPage() { return new global::LMS_Project.MainPage(); }
+        private object Activate_5_ViewNovelPage() { return new global::LMS_Project.Pages.ViewNovelPage(); }
+        private object Activate_6_NovelPage() { return new global::LMS_Project.Pages.NovelPage(); }
+        private object Activate_7_MainPage() { return new global::LMS_Project.MainPage(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -196,9 +202,9 @@ namespace LMS_Project.LMS_Project_XamlTypeInfo
             switch (typeIndex)
             {
 
-            case 0:   //  LMS_Project.Pages.AllChapterPage
+            case 0:   //  LMS_Project.Pages.ChapterPage
                 userType = new global::LMS_Project.LMS_Project_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_0_AllChapterPage;
+                userType.Activator = Activate_0_ChapterPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -211,9 +217,9 @@ namespace LMS_Project.LMS_Project_XamlTypeInfo
                 xamlType = new global::LMS_Project.LMS_Project_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 3:   //  LMS_Project.Pages.ChapterPage
+            case 3:   //  LMS_Project.Pages.EpisodePage
                 userType = new global::LMS_Project.LMS_Project_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_3_ChapterPage;
+                userType.Activator = Activate_3_EpisodePage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;
@@ -225,9 +231,23 @@ namespace LMS_Project.LMS_Project_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 5:   //  LMS_Project.MainPage
+            case 5:   //  LMS_Project.Pages.ViewNovelPage
                 userType = new global::LMS_Project.LMS_Project_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_5_MainPage;
+                userType.Activator = Activate_5_ViewNovelPage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 6:   //  LMS_Project.Pages.NovelPage
+                userType = new global::LMS_Project.LMS_Project_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_6_NovelPage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 7:   //  LMS_Project.MainPage
+                userType = new global::LMS_Project.LMS_Project_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_7_MainPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;

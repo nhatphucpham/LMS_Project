@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="LMS_Project.Pages.AllChapterPage"
+    x:Class="LMS_Project.Pages.EpisodePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LMS_Project"
@@ -9,21 +9,18 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <DataTemplate x:DataType="data:Chapter" x:Key="ChaptersDataTemplate">
+        <DataTemplate x:DataType="data:Episode" x:Key="EpisodeDataTemplate">
             <StackPanel HorizontalAlignment="Center" Width="250" Padding="10">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock FontSize="12" Text="{x:Bind NumberInEpisode}" HorizontalAlignment="Left" Loaded="TextBlock_Loaded_2"/>
-                </StackPanel>
-                <TextBlock FontSize="16" Text="{x:Bind Name}" HorizontalAlignment="Left" Loaded="TextBlock_Loaded"/>
-                <TextBlock FontSize="10" Text="{x:Bind WebAddress}" HorizontalAlignment="Left" Loaded="TextBlock_Loaded_1"/>
+                <TextBlock FontSize="24" Text="{x:Bind Name}" HorizontalAlignment="Left" TextWrapping="Wrap" />
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
-    
-    <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+
+    <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Loaded="Grid_Loaded">
+        <ProgressRing x:Name="LoadingIndicator"></ProgressRing>
         <GridView x:Name="MainGridView"
                   ItemsSource="{Binding}"
-                  ItemTemplate="{StaticResource ChaptersDataTemplate}" 
+                  ItemTemplate="{StaticResource EpisodeDataTemplate}" 
                   IsItemClickEnabled="true"
                   ItemClick="MainGridView_ItemClick">
             <GridView.ItemsPanel>
