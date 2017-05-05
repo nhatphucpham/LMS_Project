@@ -1,4 +1,5 @@
 ﻿using LMS_Project.Data;
+using LMS_Project.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,10 +31,12 @@ namespace LMS_Project.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(NovelPage.model != null)
-                NovelPage.model.RemoveEpisode();
             MainPage.cbTitle.SelectedIndex = (new DataManager()).WebSourses.Single(s => s.Name == (sender as Button).Content.ToString()).WebId - 1;
             Frame.Navigate(typeof(NovelPage));
+        }
+
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

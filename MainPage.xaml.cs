@@ -1,9 +1,11 @@
 ﻿using LMS_Project.Data;
 using LMS_Project.Model;
 using LMS_Project.Pages;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -34,15 +37,16 @@ namespace LMS_Project
     public sealed partial class MainPage : Page
     {
         NavMenu Menu;
+        public static Frame contentFrame;
         public static ComboBox cbTitle;
-        public static WebSource WebSource = new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" };
+        public static WebSource WebSource;
+        public static Chapter CurrentChapter;
         public MainPage()
         {
             this.InitializeComponent();
             //&#xE700; Hamburger button
-
+            contentFrame = ContentFrame;
             cbTitle = cbSourse;
-
             Menu = new Model.NavMenu();
             MenuItem.ItemsSource = Menu.MenuItems;
             MenuItem.SelectedIndex = 0;
@@ -71,6 +75,21 @@ namespace LMS_Project
             else
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+
+        public async Task<Chapter> GetCurrentChapter()
+        {
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            try
+            {
+                StorageFile jsonFile = await folder.GetFileAsync("currentChapter.txt");
+                string json = await Windows.Storage.FileIO.ReadTextAsync(jsonFile);
+                return JsonConvert.DeserializeObject<Chapter>(json);
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -182,56 +201,9 @@ namespace LMS_Project
 
         private void CbSourse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (NovelPage.model != null)
-                NovelPage.model.RemoveEpisode();
-            MainPage.WebSource = (sender as ComboBox).SelectedItem as WebSource;
-            if (ContentFrame.CurrentSourcePageType != typeof(HomePage))
-                ContentFrame.Navigate(typeof(NovelPage));
-        }
-
-        private async void MySplitView_Loaded(object sender, RoutedEventArgs e)
-        {
-            TimeTrigger connectCheckTime = new TimeTrigger(15, false);
-
-            SystemCondition userCondition = new SystemCondition(SystemConditionType.UserPresent);
-
-            await BackgroundExecutionManager.RequestAccessAsync();
-
-            BackgroundTaskRegistration task = RegisterBackgroundTask("BackgroundTasks.TimerBackgroundTask", "Check connection every 5 seconds", connectCheckTime, userCondition);
-
-            if(task != null)
-            {
-                AttachProgressAndCompletedHandlers(task);
-            }
-
-
-            await new Sublightnovel().CheckConnection();
-            try
-            {
-                LoadingIndicator.IsActive = true;
-                using (var context = new DataManager())
-                {
-                    WebSource[] sourses =
-                    {
-                       new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" },
-                       new WebSource() { Name = "Valvrareteam", Address = @"http://valvrareteam.com/" }
-                    };
-                    foreach (var sourse in sourses)
-                    {
-                        if (context.WebSourses.Where(s => s.Name == sourse.Name).Count() == 0)
-                        {
-                            context.WebSourses.Add(sourse);
-                            context.SaveChanges();
-                        }
-                    }
-                    cbSourse.ItemsSource = (new DataManager()).WebSourses.ToList();
-                    cbSourse.SelectedIndex = 0;
-                }
-            }
-            finally
-            {
-                LoadingIndicator.IsActive = false;
-            }
+            MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+            if(ContentFrame.Content.GetType() != typeof(HomePage))
+                ContentFrame.Navigate(typeof(NovelPage), MainPage.WebSource);
         }
 
         private void AttachProgressAndCompletedHandlers(IBackgroundTaskRegistration task)
@@ -281,7 +253,53 @@ namespace LMS_Project
 
             return task;
 
+        }
 
+        private async void MySplitView_Loading(FrameworkElement sender, object args)
+        {
+            TimeTrigger connectCheckTime = new TimeTrigger(15, false);
+
+            SystemCondition userCondition = new SystemCondition(SystemConditionType.UserPresent);
+
+            await BackgroundExecutionManager.RequestAccessAsync();
+
+            BackgroundTaskRegistration task = RegisterBackgroundTask("BackgroundTasks.TimerBackgroundTask", "Check connection every 5 seconds", connectCheckTime, userCondition);
+
+            if (task != null)
+            {
+                AttachProgressAndCompletedHandlers(task);
+            }
+
+            await new Sublightnovel().CheckConnection();
+            try
+            {
+                LoadingIndicator.IsActive = true;
+                using (var context = new DataManager())
+                {
+                    WebSource[] sourses =
+                    {
+                       new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" },
+                       new WebSource() { Name = "Valvrareteam", Address = @"http://valvrareteam.com/" }
+                    };
+                    foreach (var sourse in sourses)
+                    {
+                        if (context.WebSourses.Where(s => s.Name == sourse.Name).Count() == 0)
+                        {
+                            context.WebSourses.Add(sourse);
+                            context.SaveChanges();
+                        }
+                    }
+                    cbSourse.ItemsSource = (new DataManager()).WebSourses.ToList();
+                    cbSourse.SelectedIndex = 0;
+
+                    CurrentChapter = await GetCurrentChapter();
+                }
+            }
+            finally
+            {
+                LoadingIndicator.IsActive = false;
+                MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+            }
         }
 
         //public static void SetCbSource()

@@ -30,14 +30,7 @@ namespace LMS_Project.Pages
         public static SourceAnalysis model;
         public NovelPage()
         {
-            this.InitializeComponent();
-
-            if (MainPage.WebSource.Name == "Valvrareteam")
-                NovelPage.model = new Valvrareteam();
-            else
-                NovelPage.model = new Sublightnovel();
-
-            
+            this.InitializeComponent();           
 
         }
         private void MainGridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -49,6 +42,14 @@ namespace LMS_Project.Pages
         {
             try
             {
+                if (MainPage.WebSource != null)
+                {
+                    if (MainPage.WebSource.Name == "Valvrareteam")
+                        NovelPage.model = new Valvrareteam();
+                    else
+                        NovelPage.model = new Sublightnovel();
+                }
+
                 LoadingIndicator.IsActive = true;
                 if (SourceAnalysis.CurrentPages == 0 || SourceAnalysis.CurrentPages == 1)
                     NovelPage.model.Sourse = MainPage.WebSource;

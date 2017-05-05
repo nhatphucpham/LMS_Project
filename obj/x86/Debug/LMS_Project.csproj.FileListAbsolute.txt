@@ -507,3 +507,10 @@ C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\ob
 C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\obj\x86\Debug\Pages\HomePage.g.cs
 C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\obj\x86\Debug\Pages\HomePage.xaml
 C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\obj\x86\Debug\Pages\HomePage.xbf
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\Newtonsoft.Json.dll
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\System.ComponentModel.Primitives.dll
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\System.ComponentModel.TypeConverter.dll
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\System.Runtime.Serialization.Formatters.dll
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\obj\x86\Debug\FxResources.System.ComponentModel.Primitives.SR.resw
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\obj\x86\Debug\FxResources.System.ComponentModel.TypeConverter.SR.resw
+C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\obj\x86\Debug\FxResources.System.Runtime.Serialization.Formatters.SR.resw

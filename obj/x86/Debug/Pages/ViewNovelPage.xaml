@@ -8,9 +8,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:ConnectionId='1' Background="{ThemeResource SystemControlBackgroundAltHighBrush}"                       >
+    <Grid x:ConnectionId='1' Background="{ThemeResource SystemControlBackgroundAltHighBrush}"                     >
         <ProgressRing x:ConnectionId='2' x:Name="LoadingIndicator"/>
-        <WebView x:ConnectionId='3' x:Name="wpContent" />
+        <FlipView x:ConnectionId='3' x:Name="flView"/>
     </Grid>
 </Page>
 

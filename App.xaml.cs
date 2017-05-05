@@ -23,6 +23,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.EntityFrameworkCore;
 
 using LMS_Project.Data;
+using Newtonsoft.Json;
 
 namespace LMS_Project
 {
@@ -38,7 +39,7 @@ namespace LMS_Project
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            this.Suspending += OnSuspendingAsync;
 
             using (var db = new DataManager())
             {
@@ -118,31 +119,33 @@ namespace LMS_Project
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspendingAsync(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            _store.Add("timestamp", DateTime.Now);
-            await SaveStateAsync();
-            deferral.Complete();
-        }
-        private Dictionary<string, object> _store = new Dictionary<string, object>();
-        private readonly string _saveFileName = "store.xml";
-
-        private async Task SaveStateAsync()
-        {
-            var ms = new MemoryStream();
-            var serializer = new DataContractSerializer(typeof(Dictionary<string, object>));
-            serializer.WriteObject(ms, _store);
-
-            var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(_saveFileName, CreationCollisionOption.ReplaceExisting);
-
-            using (var fs = await file.OpenStreamForWriteAsync())
+            if (MainPage.contentFrame.Content.GetType() == typeof(Pages.ViewNovelPage))
             {
-                //because we have written to the stream, set the position back to start
-                ms.Seek(0, SeekOrigin.Begin);
-                await ms.CopyToAsync(fs);
-                await fs.FlushAsync();
+                if (MainPage.CurrentChapter != null)
+                {
+                    StorageFolder folder = ApplicationData.Current.LocalFolder;
+                    StorageFile jsonFile = await folder.CreateFileAsync("currentChapter.txt", CreationCollisionOption.ReplaceExisting);
+                    var json = JsonConvert.SerializeObject(MainPage.CurrentChapter);
+                    await Windows.Storage.FileIO.WriteTextAsync(jsonFile, json);
+                }
             }
+            else
+            {
+                try
+                {
+                    StorageFolder folder = ApplicationData.Current.LocalFolder;
+                    StorageFile jsonFile = await folder.GetFileAsync("currentChapter.txt");
+                    await jsonFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                }
+                catch
+                {
+
+                }
+            }
+            deferral.Complete();
         }
     }
 }

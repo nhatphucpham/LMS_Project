@@ -47,7 +47,6 @@
       <RootProperty Name="Margin" />
       <RootProperty Name="RowDefinitions" />
       <RootEvent Name="Loaded" />
-      <RootEvent Name="Loading" />
       <RootMethod Name="GetColumn" />
       <RootMethod Name="SetColumn" />
       <RootMethod Name="GetRow" />
@@ -97,7 +96,7 @@
       <RootEvent Name="Click" />
     </RootType>
     <RootType FullName="LMS_Project.Pages.HomePage" />
-    <RootType FullName="Windows.UI.Xaml.Controls.WebView" />
+    <RootType FullName="Windows.UI.Xaml.Controls.FlipView" />
     <RootType FullName="LMS_Project.Pages.ViewNovelPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.Image">
       <RootProperty Name="HorizontalAlignment" />
@@ -227,7 +226,7 @@
       <RootProperty Name="Pane" />
       <RootProperty Name="Content" />
       <RootEvent Name="SizeChanged" />
-      <RootEvent Name="Loaded" />
+      <RootEvent Name="Loading" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="IsItemClickEnabled" />

@@ -25,28 +25,66 @@ namespace LMS_Project.Pages
     public sealed partial class ViewNovelPage : Page
     {
         Chapter chapter;
-        SourceAnalysis model;
+        List<WebView> webViews;
         public ViewNovelPage()
         {
             this.InitializeComponent();
-            if (MainPage.WebSource.Address == "http://www.sublightnovel.com/p/home.html")
-                model = new Sublightnovel();
-            else
-                model = new Valvrareteam();
+            webViews = new List<WebView>();
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             chapter = e.Parameter as Chapter;
+            if (chapter == null)
+            {
+                if(MainPage.CurrentChapter != null)
+                {
+                    chapter = MainPage.CurrentChapter;
+                }
+                else
+                    flView.Items.Add(new TextBlock() { Text = "Cannot see any chapter's history in here!" });
+            }
         }
 
-        private async void Grid_Loading(FrameworkElement sender, object args)
+        private async void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 LoadingIndicator.IsActive = true;
-                chapter = model.GetChapter(chapter.ChapterId);
-                await model.SetContent(chapter.ChapterId);
-                wpContent.NavigateToString(model.StringHtml);
+                if (chapter != null)
+                {
+                    if (NovelPage.model == null)
+                    {
+                        if (MainPage.cbTitle.ItemsSource == null)
+                        {
+                            MainPage.cbTitle.ItemsSource = (new DataManager()).WebSourses.ToList().OrderBy(o => o.WebId);
+                        }
+
+                        if (SourceAnalysis.GetWebSourceOfChapter(chapter.ChapterId).Name == "Sublightnovel")
+                        {
+                            MainPage.cbTitle.SelectedIndex = 0;
+                            NovelPage.model = new Sublightnovel();
+                        }
+                        else
+                        {
+                            MainPage.cbTitle.SelectedIndex = 1;
+                            NovelPage.model = new Valvrareteam();
+                        }
+                        MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+                    }
+
+                    await NovelPage.model.SetContent(chapter.ChapterId);
+
+                    if (SourceAnalysis.GetWebSourceOfChapter(chapter.ChapterId).Name == "Sublightnovel")
+                        MainPage.cbTitle.SelectedIndex = 0;
+                    else
+                        MainPage.cbTitle.SelectedIndex = 1;
+
+                    var webView = new WebView();
+                    MainPage.CurrentChapter = NovelPage.model.GetChapter(chapter.ChapterId);
+                    webView.NavigateToString(NovelPage.model.StringHtml);
+                    webView.IsHitTestVisible = false;
+                    flView.Items.Add(webView);
+                }
             }
             finally
             {

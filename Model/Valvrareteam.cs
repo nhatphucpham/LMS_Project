@@ -72,7 +72,7 @@ namespace LMS_Project.Model
                 if (isNav)
                 {
                     int index = 0;
-                    int leight = 0;
+                    int length = 0;
                     int key = 0;
                     string value = Sourse.Address;
                     if (item.Contains("prev page-numbers"))
@@ -80,9 +80,9 @@ namespace LMS_Project.Model
                     if (item.Contains("<a") || item.Contains("<span"))
                     {
                         index = item.IndexOf("href") + 6;
-                        leight = item.Substring(index).IndexOf("\"");
-                        if (leight > 0)
-                            value = item.Substring(index, leight);
+                        length = item.Substring(index).IndexOf("\"");
+                        if (length > 0)
+                            value = item.Substring(index, length);
                         index = value.IndexOf("page") + 5;
 
                         key = NavLinks.Count + 1;
@@ -139,8 +139,8 @@ namespace LMS_Project.Model
 
                 int index = 0;
                 int index2 = 0;
-                int leight = 0;
-                int leight2 = 0;
+                int length = 0;
+                int length2 = 0;
 
                 for (int i = 0; i < StringHtml.Length; i++)
                 {
@@ -148,8 +148,8 @@ namespace LMS_Project.Model
                     {
                         index = i;
                         if (index2 > 0)
-                            leight2 = i - index2;
-                        string item = StringHtml.Substring(index2, leight2);
+                            length2 = i - index2;
+                        string item = StringHtml.Substring(index2, length2);
 
                         if (item.Trim() != "")
                             SourceAnalysis.m_HTML.Add(item);
@@ -158,16 +158,16 @@ namespace LMS_Project.Model
                     if (StringHtml[i] == '>')
                     {
                         index2 = i + 1;
-                        leight = i - index + 1;
+                        length = i - index + 1;
                         StringHtml = StringHtml.Insert(i + 1, "\n\n");
-                        string item = StringHtml.Substring(index, leight);
+                        string item = StringHtml.Substring(index, length);
                         if (item.Trim() != "")
                             SourceAnalysis.m_HTML.Add(item);
                     }
                 }
 
                 index = -1;
-                leight = -1;
+                length = -1;
                 int ChapterInEpisode = 0;
                 bool SummanyWrite = false;
                 bool chapterWrite = false;
@@ -191,9 +191,12 @@ namespace LMS_Project.Model
                     }
                     if (item.ToLower().Contains("danh sách") || item.Contains("Web Novel") || (item.Contains("Tác Phẩm")&& pre_Item.Contains("span")))
                     {
-                        chapterWrite = true;
-                        pre_Item = item;
-                        continue;
+                        if ((pre_Item.Contains("strong") || SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) - 2].Contains("strong")))
+                        {
+                            chapterWrite = true;
+                            pre_Item = item;
+                            continue;
+                        }
                     }
                     if (SummanyWrite)
                     {
@@ -221,7 +224,7 @@ namespace LMS_Project.Model
                     {
                         if (!item.Contains("<"))
                         {
-                            if(item.ToLower().Contains("TẬP".ToLower()) || item.Contains("Quyển"))
+                            if(item.ToLower().Contains("TẬP".ToLower()) || item.Contains("Quyển") || item.Contains("Web Novel"))
                             {
                                 if ((pre_Item.Contains("strong") || SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) - 2].Contains("strong")))
                                 {
@@ -336,8 +339,8 @@ namespace LMS_Project.Model
                 SourceAnalysis.m_HTML.Clear();
                 int index = 0;
                 int index2 = 0;
-                int leight = 0;
-                int leight2 = 0;
+                int length = 0;
+                int length2 = 0;
 
                 for (int i = 0; i < StringHtml.Length; i++)
                 {
@@ -345,8 +348,8 @@ namespace LMS_Project.Model
                     {
                         index = i;
                         if (index2 > 0)
-                            leight2 = i - index2;
-                        string item = StringHtml.Substring(index2, leight2);
+                            length2 = i - index2;
+                        string item = StringHtml.Substring(index2, length2);
 
                         if (item.Trim() != "")
                             SourceAnalysis.m_HTML.Add(item);
@@ -355,8 +358,8 @@ namespace LMS_Project.Model
                     if (StringHtml[i] == '>')
                     {
                         index2 = i + 1;
-                        leight = i - index + 1;
-                        string item = StringHtml.Substring(index, leight);
+                        length = i - index + 1;
+                        string item = StringHtml.Substring(index, length);
                         if (item.Trim() != "")
                             SourceAnalysis.m_HTML.Add(item);
                     }
@@ -402,6 +405,10 @@ namespace LMS_Project.Model
                 }
 
             }
+
+            StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >");
+            StringHtml = StringHtml.Insert(StringHtml.Count(), "</html>");
+
             return SourceAnalysis.m_HTML;
         }
 
@@ -419,28 +426,28 @@ namespace LMS_Project.Model
             {
                 chapter.Name = TitleLine;
                 int index = AddressLine.IndexOf("href") + 6;
-                int leight = AddressLine.Substring(index).IndexOf("\"");
-                if (index >= 0 && leight > 0)
+                int length = AddressLine.Substring(index).IndexOf("\"");
+                if (index >= 0 && length > 0)
                 {
-                    chapter.WebAddress = AddressLine.Substring(index, leight);
+                    chapter.WebAddress = AddressLine.Substring(index, length);
                 }
             }
             else
             {
                 int index = AddressLine.IndexOf("href") + 6;
-                int leight = AddressLine.Substring(index).IndexOf("\"");
-                if (index >= 0 && leight > 0)
+                int length = AddressLine.Substring(index).IndexOf("\"");
+                if (index >= 0 && length > 0)
                 {
-                    chapter.WebAddress = AddressLine.Substring(index, leight);
+                    chapter.WebAddress = AddressLine.Substring(index, length);
                 }
 
                 string name;
                 index = AddressLine.IndexOf(">") + 1;
-                leight = AddressLine.Substring(index).IndexOf("<");
-                if (leight == -1)
+                length = AddressLine.Substring(index).IndexOf("<");
+                if (length == -1)
                     name = AddressLine.Substring(index);
                 else
-                    name = AddressLine.Substring(index, leight);
+                    name = AddressLine.Substring(index, length);
                 if (name != "")
                     chapter.Name = name;
                 else
@@ -503,11 +510,11 @@ namespace LMS_Project.Model
                         if (item.Contains("<a"))
                         {
                             int index = item.IndexOf("href") + 6;
-                            int leight = item.Substring(index).IndexOf("\"");
-                            string address = item.Substring(index, leight);
+                            int length = item.Substring(index).IndexOf("\"");
+                            string address = item.Substring(index, length);
                             index = item.IndexOf("title") + 7;
-                            leight = item.Substring(index).IndexOf("\"");
-                            string title = item.Substring(index, leight);
+                            length = item.Substring(index).IndexOf("\"");
+                            string title = item.Substring(index, length);
                             if (title.Count() > 20)
                             {
                                 title.Insert(20, "\r\n");
@@ -534,8 +541,8 @@ namespace LMS_Project.Model
                     if (item.Contains("img"))
                     {
                         int index = item.IndexOf("src") + 5;
-                        int leight = item.Substring(index).IndexOf("\"");
-                        novel.ImageUrl = item.Substring(index, leight);
+                        int length = item.Substring(index).IndexOf("\"");
+                        novel.ImageUrl = item.Substring(index, length);
                         if (novel.ImageUrl.Contains("/no-avatar.png"))
                         {
                             novel.ImageUrl = "ms-appx:///Assets/noimagefound.jpg";

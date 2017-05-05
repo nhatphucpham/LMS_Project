@@ -130,6 +130,9 @@
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Microsoft.VisualBasic\10.0.1\lib\netcore50\Microsoft.VisualBasic.dll">
       <PackagePath>Microsoft.VisualBasic.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Newtonsoft.Json\10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Remotion.Linq\2.1.1\lib\portable-net45+win+wpa81+wp80\Remotion.Linq.dll">
       <PackagePath>Remotion.Linq.dll</PackagePath>
     </AppxPackagedFile>
@@ -243,6 +246,12 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.ComponentModel.EventBasedAsync\4.0.11\lib\netcore50\System.ComponentModel.EventBasedAsync.dll">
       <PackagePath>System.ComponentModel.EventBasedAsync.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.ComponentModel.Primitives\4.3.0\lib\netstandard1.0\System.ComponentModel.Primitives.dll">
+      <PackagePath>System.ComponentModel.Primitives.dll</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.ComponentModel.TypeConverter\4.3.0\lib\netstandard1.0\System.ComponentModel.TypeConverter.dll">
+      <PackagePath>System.ComponentModel.TypeConverter.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Data.Common\4.3.0\lib\netstandard1.2\System.Data.Common.dll">
       <PackagePath>System.Data.Common.dll</PackagePath>
@@ -364,10 +373,13 @@
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Numerics\4.3.0\lib\netcore50\System.Runtime.Numerics.dll">
       <PackagePath>System.Runtime.Numerics.dll</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Formatters\4.3.0\lib\netstandard1.4\System.Runtime.Serialization.Formatters.dll">
+      <PackagePath>System.Runtime.Serialization.Formatters.dll</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Json\4.0.2\lib\netcore50\System.Runtime.Serialization.Json.dll">
       <PackagePath>System.Runtime.Serialization.Json.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Primitives\4.1.1\lib\netcore50\System.Runtime.Serialization.Primitives.dll">
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Primitives\4.3.0\lib\netcore50\System.Runtime.Serialization.Primitives.dll">
       <PackagePath>System.Runtime.Serialization.Primitives.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Xml\4.1.1\lib\netcore50\System.Runtime.Serialization.Xml.dll">
@@ -445,7 +457,7 @@
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XDocument\4.3.0\lib\netcore50\System.Xml.XDocument.dll">
       <PackagePath>System.Xml.XDocument.dll</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlDocument\4.0.1\lib\netstandard1.3\System.Xml.XmlDocument.dll">
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlDocument\4.3.0\lib\netstandard1.3\System.Xml.XmlDocument.dll">
       <PackagePath>System.Xml.XmlDocument.dll</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlSerializer\4.0.11\lib\netcore50\System.Xml.XmlSerializer.dll">

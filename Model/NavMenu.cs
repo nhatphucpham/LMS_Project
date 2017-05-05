@@ -16,7 +16,8 @@ namespace LMS_Project.Model
             BackgroundColor = "#FF2B2B2B";
             MenuItems = new List<NavItem>() {
                 new NavItem(0, "\xE80F","Trang Chủ", typeof(HomePage)),
-                new NavItem(1, "\xE8F1","Tất Cả", typeof(NovelPage))
+                new NavItem(1, "\xE8F1","Tất Cả", typeof(NovelPage)),
+                new NavItem(2, "\xE81C", "Gần Đây", typeof(ViewNovelPage))
             };
         }
         public int GetIndex(Type Page)

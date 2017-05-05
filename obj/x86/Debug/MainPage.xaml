@@ -136,7 +136,7 @@
         </Style>
     </Page.Resources>
 
-    <SplitView x:ConnectionId='1' x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150"                                                                  >
+    <SplitView x:ConnectionId='1' x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150"                                                                    >
         <SplitView.Pane>
             <Grid x:ConnectionId='2' x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">

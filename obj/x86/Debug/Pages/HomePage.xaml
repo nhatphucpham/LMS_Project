@@ -7,13 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid x:ConnectionId='1' Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"                     >
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:ConnectionId='1' Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sublightnovel" FontSize="20"                     />
-        <Button x:ConnectionId='2' Margin="10" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Valvrareteam" FontSize="20"                     />
+        <Button x:ConnectionId='2' Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sublightnovel" FontSize="20"                     />
+        <Button x:ConnectionId='3' Margin="10" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Valvrareteam" FontSize="20"                     />
     </Grid>
 </Page>
 

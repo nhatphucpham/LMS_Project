@@ -241,6 +241,17 @@ namespace LMS_Project.Model
             }
         }
 
+        public static WebSource GetWebSourceOfChapter(int id)
+        {
+            using (var context = new DataManager())
+            {
+                var eDetail = context.EpisodeDetails.Single(s => s.ChapterId == id);
+                var nDetai = context.NovelDetails.Single(s => s.EpisodeId == eDetail.EpisodeId);
+                var wDetail = context.WebDetails.Single(s => s.NovelId == nDetai.NovelId);
+                return context.WebSourses.Single(s => s.WebId == wDetail.WebId);
+            }
+        }
+
         abstract protected Chapter GetChapterFromHtmlLine(string AddressLine, string TitleLine = "");
 
         abstract public Task<List<string>> SetContent(int id);

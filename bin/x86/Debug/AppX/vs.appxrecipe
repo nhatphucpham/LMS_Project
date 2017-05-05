@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-05T10:43:16.020</Modified>
+      <Modified>2017-05-05T15:30:39.298</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\LMS_Project.exe">
       <PackagePath>entrypoint\LMS_Project.exe</PackagePath>
-      <Modified>2017-05-05T10:43:15.709</Modified>
+      <Modified>2017-05-05T15:30:38.963</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Microsoft.AspNetCore.Hosting.Abstractions\1.1.1\lib\netstandard1.3\Microsoft.AspNetCore.Hosting.Abstractions.dll">
       <PackagePath>Microsoft.AspNetCore.Hosting.Abstractions.dll</PackagePath>
@@ -174,6 +174,10 @@
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Microsoft.VisualBasic\10.0.1\lib\netcore50\Microsoft.VisualBasic.dll">
       <PackagePath>Microsoft.VisualBasic.dll</PackagePath>
       <Modified>2017-04-27T18:51:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Newtonsoft.Json\10.0.2\lib\netstandard1.3\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+      <Modified>2017-04-02T10:46:32.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Remotion.Linq\2.1.1\lib\portable-net45+win+wpa81+wp80\Remotion.Linq.dll">
       <PackagePath>Remotion.Linq.dll</PackagePath>
@@ -326,6 +330,14 @@
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.ComponentModel.EventBasedAsync\4.0.11\lib\netcore50\System.ComponentModel.EventBasedAsync.dll">
       <PackagePath>System.ComponentModel.EventBasedAsync.dll</PackagePath>
       <Modified>2017-04-27T18:51:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.ComponentModel.Primitives\4.3.0\lib\netstandard1.0\System.ComponentModel.Primitives.dll">
+      <PackagePath>System.ComponentModel.Primitives.dll</PackagePath>
+      <Modified>2016-11-04T21:55:40.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.ComponentModel.TypeConverter\4.3.0\lib\netstandard1.0\System.ComponentModel.TypeConverter.dll">
+      <PackagePath>System.ComponentModel.TypeConverter.dll</PackagePath>
+      <Modified>2016-11-04T21:55:44.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Data.Common\4.3.0\lib\netstandard1.2\System.Data.Common.dll">
       <PackagePath>System.Data.Common.dll</PackagePath>
@@ -487,13 +499,17 @@
       <PackagePath>System.Runtime.Numerics.dll</PackagePath>
       <Modified>2016-11-04T21:57:00.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Formatters\4.3.0\lib\netstandard1.4\System.Runtime.Serialization.Formatters.dll">
+      <PackagePath>System.Runtime.Serialization.Formatters.dll</PackagePath>
+      <Modified>2016-11-04T21:56:58.000</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Json\4.0.2\lib\netcore50\System.Runtime.Serialization.Json.dll">
       <PackagePath>System.Runtime.Serialization.Json.dll</PackagePath>
       <Modified>2017-04-27T18:51:16.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Primitives\4.1.1\lib\netcore50\System.Runtime.Serialization.Primitives.dll">
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Primitives\4.3.0\lib\netcore50\System.Runtime.Serialization.Primitives.dll">
       <PackagePath>System.Runtime.Serialization.Primitives.dll</PackagePath>
-      <Modified>2016-06-11T16:14:32.000</Modified>
+      <Modified>2016-11-04T21:57:02.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Runtime.Serialization.Xml\4.1.1\lib\netcore50\System.Runtime.Serialization.Xml.dll">
       <PackagePath>System.Runtime.Serialization.Xml.dll</PackagePath>
@@ -595,9 +611,9 @@
       <PackagePath>System.Xml.XDocument.dll</PackagePath>
       <Modified>2016-11-04T21:57:34.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlDocument\4.0.1\lib\netstandard1.3\System.Xml.XmlDocument.dll">
+    <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlDocument\4.3.0\lib\netstandard1.3\System.Xml.XmlDocument.dll">
       <PackagePath>System.Xml.XmlDocument.dll</PackagePath>
-      <Modified>2017-04-27T18:51:16.000</Modified>
+      <Modified>2016-11-04T21:57:34.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\System.Xml.XmlSerializer\4.0.11\lib\netcore50\System.Xml.XmlSerializer.dll">
       <PackagePath>System.Xml.XmlSerializer.dll</PackagePath>
@@ -647,7 +663,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\LMS_Project.xr.xml">
       <PackagePath>LMS_Project.xr.xml</PackagePath>
-      <Modified>2017-05-05T10:10:41.723</Modified>
+      <Modified>2017-05-05T14:06:34.846</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -656,11 +672,11 @@
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-05T10:10:42.922</Modified>
+      <Modified>2017-05-05T14:06:35.662</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\Core\LMS_Project.exe">
       <PackagePath>LMS_Project.exe</PackagePath>
-      <Modified>2017-05-05T10:43:16.016</Modified>
+      <Modified>2017-05-05T15:30:39.294</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

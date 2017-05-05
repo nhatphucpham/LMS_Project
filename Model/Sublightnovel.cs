@@ -292,23 +292,23 @@ namespace LMS_Project.Model
                     if (tilte)
                     {
                         int index = s.IndexOf(">") + 1;
-                        int leight = s.Substring(index).IndexOf("<");
-                        thisNovel.Title = s.Substring(index, leight);
+                        int length = s.Substring(index).IndexOf("<");
+                        thisNovel.Title = s.Substring(index, length);
                         tilte = false;
                     }
 
                     if (s.Contains("img border=\"0\" src"))
                     {
                         int index = s.IndexOf("\"") + 1;
-                        int leight = s.Substring(index).IndexOf("\"");
-                        thisNovel.ImageUrl = s.Substring(index, leight);
+                        int length = s.Substring(index).IndexOf("\"");
+                        thisNovel.ImageUrl = s.Substring(index, length);
                     }
 
                     if (s.Contains(">Tác giả:"))
                     {
                         int index = s.IndexOf(">") + 10;
-                        int leight = s.Substring(index).IndexOf("<");
-                        thisNovel.Author = s.Substring(index, leight);
+                        int length = s.Substring(index).IndexOf("<");
+                        thisNovel.Author = s.Substring(index, length);
                     }
 
                     if (s.Contains("text-align: justify;"))
@@ -320,8 +320,8 @@ namespace LMS_Project.Model
                     {
                         if (s.Contains("/span"))
                         {
-                            int leight = s.IndexOf("<");
-                            thisNovel.Summany += s.Substring(0, leight);
+                            int length = s.IndexOf("<");
+                            thisNovel.Summany += s.Substring(0, length);
                             sumany = false;
                         }
                         else
