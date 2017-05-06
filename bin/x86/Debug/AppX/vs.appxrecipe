@@ -19,7 +19,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>65B36066EA39F65416246A2FAB387F72D130AF398C0E938E2DA9DBDA661F6766</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>E7078CF8DB93B0F4FFAFB4D2B1948C4EF1460537E59DA846B58982C70EE54755</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>559775ac-5e3d-4a3b-96ee-26729844446e_1.0.0.0_x86__zmrbqgrpxpa6m</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>559775ac-5e3d-4a3b-96ee-26729844446e_zmrbqgrpxpa6m!App</RegisteredUserModeAppID>
     <RegisteredPackageID>559775ac-5e3d-4a3b-96ee-26729844446e</RegisteredPackageID>
@@ -31,13 +31,13 @@
     <AppXManifest Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-05T15:30:39.298</Modified>
+      <Modified>2017-05-06T04:42:49.928</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\LMS_Project.exe">
       <PackagePath>entrypoint\LMS_Project.exe</PackagePath>
-      <Modified>2017-05-05T15:30:38.963</Modified>
+      <Modified>2017-05-06T04:42:49.007</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\.nuget\packages\Microsoft.AspNetCore.Hosting.Abstractions\1.1.1\lib\netstandard1.3\Microsoft.AspNetCore.Hosting.Abstractions.dll">
       <PackagePath>Microsoft.AspNetCore.Hosting.Abstractions.dll</PackagePath>
@@ -623,9 +623,135 @@
       <PackagePath>Assets\noimagefound.jpg</PackagePath>
       <Modified>2017-05-03T11:09:08.954</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2017-04-27T18:51:16.000</Modified>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SmallTile.scale-100.png">
+      <PackagePath>Assets\SmallTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.392</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SmallTile.scale-125.png">
+      <PackagePath>Assets\SmallTile.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.401</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SmallTile.scale-150.png">
+      <PackagePath>Assets\SmallTile.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.413</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SmallTile.scale-200.png">
+      <PackagePath>Assets\SmallTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.423</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SmallTile.scale-400.png">
+      <PackagePath>Assets\SmallTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.435</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.651</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SplashScreen.scale-125.png">
+      <PackagePath>Assets\SplashScreen.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.663</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SplashScreen.scale-150.png">
+      <PackagePath>Assets\SplashScreen.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.677</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SplashScreen.scale-400.png">
+      <PackagePath>Assets\SplashScreen.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.729</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square150x150Logo.scale-100.png">
+      <PackagePath>Assets\Square150x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.446</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square150x150Logo.scale-125.png">
+      <PackagePath>Assets\Square150x150Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.456</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square150x150Logo.scale-150.png">
+      <PackagePath>Assets\Square150x150Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.466</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square150x150Logo.scale-400.png">
+      <PackagePath>Assets\Square150x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.493</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.602</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.641</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.620</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.629</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.scale-100.png">
+      <PackagePath>Assets\Square44x44Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.504</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.scale-125.png">
+      <PackagePath>Assets\Square44x44Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.513</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.scale-150.png">
+      <PackagePath>Assets\Square44x44Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.523</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.scale-400.png">
+      <PackagePath>Assets\Square44x44Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.542</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.551</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.targetsize-24.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.561</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.593</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.571</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-05-06T04:38:33.580</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
@@ -634,22 +760,22 @@
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-04-27T18:51:16.000</Modified>
+      <Modified>2017-05-06T04:38:33.693</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-04-27T18:51:16.000</Modified>
+      <Modified>2017-05-06T04:38:33.477</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-04-27T18:51:16.000</Modified>
+      <Modified>2017-05-06T04:38:33.532</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-04-27T18:51:16.000</Modified>
+      <Modified>2017-05-06T04:38:33.611</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
@@ -659,6 +785,10 @@
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2017-04-27T18:51:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
       <Modified>2017-04-27T18:51:16.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\LMS_Project.xr.xml">
@@ -672,11 +802,11 @@
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-05T14:06:35.662</Modified>
+      <Modified>2017-05-06T04:42:49.580</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\bin\x86\Debug\Core\LMS_Project.exe">
       <PackagePath>LMS_Project.exe</PackagePath>
-      <Modified>2017-05-05T15:30:39.294</Modified>
+      <Modified>2017-05-06T04:42:49.923</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace LMS_Project.Pages
             Frame.Navigate(typeof(NovelPage));
         }
 
-        private async void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
         }
     }

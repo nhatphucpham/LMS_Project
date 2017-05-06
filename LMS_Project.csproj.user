@@ -8,4 +8,17 @@
     <DeviceId>30F105C9-681E-420b-A277-7C086EAD8A4E</DeviceId>
     <UseEmulator>true</UseEmulator>
   </PropertyGroup>
+  <PropertyGroup>
+    <MediumTileSource>C:\Users\Mantis\Desktop\logo.png</MediumTileSource>
+    <SmallTileSource>C:\Users\Mantis\Desktop\logo.png</SmallTileSource>
+    <Source>C:\Users\Mantis\Desktop\logo.png</Source>
+    <AppIconSource>C:\Users\Mantis\Desktop\logo.png</AppIconSource>
+    <SplashScreenSource>C:\Users\Mantis\Desktop\logo.png</SplashScreenSource>
+    <AppxPackageIsForStore>False</AppxPackageIsForStore>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <WideTileSource>C:\Users\Mantis\Desktop\logo.png</WideTileSource>
+    <LargeTileSource>C:\Users\Mantis\Desktop\logo.png</LargeTileSource>
+  </PropertyGroup>
 </Project>

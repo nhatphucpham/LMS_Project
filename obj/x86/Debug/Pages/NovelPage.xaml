@@ -10,7 +10,7 @@
 
     <Page.Resources>
         <DataTemplate                         x:Key="NovelsDataTemplate">
-            <Grid x:ConnectionId='1' Width="240" Height="280" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+            <Grid x:ConnectionId='1' Width="240" Height="280" Background="{ThemeResource SystemControlBackgroundBaseMediumBrush}">
                 <Image x:ConnectionId='2' HorizontalAlignment="Center"                            VerticalAlignment="Center" Stretch="Fill"            />
                 <ProgressRing x:Name="LoadingImage"></ProgressRing>
                 <StackPanel Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Padding="10,0">
