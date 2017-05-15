@@ -43,7 +43,7 @@ namespace LMS_Project
             var value = localSettings.Values["isDarkMode"];
             if(value==null)
             {
-                value = localSettings.Values["isDarkMode"] = true;
+                value = localSettings.Values["isDarkMode"] = false;
             }
             if (value.ToString() == "true")
             {
