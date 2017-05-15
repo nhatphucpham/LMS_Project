@@ -24,7 +24,7 @@
         <GridView x:Name="MainGridView"
                   ItemsSource="{Binding}"
                   ItemTemplate="{StaticResource ChapterDataTemplate}" 
-                  IsItemClickEnabled="true"
+                  IsItemClickEnabled="true"             
                   ItemClick="MainGridView_ItemClick">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>

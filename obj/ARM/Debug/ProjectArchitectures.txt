@@ -1,1 +1,1 @@
-C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\LMS_Project.csproj;arm
+C:\Users\long.nh\Documents\LMS_Project\LMS_Project.csproj;arm

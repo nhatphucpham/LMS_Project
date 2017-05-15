@@ -21,4 +21,7 @@
     <WideTileSource>C:\Users\Mantis\Desktop\logo.png</WideTileSource>
     <LargeTileSource>C:\Users\Mantis\Desktop\logo.png</LargeTileSource>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <UseSimulator>false</UseSimulator>
+  </PropertyGroup>
 </Project>

@@ -7,12 +7,20 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="Grid_Loaded">
+    <Grid  Loaded="Grid_Loaded">
+        <Grid.Background>
+            <ImageBrush Stretch="None" ImageSource="/Assets/background.jpg" AlignmentY="Top" AlignmentX="Center"/>
+        </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Sublightnovel" FontSize="20" Click="Button_Click"/>
-        <Button Margin="10" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="Valvrareteam" FontSize="20" Click="Button_Click"/>
+
+        <Button x:Name="Sublightnovel" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Click="Button_Click" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Padding="-4" >
+            <Image Source="/Assets/border1.png" />
+        </Button>
+        <Button x:Name="Valvrareteam" Margin="10" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"   Click="Button_Click"  Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Padding="-4">
+            <Image Source="/Assets/border2.png" />
+        </Button>
     </Grid>
 </Page>

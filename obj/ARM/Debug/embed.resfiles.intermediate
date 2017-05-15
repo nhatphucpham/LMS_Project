@@ -1,5 +1,7 @@
 App.xbf
 MainPage.xbf
-Pages\AllChapterPage.xbf
+Pages\ChapterPage.xbf
 Pages\EpisodePage.xbf
 Pages\HomePage.xbf
+Pages\NovelPage.xbf
+Pages\ViewNovelPage.xbf

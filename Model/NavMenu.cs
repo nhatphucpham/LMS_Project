@@ -17,7 +17,8 @@ namespace LMS_Project.Model
             MenuItems = new List<NavItem>() {
                 new NavItem(0, "\xE80F","Trang Chủ", typeof(HomePage)),
                 new NavItem(1, "\xE8F1","Tất Cả", typeof(NovelPage)),
-                new NavItem(2, "\xE81C", "Gần Đây", typeof(ViewNovelPage))
+                new NavItem(2, "\xE81C", "Gần Đây", typeof(ViewNovelPage)),
+                new NavItem(3, "\xE115", "Cài đặt", typeof(Setting))
             };
         }
         public int GetIndex(Type Page)

@@ -31,7 +31,7 @@ namespace LMS_Project.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.cbTitle.SelectedIndex = (new DataManager()).WebSourses.Single(s => s.Name == (sender as Button).Content.ToString()).WebId - 1;
+            MainPage.cbTitle.SelectedIndex = (new DataManager()).WebSourses.Single(s => s.Name == (sender as Button).Name.ToString()).WebId - 1;
             Frame.Navigate(typeof(NovelPage));
         }
 

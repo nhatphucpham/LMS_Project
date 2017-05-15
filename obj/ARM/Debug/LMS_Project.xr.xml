@@ -20,33 +20,53 @@
       <RootProperty Name="Width" />
       <RootProperty Name="Padding" />
       <RootProperty Name="Children" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Orientation" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
       <RootProperty Name="FontSize" />
       <RootProperty Name="Text" />
       <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="Width" />
-      <RootProperty Name="FontFamily" />
+      <RootProperty Name="TextWrapping" />
+      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Foreground" />
-      <RootProperty Name="Margin" />
       <RootProperty Name="TextAlignment" />
-      <RootEvent Name="Loaded" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Width" />
     </RootType>
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.BindExtension" />
     <RootType FullName="Windows.UI.Xaml.Controls.Grid">
-      <RootProperty Name="Children" />
       <RootProperty Name="Background" />
+      <RootProperty Name="Children" />
+      <RootProperty Name="ColumnDefinitions" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Padding" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="RowDefinitions" />
+      <RootEvent Name="Loaded" />
+      <RootMethod Name="GetColumn" />
+      <RootMethod Name="SetColumn" />
+      <RootMethod Name="GetRow" />
+      <RootMethod Name="SetRow" />
     </RootType>
+    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ProgressRing" />
     <RootType FullName="Windows.UI.Xaml.Controls.GridView">
+      <RootProperty Name="ItemsSource" />
       <RootProperty Name="ItemTemplate" />
       <RootProperty Name="IsItemClickEnabled" />
       <RootProperty Name="ItemsPanel" />
-      <RootProperty Name="ItemsSource" />
-      <RootProperty Name="HorizontalContentAlignment" />
-      <RootProperty Name="VerticalContentAlignment" />
+      <RootProperty Name="Padding" />
+      <RootProperty Name="ShowsScrollingPlaceholders" />
+      <RootProperty Name="ItemContainerStyle" />
       <RootEvent Name="ItemClick" />
+      <RootEvent Name="Loaded" />
+      <RootEvent Name="ContainerContentChanging" />
     </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding" />
     <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.StaticResourceExtension">
       <RootProperty Name="ResourceKey" />
     </RootType>
@@ -56,31 +76,52 @@
     <RootType FullName="Windows.UI.Xaml.Controls.ItemsWrapGrid">
       <RootProperty Name="Orientation" />
     </RootType>
-    <RootType FullName="LMS_Project.Pages.AllChapterPage" />
-    <RootType FullName="Microsoft.Xaml.DirectUI.ProxyTypes.ThemeResourceExtension" />
+    <RootType FullName="LMS_Project.Pages.ChapterPage" />
     <RootType FullName="LMS_Project.Pages.EpisodePage" />
-    <RootType FullName="Windows.UI.Xaml.Controls.Image">
-      <RootProperty Name="Source" />
-      <RootProperty Name="Width" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition" />
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Margin" />
       <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
-    </RootType>
-    <RootType FullName="LMS_Project.Pages.HomePage" />
-    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Content" />
+      <RootProperty Name="FontSize" />
       <RootProperty Name="Foreground" />
       <RootProperty Name="FontFamily" />
-      <RootProperty Name="Content" />
       <RootProperty Name="Height" />
       <RootProperty Name="Width" />
       <RootProperty Name="Background" />
-      <RootProperty Name="VerticalAlignment" />
       <RootProperty Name="Style" />
       <RootProperty Name="Padding" />
-      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="HorizontalContentAlignment" />
-      <RootProperty Name="Margin" />
       <RootEvent Name="Click" />
     </RootType>
+    <RootType FullName="LMS_Project.Pages.HomePage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.FlipView" />
+    <RootType FullName="LMS_Project.Pages.ViewNovelPage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.Image">
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Source" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Stretch" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.GridViewItem" />
+    <RootType FullName="Windows.UI.Xaml.FrameworkElement">
+      <RootProperty Name="Margin" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="FocusVisualMargin" />
+      <RootProperty Name="MinWidth" />
+      <RootProperty Name="MinHeight" />
+      <RootProperty Name="FocusVisualPrimaryBrush" />
+      <RootProperty Name="FocusVisualPrimaryThickness" />
+      <RootProperty Name="FocusVisualSecondaryBrush" />
+      <RootProperty Name="FocusVisualSecondaryThickness" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Setter">
+      <RootProperty Name="Property" />
+      <RootProperty Name="Value" />
+    </RootType>
+    <RootType FullName="LMS_Project.Pages.NovelPage" />
     <RootType FullName="Windows.UI.Xaml.Controls.Control">
       <RootProperty Name="Background" />
       <RootProperty Name="Foreground" />
@@ -98,25 +139,10 @@
       <RootMethod Name="GetIsTemplateFocusTarget" />
       <RootMethod Name="SetIsTemplateFocusTarget" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.FrameworkElement">
-      <RootProperty Name="HorizontalAlignment" />
-      <RootProperty Name="VerticalAlignment" />
-      <RootProperty Name="FocusVisualMargin" />
-      <RootProperty Name="MinWidth" />
-      <RootProperty Name="MinHeight" />
-      <RootProperty Name="FocusVisualPrimaryBrush" />
-      <RootProperty Name="FocusVisualPrimaryThickness" />
-      <RootProperty Name="FocusVisualSecondaryBrush" />
-      <RootProperty Name="FocusVisualSecondaryThickness" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListViewItem" />
     <RootType FullName="Windows.UI.Xaml.UIElement">
       <RootProperty Name="IsHoldingEnabled" />
       <RootProperty Name="AllowDrop" />
-    </RootType>
-    <RootType FullName="Windows.UI.Xaml.Setter">
-      <RootProperty Name="Property" />
-      <RootProperty Name="Value" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ControlTemplate">
       <RootProperty Name="TargetType" />
@@ -200,6 +226,7 @@
       <RootProperty Name="Pane" />
       <RootProperty Name="Content" />
       <RootEvent Name="SizeChanged" />
+      <RootEvent Name="Loading" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.ListView">
       <RootProperty Name="IsItemClickEnabled" />
@@ -208,9 +235,30 @@
       <RootEvent Name="SelectionChanged" />
       <RootEvent Name="ItemClick" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Data.Binding" />
-    <RootType FullName="Windows.UI.Xaml.Controls.Frame">
-      <RootProperty Name="Visibility" />
+    <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
+      <RootProperty Name="Height" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Canvas">
+      <RootProperty Name="Background" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Children" />
+      <RootEvent Name="SizeChanged" />
+      <RootMethod Name="GetLeft" />
+      <RootMethod Name="SetLeft" />
+      <RootMethod Name="GetTop" />
+      <RootMethod Name="SetTop" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Frame" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
+      <RootProperty Name="Height" />
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="HorizontalContentAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Items" />
+      <RootProperty Name="ItemTemplate" />
+      <RootEvent Name="SelectionChanged" />
     </RootType>
     <RootType FullName="LMS_Project.MainPage" />
   </Roots.RootTypes>

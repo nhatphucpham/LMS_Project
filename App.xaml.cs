@@ -38,6 +38,21 @@ namespace LMS_Project
         /// </summary>
         public App()
         {
+            var applicationData = Windows.Storage.ApplicationData.Current;
+            var localSettings = applicationData.LocalSettings;
+            var value = localSettings.Values["isDarkMode"];
+            if(value==null)
+            {
+                value = localSettings.Values["isDarkMode"] = true;
+            }
+            if (value.ToString() == "true")
+            {
+                this.RequestedTheme = ApplicationTheme.Dark;
+            }
+            else
+            {
+                this.RequestedTheme = ApplicationTheme.Light;
+            }
             this.InitializeComponent();
             this.Suspending += OnSuspendingAsync;
 
@@ -45,6 +60,9 @@ namespace LMS_Project
             {
                 db.Database.Migrate();
             }
+       
+
+           
         }
 
         /// <summary>
@@ -147,5 +165,7 @@ namespace LMS_Project
             }
             deferral.Complete();
         }
+
+
     }
 }
