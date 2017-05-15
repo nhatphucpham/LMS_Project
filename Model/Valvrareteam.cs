@@ -176,8 +176,32 @@ namespace LMS_Project.Model
                 string AddressLine = "";
                 string pre_Item = null;
                 Episode episode = new Episode();
+
+                bool IsEpisode = false;
+                string TypeChapter = "Light Novel";
+                bool isGetType = false;
+
                 foreach (var item in SourceAnalysis.m_HTML)
                 {
+                    if (item.ToLower().Contains("thông báo"))
+                        isGetType = true;
+
+
+                    if (item.ToLower().Remove(0, 2).Trim() == "web novel")
+                    {
+                        TypeChapter = "Web Novel";
+                    }
+
+                    if (item.ToLower().Remove(0, 2).Trim() == "light novel")
+                    {
+                        TypeChapter = "Light Novel";
+                    }
+
+                    if (item.ToLower().Remove(0, 2) == " manga")
+                    {
+                        TypeChapter = "Manga";
+                    }
+
                     string nexxt_item = SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) + 1];
                     if (item.ToLower().Contains("nội dung"))
                     {
@@ -189,12 +213,18 @@ namespace LMS_Project.Model
                     {
                         SummanyWrite = false;
                     }
-                    if (item.ToLower().Contains("danh sách") || item.Contains("Web Novel") || (item.Contains("Tác Phẩm")&& pre_Item.Contains("span")))
+                    if (item.Contains("<strong"))
+                        IsEpisode = true;
+                    if (item.Contains("/strong"))
+                        IsEpisode = false;
+
+                    if (item.ToLower().Contains("danh sách") || item.Contains("Web Novel") || (item.Contains("/ Tác Phẩm")&& pre_Item.Contains("span")))
                     {
-                        if ((pre_Item.Contains("strong") || SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) - 2].Contains("strong")))
+                        if (IsEpisode)
                         {
                             chapterWrite = true;
                             pre_Item = item;
+                            IsEpisode = false;
                             continue;
                         }
                     }
@@ -222,16 +252,23 @@ namespace LMS_Project.Model
                     }
                     if (chapterWrite)
                     {
+
+                        if (item.Contains("<strong"))
+                        {
+                            IsEpisode = true;
+                        }
+
                         if (!item.Contains("<"))
                         {
-                            if(item.ToLower().Contains("TẬP".ToLower()) || item.Contains("Quyển") || item.Contains("Web Novel"))
+
+                            if (item.ToLower().Contains("tập") || item.Contains("Quyển") || item.Contains("Web Novel") || item.ToLower().Contains("arc"))
                             {
-                                if ((pre_Item.Contains("strong") || SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) - 2].Contains("strong")))
+                                if (IsEpisode || pre_Item.Contains("<span style=\"font-size: 24pt; color: #ff0000;\">"))
                                 {
                                     episode = new Episode()
                                     {
                                         EpisodeId = episodes.Count + 1,
-                                        Name = string.Format("{0}: {1}", novel.Title, item.Contains("\n\n") ? item.Remove(0, 2) : item)
+                                        Name = string.Format("{0}\n{1}", TypeChapter, item.Contains("\n\n") ? item.Remove(0, 2) : item)
                                     };
                                     if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
                                     {
@@ -242,18 +279,27 @@ namespace LMS_Project.Model
                                         novelDetails.Add(detail);
                                         NewNovelDetailList.Add(detail);
                                     }
+
                                 }
                             }
+                        
 
-                            if (pre_Item != null && pre_Item.Contains("href"))
+                            if ((pre_Item != null && pre_Item.Contains("href")) || AddressLine  != "")
                             {
                                 TitleLine = item;
                             }
                         }
+
+                        if (item.Contains("/strong"))
+                        {
+                            IsEpisode = false;
+                        }
+
                         if (item.Contains("href"))
                         {
                             AddressLine = item;
                         }
+
                         if (AddressLine != "")
                         {
                             var chapter = GetChapterFromHtmlLine(AddressLine, TitleLine);
@@ -282,9 +328,8 @@ namespace LMS_Project.Model
                             }
                         }
 
-                        if (item.Contains("text/rocketscript"))
-                            chapterWrite = false;
                     }
+
                     pre_Item = item;
                 }
                 if (episodes.Count == BeginEpisodeCount)
@@ -324,7 +369,7 @@ namespace LMS_Project.Model
         }
 
 
-        public override async Task<List<string>> SetContent(int id)
+        public override async Task<List<string>> LoadContent(int id)
         {
             using (var context = new DataManager())
             {

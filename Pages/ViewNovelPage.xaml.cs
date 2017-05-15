@@ -72,7 +72,7 @@ namespace LMS_Project.Pages
                         MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
                     }
 
-                    await NovelPage.model.SetContent(chapter.ChapterId);
+                    await NovelPage.model.LoadContent(chapter.ChapterId);
 
                     if (SourceAnalysis.GetWebSourceOfChapter(chapter.ChapterId).Name == "Sublightnovel")
                         MainPage.cbTitle.SelectedIndex = 0;

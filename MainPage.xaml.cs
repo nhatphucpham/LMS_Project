@@ -123,23 +123,18 @@ namespace LMS_Project
         //        current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
         }
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        { 
-            //if (NovelManager.Instance().UpdateInfomartion())
-            //{
-            //    await new MessageDialog("Updated!").ShowAsync();
-            //}
-            //Frame current = ContentFrame;
-            //if (((NavItem)MenuItem.SelectedItem).Page.GetType() != current.GetType())
-            //    current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (EpisodePage.ChapterSelected != null)
-            //{
-            //    NovelManager.Instance().DeleteChapter(EpisodePage.ChapterSelected);
-            //    EpisodePage.Delete();
-            //}
+            using (var context = new DataManager())
+            {
+                context.Episodes.RemoveRange(context.Episodes);
+                context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
+                context.Chapters.RemoveRange(context.Chapters);
+                context.Novels.RemoveRange(context.Novels);
+                context.NovelDetails.RemoveRange(context.NovelDetails);
+                context.SaveChanges();
+
+                ContentFrame.Navigate(typeof(NovelPage));
+            }
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
@@ -301,15 +296,5 @@ namespace LMS_Project
                 MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
             }
         }
-
-        //public static void SetCbSource()
-        //{
-        //    using (var context = new DataManager())
-        //    {
-        //        MainPage.cbTitle.ItemsSource = context.WebSourses.ToList();
-        //        MainPage.cbTitle.SelectedIndex = 0;
-        //        MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
-        //    }
-        //}
     }
 }

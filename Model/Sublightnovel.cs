@@ -25,7 +25,7 @@ namespace LMS_Project.Model
             }
         }
 
-        public override async Task<List<string>> SetContent(int id)
+        public override async Task<List<string>> LoadContent(int id)
         {
             using (var context = new DataManager())
             {
@@ -49,7 +49,7 @@ namespace LMS_Project.Model
                             Nope1 = false;
                         if (Nope1)
                         {
-                            if (str.Contains("h3"))
+                            if (str.Contains("/h3"))
                                 Nope2 = true;
                             if (Nope2)
                             {
@@ -293,8 +293,19 @@ namespace LMS_Project.Model
                     {
                         int index = s.IndexOf(">") + 1;
                         int length = s.Substring(index).IndexOf("<");
-                        thisNovel.Title = s.Substring(index, length);
-                        tilte = false;
+                        if (length > 0)
+                        {
+                            thisNovel.Title = s.Substring(index, length);
+                            tilte = false;
+                        }
+                        else
+                        {
+                            if(!s.Contains(">"))
+                            {
+                                thisNovel.Title = s;
+                                tilte = false;
+                            }
+                        }
                     }
 
                     if (s.Contains("img border=\"0\" src"))

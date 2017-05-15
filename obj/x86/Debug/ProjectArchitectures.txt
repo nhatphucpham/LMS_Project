@@ -1,1 +1,1 @@
-C:\Users\Mantis\Documents\Visual Studio 2017\Projects\LMS_Project\LMS_Project\LMS_Project.csproj;x86
+C:\Users\Mantis\Documents\GitHub\LMS_Project\LMS_Project.csproj;x86

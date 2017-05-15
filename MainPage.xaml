@@ -177,13 +177,6 @@
                         Background="Transparent" 
                         Click="UpdateButton_Click" VerticalAlignment="Bottom" Style="{StaticResource HumburgerStyle}" Padding="8,4">
                 </Button>
-                <Button x:Name="DeleteButton" 
-                        Foreground="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"
-                        FontFamily="Segoe MDL2 Assets" 
-                        Content="&#xE74D;" 
-                        Height="48"  Width="48"
-                        Background="Transparent" 
-                        Click="DeleteButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource HumburgerStyle}" Padding="3,4,8,4"/>
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>

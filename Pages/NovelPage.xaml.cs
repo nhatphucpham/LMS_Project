@@ -44,37 +44,38 @@ namespace LMS_Project.Pages
             {
                 if (MainPage.WebSource != null)
                 {
-                    if (MainPage.WebSource.Name == "Valvrareteam")
+                    if (MainPage.WebSource.Name == "Valvrareteam" && !(NovelPage.model is Valvrareteam))
                         NovelPage.model = new Valvrareteam();
-                    else
+                    else if(!(NovelPage.model is Sublightnovel))
                         NovelPage.model = new Sublightnovel();
                 }
-
-                LoadingIndicator.IsActive = true;
-                if (SourceAnalysis.CurrentPages == 0 || SourceAnalysis.CurrentPages == 1)
-                    NovelPage.model.Sourse = MainPage.WebSource;
-
-                bool result = await NovelPage.model.LoadHTLM(NovelPage.model.Sourse.Address);
-                if (!result)
+                if (NovelPage.model.GetNovels(MainPage.WebSource.WebId) == null)
                 {
-                    await NovelPage.model.CheckConnection();
-                }
-                if (NovelPage.model.GetNovelFromWebSourse(NovelPage.model.Sourse.Address) == null || NovelPage.model.GetNovelFromWebSourse(NovelPage.model.Sourse.Address).Count == 0)
-                {
-                    NovelPage.model.Sourse = MainPage.WebSource;
-                   
-                    NovelPage.model.LoadNovel();
-                }
-                NovelPage.model.LoadNav();
+                    LoadingIndicator.IsActive = true;
+                    if (SourceAnalysis.CurrentPages == 0 || SourceAnalysis.CurrentPages == 1)
+                        NovelPage.model.Sourse = MainPage.WebSource;
 
-                foreach(var item in SourceAnalysis.NavLinks)
-                {
-                    await NovelPage.model.LoadHTLM(item.Value);
-                    NovelPage.model.LoadNovel();
+                    bool result = await NovelPage.model.LoadHTLM(NovelPage.model.Sourse.Address);
+                    if (!result)
+                    {
+                        await NovelPage.model.CheckConnection();
+                    }
+                    if (NovelPage.model.GetNovelFromWebSourse(NovelPage.model.Sourse.Address) == null || NovelPage.model.GetNovelFromWebSourse(NovelPage.model.Sourse.Address).Count == 0)
+                    {
+                        NovelPage.model.Sourse = MainPage.WebSource;
+
+                        NovelPage.model.LoadNovel();
+                    }
+                    NovelPage.model.LoadNav();
+
+                    foreach (var item in SourceAnalysis.NavLinks)
+                    {
+                        await NovelPage.model.LoadHTLM(item.Value);
+                        NovelPage.model.LoadNovel();
+                    }
+
                 }
-
-                MainGridView.ItemsSource = NovelPage.model.GetNovelFromWebSourse(MainPage.WebSource.Address);
-
+                MainGridView.ItemsSource = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
             }
             finally
             {
@@ -91,9 +92,7 @@ namespace LMS_Project.Pages
             
             // It's phase 1, so show this item's subtitle.
             var templateRoot = args.ItemContainer.ContentTemplateRoot as Grid;
-            var progressRing = templateRoot.Children[1] as ProgressRing;
-            progressRing.IsActive = true;
-            var childTemplateRoot = templateRoot.Children[2] as StackPanel;
+            var childTemplateRoot = templateRoot.Children[1] as StackPanel;
             var textBlock = childTemplateRoot.Children[0] as TextBlock;
             textBlock.Text = (args.Item as Novel).Title;
             textBlock.Opacity = 1;
@@ -112,13 +111,29 @@ namespace LMS_Project.Pages
             
             // It's phase 0, so this item's title will already be bound and displayed.
             var templateRoot = args.ItemContainer.ContentTemplateRoot as Grid;
-            var progressRing = templateRoot.Children[1] as ProgressRing;
             var image = templateRoot.Children[0] as Image;
             image.Source = new BitmapImage(new Uri((args.Item as Novel).ImageUrl));
             image.Opacity = 1;
-
-            progressRing.IsActive = false;
+            
         }
-        
+
+        private void MainGridView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width > 860)
+            {
+                var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                wrap.ItemWidth = (e.NewSize.Width - 30) / 5;
+            }
+            else if (e.NewSize.Width > 560)
+            {
+                var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                wrap.ItemWidth = (e.NewSize.Width - 30) / 4;
+            }
+            else
+            {
+                var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
+            }
+        }
     }
 }

@@ -152,15 +152,24 @@ namespace LMS_Project
             }
             else
             {
-                try
+                using (var context = new DataManager())
                 {
-                    StorageFolder folder = ApplicationData.Current.LocalFolder;
-                    StorageFile jsonFile = await folder.GetFileAsync("currentChapter.txt");
-                    await jsonFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
-                }
-                catch
-                {
+                    context.Episodes.RemoveRange(context.Episodes);
+                    context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
+                    context.Chapters.RemoveRange(context.Chapters);
+                    context.NovelDetails.RemoveRange(context.NovelDetails);
+                    context.SaveChanges();
 
+                    try
+                    {
+                        StorageFolder folder = ApplicationData.Current.LocalFolder;
+                        StorageFile jsonFile = await folder.GetFileAsync("currentChapter.txt");
+                        await jsonFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                    }
+                    catch
+                    {
+
+                    }
                 }
             }
             deferral.Complete();

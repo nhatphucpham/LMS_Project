@@ -140,7 +140,7 @@
         <SplitView.Pane>
             <Grid x:ConnectionId='2' x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">
-                    <Button x:ConnectionId='5' x:Name="HamburgerButton" 
+                    <Button x:ConnectionId='4' x:Name="HamburgerButton" 
                             FontFamily="Segoe MDL2 Assets" 
                             Content="&#xE700;" 
                             Height="48" 
@@ -151,7 +151,7 @@
                             <StaticResource ResourceKey="HumburgerStyle"/>
                         </Button.Style>
                     </Button>
-                    <ListView x:ConnectionId='6' x:Name="MenuItem" 
+                    <ListView x:ConnectionId='5' x:Name="MenuItem" 
                           IsItemClickEnabled="True"
                                                                        
                                                          ItemContainerStyle="{StaticResource HumburgerListViewItemStyle}">
@@ -177,13 +177,6 @@
                         Background="Transparent" 
                                                    VerticalAlignment="Bottom" Style="{StaticResource HumburgerStyle}" Padding="8,4">
                 </Button>
-                <Button x:ConnectionId='4' x:Name="DeleteButton" 
-                        Foreground="{ThemeResource SystemControlHighlightAltAltMediumHighBrush}"
-                        FontFamily="Segoe MDL2 Assets" 
-                        Content="&#xE74D;" 
-                        Height="48"  Width="48"
-                        Background="Transparent" 
-                                                   VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource HumburgerStyle}" Padding="3,4,8,4"/>
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
@@ -192,8 +185,8 @@
                     <RowDefinition Height="48"/>
                     <RowDefinition Height="593*"/>
                 </Grid.RowDefinitions>
-                <Canvas x:ConnectionId='7' x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0"                                 >
-                    <Button x:ConnectionId='9' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
+                <Canvas x:ConnectionId='6' x:Name="canvas" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Height="48" Margin="-1,0"                                 >
+                    <Button x:ConnectionId='8' x:Name="HeaderButton" HorizontalAlignment="Center" FontFamily="Segoe MDL2 Assets" 
                         Content="&#xE700;" Padding="12,6,12,4" 
                         Background="Transparent" 
                         Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
@@ -202,7 +195,7 @@
                             <StaticResource ResourceKey="HumburgerStyle"/>
                         </Button.Style>
                     </Button>
-                    <ComboBox x:ConnectionId='10' x:Name="cbSourse" 
+                    <ComboBox x:ConnectionId='9' x:Name="cbSourse" 
                               Canvas.Left="55" Canvas.Top="5" 
                               Height="36" 
                               ItemsSource="{Binding}" 
@@ -210,15 +203,15 @@
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"
                                                                           >
-                        <ProgressRing x:ConnectionId='11' x:Name="LoadingIndicator"/>
+                        <ProgressRing x:ConnectionId='10' x:Name="LoadingIndicator"/>
                         <ComboBox.ItemTemplate>
                             <DataTemplate                            >
-                                <TextBlock x:ConnectionId='12'                     />
+                                <TextBlock x:ConnectionId='11'                     />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </Canvas>
-                <Frame x:ConnectionId='8' x:Name="ContentFrame" Grid.Row="1" />
+                <Frame x:ConnectionId='7' x:Name="ContentFrame" Grid.Row="1" />
             </Grid>
         </SplitView.Content>
     </SplitView>

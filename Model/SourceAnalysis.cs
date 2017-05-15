@@ -67,25 +67,6 @@ namespace LMS_Project.Model
             return false;
         }
 
-        public void RemoveEpisode()
-        {
-            using (var context = new DataManager())
-            {
-                if (context.Episodes.Count() > 0)
-                {
-                    var episodes = context.Episodes;
-                    episodes.RemoveRange(episodes);
-                    var chapters = context.Chapters;
-                    chapters.RemoveRange(chapters);
-                    var novelDetails = context.NovelDetails;
-                    novelDetails.RemoveRange(novelDetails);
-                    var episodeDetails = context.EpisodeDetails;
-                    episodeDetails.RemoveRange(episodeDetails);
-                    context.SaveChanges();
-                }
-            }
-        }
-
         public List<Chapter> GetChaptersFromNovel(int NovelId)
         {
             var ChapterList = new List<Chapter>();
@@ -254,7 +235,7 @@ namespace LMS_Project.Model
 
         abstract protected Chapter GetChapterFromHtmlLine(string AddressLine, string TitleLine = "");
 
-        abstract public Task<List<string>> SetContent(int id);
+        abstract public Task<List<string>> LoadContent(int id);
 
         abstract public void LoadEpisode(int NovelId = 1);
 
