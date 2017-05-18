@@ -60,7 +60,6 @@
       <RootProperty Name="ItemContainerStyle" />
       <RootEvent Name="ItemClick" />
       <RootEvent Name="Loaded" />
-      <RootEvent Name="ContainerContentChanging" />
       <RootEvent Name="SizeChanged" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Data.Binding" />

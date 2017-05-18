@@ -131,6 +131,7 @@ namespace LMS_Project
                 context.Chapters.RemoveRange(context.Chapters);
                 context.Novels.RemoveRange(context.Novels);
                 context.NovelDetails.RemoveRange(context.NovelDetails);
+                context.WebDetails.RemoveRange(context.WebDetails);
                 context.SaveChanges();
 
                 ContentFrame.Navigate(typeof(NovelPage));

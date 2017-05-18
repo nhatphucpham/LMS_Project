@@ -22,13 +22,12 @@ namespace LMS_Project.Model
 
         private string MainAdress = @"http://valvrareteam.com/";
 
-        public override void LoadNav()
+        public override async void LoadNav()
         {
             bool isNav = false;
-            Task.Run(async () => {
-                await CheckConnection();
-                await LoadHTLM(Sourse.Address);
-            }).Wait();
+            await CheckConnection();
+            await LoadHTLM(Sourse.Address);
+
             SourceAnalysis.m_HTML.ForEach(m =>
             {
                 if (m.Contains("header"))
@@ -203,7 +202,7 @@ namespace LMS_Project.Model
                     }
 
                     string nexxt_item = SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) + 1];
-                    if (item.ToLower().Contains("nội dung"))
+                    if (item.ToLower().Contains("nội dung") || item.ToLower().Contains("tóm tắt"))
                     {
                         SummanyWrite = true;
                         pre_Item = item;
@@ -241,10 +240,7 @@ namespace LMS_Project.Model
 
                                 if (!item.Contains("<"))
                                 {
-                                    if (pre_Item.Contains("<"))
-                                        novel.Summany += string.Format("\n\n{0}", item.Trim());
-                                    else
-                                        novel.Summany += item;
+                                    novel.Summany += item.Contains("\n")?item.Remove(0, 2):item;
                                 }
                             }
                         }

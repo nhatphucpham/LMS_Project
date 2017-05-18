@@ -46,10 +46,13 @@ namespace LMS_Project.Pages
                 {
                     if (MainPage.WebSource.Name == "Valvrareteam" && !(NovelPage.model is Valvrareteam))
                         NovelPage.model = new Valvrareteam();
-                    else if(!(NovelPage.model is Sublightnovel))
+                    else if(MainPage.WebSource.Name == "Sublightnovel" && !(NovelPage.model is Sublightnovel))
                         NovelPage.model = new Sublightnovel();
                 }
-                if (NovelPage.model.GetNovels(MainPage.WebSource.WebId) == null)
+
+                var Novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
+
+                if (Novels == null || Novels.Count == 0)
                 {
                     LoadingIndicator.IsActive = true;
                     if (SourceAnalysis.CurrentPages == 0 || SourceAnalysis.CurrentPages == 1)
@@ -60,12 +63,10 @@ namespace LMS_Project.Pages
                     {
                         await NovelPage.model.CheckConnection();
                     }
-                    if (NovelPage.model.GetNovelFromWebSourse(NovelPage.model.Sourse.Address) == null || NovelPage.model.GetNovelFromWebSourse(NovelPage.model.Sourse.Address).Count == 0)
-                    {
-                        NovelPage.model.Sourse = MainPage.WebSource;
+                    NovelPage.model.Sourse = MainPage.WebSource;
 
-                        NovelPage.model.LoadNovel();
-                    }
+                    NovelPage.model.LoadNovel();
+
                     NovelPage.model.LoadNav();
 
                     foreach (var item in SourceAnalysis.NavLinks)
@@ -75,46 +76,13 @@ namespace LMS_Project.Pages
                     }
 
                 }
-                MainGridView.ItemsSource = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
+                Novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
+                MainGridView.ItemsSource = Novels;
             }
             finally
             {
                 LoadingIndicator.IsActive = false;
             }
-        }
-
-        private void MainGridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            if (args.Phase != 0)
-            {
-                throw new System.Exception("We should be in phase 0, but we are not.");
-            }
-            
-            // It's phase 1, so show this item's subtitle.
-            var templateRoot = args.ItemContainer.ContentTemplateRoot as Grid;
-            var childTemplateRoot = templateRoot.Children[1] as StackPanel;
-            var textBlock = childTemplateRoot.Children[0] as TextBlock;
-            textBlock.Text = (args.Item as Novel).Title;
-            textBlock.Opacity = 1;
-            
-            args.RegisterUpdateCallback(this.ShowImage);
-
-            args.Handled = true;
-
-        }
-        private void ShowImage(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            if (args.Phase != 1)
-            {
-                throw new System.Exception("We should be in phase 1, but we are not.");
-            }
-            
-            // It's phase 0, so this item's title will already be bound and displayed.
-            var templateRoot = args.ItemContainer.ContentTemplateRoot as Grid;
-            var image = templateRoot.Children[0] as Image;
-            image.Source = new BitmapImage(new Uri((args.Item as Novel).ImageUrl));
-            image.Opacity = 1;
-            
         }
 
         private void MainGridView_SizeChanged(object sender, SizeChangedEventArgs e)

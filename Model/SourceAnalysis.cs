@@ -140,7 +140,14 @@ namespace LMS_Project.Model
             var chapter = new Chapter();
             using (var context = new DataManager())
             {
-                chapter = context.Chapters.Single(b => b.ChapterId == id);
+                try
+                {
+                    chapter = context.Chapters.Single(b => b.ChapterId == id);
+                }
+                catch
+                {
+                    chapter = null;
+                }
             }
             return chapter;
         }
@@ -149,7 +156,14 @@ namespace LMS_Project.Model
             var episode = new Episode();
             using (var context = new DataManager())
             {
-                episode = context.Episodes.Single(b => b.EpisodeId == id);
+                try
+                {
+                    episode = context.Episodes.Single(b => b.EpisodeId == id);
+                }
+                catch
+                {
+                    episode = null;
+                }
             }
             return episode;
         }
@@ -172,7 +186,15 @@ namespace LMS_Project.Model
                 var Novels = context.WebDetails.Where(b => b.WebId == WebId).ToList();
                 foreach (var novel in Novels)
                 {
-                    NovelList.Add(context.Novels.Single(b => b.NovelId == novel.NovelId));
+                    try
+                    {
+                        NovelList.Add(context.Novels.Single(b => b.NovelId == novel.NovelId));
+                    }
+                    catch
+                    {
+                        NovelList = null;
+                        break;
+                    }
                 }
             }
             return NovelList;

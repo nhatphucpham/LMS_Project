@@ -25,7 +25,7 @@
                   ItemTemplate="{StaticResource NovelsDataTemplate}" 
                   IsItemClickEnabled="true"
                   Padding="10"
-                  ItemClick="MainGridView_ItemClick" Loaded="MainGridView_Loaded" ShowsScrollingPlaceholders="True" ContainerContentChanging="MainGridView_ContainerContentChanging" SizeChanged="MainGridView_SizeChanged">
+                  ItemClick="MainGridView_ItemClick" Loaded="MainGridView_Loaded" ShowsScrollingPlaceholders="True" SizeChanged="MainGridView_SizeChanged">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin" Value="0,0,20,20"/>

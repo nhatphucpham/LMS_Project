@@ -25,7 +25,7 @@
                   ItemTemplate="{StaticResource NovelsDataTemplate}" 
                   IsItemClickEnabled="true"
                   Padding="10"
-                                                                                  ShowsScrollingPlaceholders="True"                                                                                                        >
+                                                                                  ShowsScrollingPlaceholders="True"                                       >
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin" Value="0,0,20,20"/>
