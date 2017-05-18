@@ -133,8 +133,10 @@ namespace LMS_Project
                 context.NovelDetails.RemoveRange(context.NovelDetails);
                 context.WebDetails.RemoveRange(context.WebDetails);
                 context.SaveChanges();
-
-                ContentFrame.Navigate(typeof(NovelPage));
+                if(!(ContentFrame.Content is HomePage))
+                {
+                    ContentFrame.Navigate(typeof(NovelPage));
+                }
             }
         }
 
