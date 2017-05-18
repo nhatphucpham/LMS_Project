@@ -1,3 +1,0 @@
-Scale=100
-Scale=125
-Scale=150
