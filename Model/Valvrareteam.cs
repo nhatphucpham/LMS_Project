@@ -22,11 +22,15 @@ namespace LMS_Project.Model
 
         private string MainAdress = @"http://valvrareteam.com/";
 
-        public override async void LoadNav()
+        public override void LoadNav()
         {
             bool isNav = false;
-            await CheckConnection();
-            await LoadHTLM(Sourse.Address);
+            Task.Run(
+                async () =>
+                {
+                    await CheckConnection();
+                    await LoadHTLM(Sourse.Address);
+                });
 
             SourceAnalysis.m_HTML.ForEach(m =>
             {
