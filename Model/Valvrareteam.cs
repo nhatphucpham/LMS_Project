@@ -105,14 +105,6 @@ namespace LMS_Project.Model
             }
         }
 
-        public override void NextPage()
-        {
-            SourceAnalysis.CurrentPages++;
-            Task.Run(async () => await LoadHTLM(SourceAnalysis.NavLinks[CurrentPages])).Wait();
-            LoadNovel();
-
-        }
-
         public override void LoadEpisode(int NovelId)
         {
             using (var context = new DataManager())
@@ -599,13 +591,6 @@ namespace LMS_Project.Model
                 context.WebDetails.AddRange(NewWebDetailList);
                 context.SaveChanges();
             }
-        }
-
-        public override void PreviousPage()
-        {
-            SourceAnalysis.CurrentPages--;
-            Sourse.Address = SourceAnalysis.NavLinks[CurrentPages];
-
         }
     }
 }

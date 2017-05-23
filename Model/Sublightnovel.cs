@@ -358,15 +358,5 @@ namespace LMS_Project.Model
             SourceAnalysis.CurrentPages = 0;
             SourceAnalysis.NavLinks = new Dictionary<int, string>();
         }
-
-        public override void NextPage()
-        {
-            
-        }
-
-        public override void PreviousPage()
-        {
-
-        }
     }
 }

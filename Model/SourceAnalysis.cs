@@ -15,11 +15,18 @@ namespace LMS_Project.Model
     {
         public WebSource Sourse { get; set; }
 
+        /// <summary>
+        /// HTML code by string List
+        /// </summary>
         public static List<string> m_HTML;
 
         public string StringHtml { get; set; }
 
+        /// <summary>
+        /// Link Novels webpages
+        /// </summary>
         public static Dictionary<int, string> NavLinks { get; set; }
+
         public static int CurrentPages { get; set; }
 
         protected List<NovelDetail> novelDetails;
@@ -39,6 +46,11 @@ namespace LMS_Project.Model
             SourceAnalysis.NavLinks = new Dictionary<int, string>();
         }
 
+        /// <summary>
+        /// Load html from Address
+        /// </summary>
+        /// <param name="Address">Web Address</param>
+        /// <returns></returns>
         public async Task<bool> LoadHTLM(string Address)
         {
             List<string> newcode = new List<string>();
@@ -67,6 +79,11 @@ namespace LMS_Project.Model
             return false;
         }
 
+        /// <summary>
+        /// Get Chapters List from Novel ID
+        /// </summary>
+        /// <param name="NovelId"></param>
+        /// <returns></returns>
         public List<Chapter> GetChaptersFromNovel(int NovelId)
         {
             var ChapterList = new List<Chapter>();
@@ -85,6 +102,11 @@ namespace LMS_Project.Model
             return ChapterList;
         }
 
+        /// <summary>
+        /// Get Novels List from Web Address
+        /// </summary>
+        /// <param name="webAddress"></param>
+        /// <returns></returns>
         public List<Novel> GetNovelFromWebSourse(string webAddress)
         {
             var NovelList = new List<Novel>();
@@ -107,6 +129,11 @@ namespace LMS_Project.Model
             return NovelList;
         }
 
+        /// <summary>
+        /// Get Episode From Novel ID
+        /// </summary>
+        /// <param name="NovelId"></param>
+        /// <returns></returns>
         public List<Episode> GetEpisodesFromNovelId(int NovelId)
         {
             var EpisodeList = new List<Episode>();
@@ -121,6 +148,11 @@ namespace LMS_Project.Model
             return EpisodeList;
         }
 
+        /// <summary>
+        /// Get Chapter List from Episode ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<Chapter> GetChaptersFromEpisodeId(int id)
         {
             var chapters_List = new List<Chapter>();
@@ -135,6 +167,12 @@ namespace LMS_Project.Model
             return chapters_List;
         }
 
+
+        /// <summary>
+        /// Get Chapter from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Chapter GetChapter(int id)
         {
             var chapter = new Chapter();
@@ -151,6 +189,12 @@ namespace LMS_Project.Model
             }
             return chapter;
         }
+
+        /// <summary>
+        /// Get Episode from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Episode GetEpisode(int id)
         {
             var episode = new Episode();
@@ -168,6 +212,11 @@ namespace LMS_Project.Model
             return episode;
         }
 
+        /// <summary>
+        /// Get Novel from ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Novel GetNovel(int id)
         {
             var novel = new Novel();
@@ -178,6 +227,12 @@ namespace LMS_Project.Model
             return novel;
         }
 
+
+        /// <summary>
+        /// Get All Novel of Web Id
+        /// </summary>
+        /// <param name="WebId"></param>
+        /// <returns></returns>
         public List<Novel> GetNovels(int WebId)
         {
             var NovelList = new List<Novel>();
@@ -202,6 +257,10 @@ namespace LMS_Project.Model
 
         bool one2Time = false;
 
+        /// <summary>
+        /// Check Internet conection
+        /// </summary>
+        /// <returns></returns>
         public async Task CheckConnection()
         {
             var httpClient = new HttpClient();
@@ -244,6 +303,11 @@ namespace LMS_Project.Model
             }
         }
 
+        /// <summary>
+        /// Get WebSource Of chapter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static WebSource GetWebSourceOfChapter(int id)
         {
             using (var context = new DataManager())
@@ -255,18 +319,36 @@ namespace LMS_Project.Model
             }
         }
 
+        /// <summary>
+        /// Load Chapter 
+        /// </summary>
+        /// <param name="AddressLine"></param>
+        /// <param name="TitleLine"></param>
+        /// <returns></returns>
         abstract protected Chapter GetChapterFromHtmlLine(string AddressLine, string TitleLine = "");
 
+        /// <summary>
+        /// Load Content of chapter
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         abstract public Task<List<string>> LoadContent(int id);
 
+        /// <summary>
+        /// Load Episode of novel
+        /// </summary>
+        /// <param name="NovelId"></param>
         abstract public void LoadEpisode(int NovelId = 1);
 
+        /// <summary>
+        /// Load Novels with main source
+        /// </summary>
         abstract public void LoadNovel();
 
+
+        /// <summary>
+        /// Load all pages of website have novels
+        /// </summary>
         abstract public void LoadNav();
-
-        abstract public void NextPage();
-
-        abstract public void PreviousPage();
     }
 }

@@ -202,7 +202,7 @@
                               HorizontalContentAlignment="Center"
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"
-                              SelectionChanged="CbSourse_SelectionChanged">
+                              SelectionChanged="CbSourse_SelectionChanged" IsHitTestVisible="False" IsEnabled="False" IsTabStop="False">
                         <ProgressRing x:Name="LoadingIndicator"/>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:WebSource">
