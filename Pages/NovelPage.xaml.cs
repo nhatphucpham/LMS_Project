@@ -87,12 +87,12 @@ namespace LMS_Project.Pages
 
         private void MainGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width > 950)
+            if (e.NewSize.Width > 860)
             {
                 var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
-                wrap.ItemWidth = (e.NewSize.Width - 30) / 6;
+                wrap.ItemWidth = (e.NewSize.Width - 30) / 5;
             }
-            else if (e.NewSize.Width > 700)
+            else if (e.NewSize.Width > 560)
             {
                 var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
                 wrap.ItemWidth = (e.NewSize.Width - 30) / 4;
@@ -100,7 +100,7 @@ namespace LMS_Project.Pages
             else
             {
                 var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
-                wrap.ItemWidth = (e.NewSize.Width - 30) / 2;
+                wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
             }
         }
     }
