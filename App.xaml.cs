@@ -92,6 +92,7 @@ namespace LMS_Project
                 
             }
 
+
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
@@ -104,7 +105,6 @@ namespace LMS_Project
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
-
 
             if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
             {

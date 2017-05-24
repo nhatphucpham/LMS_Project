@@ -136,7 +136,7 @@
         </Style>
     </Page.Resources>
 
-    <SplitView x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150" SizeChanged="MySplitView_SizeChanged" Loading="MySplitView_Loading">
+    <SplitView x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150" SizeChanged="MySplitView_SizeChanged" Loading="MySplitView_Loading" LostFocus="MySplitView_LostFocus">
         <SplitView.Pane>
             <Grid x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">

@@ -18,6 +18,7 @@ using Windows.Storage;
 using Windows.System.Profile;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -52,7 +53,7 @@ namespace LMS_Project
             MenuItem.SelectedIndex = 0;
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
-                ShowStatusBar();
+                HideStatusBar();
                 MySplitView.IsPaneOpen = false;
                 HeaderButton.Visibility = Visibility.Visible;
                 MySplitView.DisplayMode = SplitViewDisplayMode.Overlay;
@@ -75,6 +76,18 @@ namespace LMS_Project
             else
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+
+        private async void HideStatusBar()
+        {
+            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
+            {
+                ApplicationView.GetForCurrentView().SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+
+                var statusbar = StatusBar.GetForCurrentView();
+
+                await statusbar.HideAsync();
             }
         }
 
@@ -169,19 +182,6 @@ namespace LMS_Project
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
             HeaderButton.Visibility = Visibility.Collapsed;
-        }
-
-        private async void ShowStatusBar()
-        {
-            if (Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.ViewManagement.StatusBar"))
-            {
-                var statusbar = Windows.UI.ViewManagement.StatusBar.GetForCurrentView();
-                await statusbar.ShowAsync();
-                statusbar.BackgroundColor = (gridPane.Background as SolidColorBrush).Color;
-                statusbar.BackgroundOpacity = 1;
-                statusbar.ForegroundColor = Windows.UI.Colors.White;
-            }
-
         }
 
         private void Canvas_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -297,6 +297,14 @@ namespace LMS_Project
             {
                 LoadingIndicator.IsActive = false;
                 MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+            }
+        }
+
+        private void MySplitView_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if(!MySplitView.IsPaneOpen && HeaderButton.Visibility == Visibility.Collapsed)
+            {
+                HeaderButton.Visibility = Visibility.Visible;
             }
         }
     }
