@@ -26,6 +26,8 @@ namespace LMS_Project.Pages
     {
         Chapter chapter;
         List<WebView> webViews;
+
+        public string Title { get { return chapter.Name; } }
         public ViewNovelPage()
         {
             this.InitializeComponent();

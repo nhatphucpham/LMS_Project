@@ -25,6 +25,8 @@ namespace LMS_Project.Pages
     /// </summary>
     public sealed partial class ChapterPage : Page
     {
+
+        public string Title { get { return episode.Name; } }
         public ChapterPage()
         {
             this.InitializeComponent();
@@ -52,13 +54,22 @@ namespace LMS_Project.Pages
                 LoadingIndicator.IsActive = true;
                 if(episode != null)
                 {
-                    MainGridView.ItemsSource = NovelPage.model.GetChaptersFromEpisodeId(episode.EpisodeId).ToList().OrderBy(o=>o.NumberInEpisode);
+                    var list = NovelPage.model.GetChaptersFromEpisodeId(episode.EpisodeId).ToList().OrderBy(o => o.NumberInEpisode);
+                    MainGridView.ItemsSource = list;
+
+                    if (list== null || list.Count() == 0)
+                        tbMessage.Text = "Không có chương nào hiện tại ở tập này";
                 }
             }
             finally
             {
                 LoadingIndicator.IsActive = false;
             }
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
         }
     }
 }

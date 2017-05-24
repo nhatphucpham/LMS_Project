@@ -142,7 +142,16 @@ namespace LMS_Project.Model
                 var episodes = context.NovelDetails.Where(b => b.NovelId == NovelId).ToList();
                 foreach (var episode in episodes)
                 {
-                    EpisodeList.Add(context.Episodes.Single(b => b.EpisodeId == episode.EpisodeId));
+                    try
+                    {
+                        var value = context.Episodes.Single(b => b.EpisodeId == episode.EpisodeId);
+
+                        EpisodeList.Add(value);
+                    }
+                    catch
+                    {
+                        return null;
+                    }
                 }
             }
             return EpisodeList;

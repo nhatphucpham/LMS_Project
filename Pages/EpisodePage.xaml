@@ -10,33 +10,40 @@
 
     <Page.Resources>
         <DataTemplate x:DataType="data:Episode" x:Key="EpisodeDataTemplate">
-            <RelativePanel HorizontalAlignment="Center" Padding="10">
-                <TextBlock FontSize="18" Text="{x:Bind Name}" HorizontalAlignment="Stretch" TextWrapping="Wrap" TextAlignment="Center" />
-            </RelativePanel>
+            <Grid HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center">
+                <TextBlock FontSize="18" Text="{x:Bind Name}" 
+                           HorizontalAlignment="Center" 
+                           TextWrapping="Wrap" 
+                           TextAlignment="Center" VerticalAlignment="Top" OpticalMarginAlignment="TrimSideBearings" TextTrimming="WordEllipsis" />
+            </Grid>
         </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Loaded="Grid_Loaded">
         <ProgressRing x:Name="LoadingIndicator" Margin="345,0,0,0"></ProgressRing>
-        <Grid x:Name="NovelGrid" HorizontalAlignment="Left" Width="340" Background="{ThemeResource SystemControlHighlightAccentBrush}" PointerPressed="NovelGrid_PointerPressed">
+        <Grid x:Name="NovelGrid" HorizontalAlignment="Left" Width="340" Background="{ThemeResource SystemControlHighlightAltListAccentLowBrush}" PointerPressed="NovelGrid_PointerPressed" Padding="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="213*"/>
                 <RowDefinition Height="107*"/>
             </Grid.RowDefinitions>
-            <Ellipse Width="300" Height="300" Stretch="Uniform" Margin="0,0,0,1.4" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+            <Ellipse Width="300" Height="300" Stretch="Uniform" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" Stroke="{ThemeResource SystemControlForegroundAccentBrush}">
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="{x:Bind ImageUrl}"/>
+                    <ImageBrush ImageSource="{x:Bind ImageUrl}" Stretch="UniformToFill"/>
                 </Ellipse.Fill>
             </Ellipse>
-            <TextBlock Text="{x:Bind Name}" FontSize="25" TextWrapping="Wrap" Foreground="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" Margin="0,4.6,0,0" FontFamily="Segoe Script" Grid.Row="1" TextAlignment="Center"/>
+            <TextBlock Text="{x:Bind Title}" 
+                       FontSize="25" FontFamily="Segoe Script" 
+                       TextWrapping="Wrap" TextAlignment="Center" IsHitTestVisible="False"
+                       Foreground="{ThemeResource SystemControlBackgroundChromeWhiteBrush}" 
+                       Margin="0" Grid.Row="1" TextLineBounds="TrimToCapHeight" LineHeight="2" FontWeight="Bold" />
         </Grid>
         <GridView x:Name="MainGridView"
                   ItemsSource="{Binding}"
                   ItemTemplate="{StaticResource EpisodeDataTemplate}" 
                   IsItemClickEnabled="true"
-                  ItemClick="MainGridView_ItemClick" Margin="345,0,0,0">
+                  ItemClick="MainGridView_ItemClick" Margin="345,0,0,0" SizeChanged="MainGridView_SizeChanged">
             <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
+                <ItemsPanelTemplate >
                     <ItemsWrapGrid Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>

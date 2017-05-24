@@ -136,7 +136,7 @@
         </Style>
     </Page.Resources>
 
-    <SplitView x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150" SizeChanged="MySplitView_SizeChanged" Loading="MySplitView_Loading" LostFocus="MySplitView_LostFocus">
+    <SplitView x:Name="MySplitView" DisplayMode="Inline" IsPaneOpen="False" CompactPaneLength="50" OpenPaneLength="150" SizeChanged="MySplitView_SizeChanged" Loading="MySplitView_Loading">
         <SplitView.Pane>
             <Grid x:Name="gridPane" Background="{ThemeResource SystemControlBackgroundAccentBrush}">
                 <StackPanel Orientation="Vertical">
@@ -175,8 +175,7 @@
                         Content="&#xE72C;" 
                         Height="48"  Width="48"
                         Background="Transparent" 
-                        Click="UpdateButton_Click" VerticalAlignment="Bottom" Style="{StaticResource HumburgerStyle}" Padding="8,4">
-                </Button>
+                        Click="UpdateButton_Click" VerticalAlignment="Bottom" Style="{StaticResource HumburgerStyle}" Padding="8,4"/>
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
@@ -203,7 +202,6 @@
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"
                               SelectionChanged="CbSourse_SelectionChanged" IsHitTestVisible="False" IsEnabled="False" IsTabStop="False">
-                        <ProgressRing x:Name="LoadingIndicator"/>
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:WebSource">
                                 <TextBlock Text="{x:Bind Name}"/>

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -30,8 +31,7 @@ namespace LMS_Project.Pages
         public static SourceAnalysis model;
         public NovelPage()
         {
-            this.InitializeComponent();           
-
+            this.InitializeComponent();
         }
         private void MainGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -87,20 +87,32 @@ namespace LMS_Project.Pages
 
         private void MainGridView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (e.NewSize.Width > 860)
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
                 var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
-                wrap.ItemWidth = (e.NewSize.Width - 30) / 5;
-            }
-            else if (e.NewSize.Width > 560)
-            {
-                var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
-                wrap.ItemWidth = (e.NewSize.Width - 30) / 4;
+                if (DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.Portrait)
+                    wrap.ItemWidth = (e.NewSize.Width - 20) / 2;
+                if (DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.Landscape ||
+                    DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.LandscapeFlipped)
+                    wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
             }
             else
             {
-                var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
-                wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
+                if (e.NewSize.Width > 860)
+                {
+                    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                    wrap.ItemWidth = (e.NewSize.Width - 50) / 5;
+                }
+                else if (e.NewSize.Width > 560)
+                {
+                    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                    wrap.ItemWidth = (e.NewSize.Width - 40) / 4;
+                }
+                else
+                {
+                    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                    wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
+                }
             }
         }
     }

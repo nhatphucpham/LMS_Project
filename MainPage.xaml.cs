@@ -37,22 +37,28 @@ namespace LMS_Project
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        NavMenu Menu;
-        public static Frame contentFrame;
+        NavMenu navMenu;
+
+        public static Frame contentFrameStatic;
         public static ComboBox cbTitle;
         public static WebSource WebSource;
         public static Chapter CurrentChapter;
+        public static ListView Menu;
+
         public MainPage()
         {
             this.InitializeComponent();
             //&#xE700; Hamburger button
-            contentFrame = ContentFrame;
+            contentFrameStatic = ContentFrame;
             cbTitle = cbSourse;
-            Menu = new Model.NavMenu();
-            MenuItem.ItemsSource = Menu.MenuItems;
+            navMenu = new Model.NavMenu();
+            MenuItem.ItemsSource = navMenu.MenuItems;
             MenuItem.SelectedIndex = 0;
+            Menu = MenuItem;
+
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
+                MySplitView.LostFocus += MySplitView_LostFocus;
                 HideStatusBar();
                 MySplitView.IsPaneOpen = false;
                 HeaderButton.Visibility = Visibility.Visible;
@@ -65,11 +71,11 @@ namespace LMS_Project
                 MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
             }
 
-            ContentFrame.Navigated += OnNavigated;
+            contentFrameStatic.Navigated += OnNavigated;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-            if (ContentFrame.CanGoBack && ContentFrame.CurrentSourcePageType != typeof(HomePage))
+            if (contentFrameStatic.CanGoBack && contentFrameStatic.CurrentSourcePageType != typeof(HomePage))
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             }
@@ -116,11 +122,20 @@ namespace LMS_Project
         private void MenuItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (MenuItem.SelectedIndex == -1) { return; }
-            Frame current = ContentFrame;
+            Frame current = contentFrameStatic;
             
             if (!current.GetType().Equals(((NavItem)MenuItem.SelectedItem).Page))
             {
                 current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
+            }
+
+            if(current.Content is HomePage || current.Content is ChapterPage || current.Content is ViewNovelPage)
+            {
+                UpdateButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                UpdateButton.Visibility = Visibility.Visible;
             }
         }
 
@@ -139,29 +154,45 @@ namespace LMS_Project
         {
             using (var context = new DataManager())
             {
-                context.Episodes.RemoveRange(context.Episodes);
-                context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
-                context.Chapters.RemoveRange(context.Chapters);
-                context.Novels.RemoveRange(context.Novels);
-                context.NovelDetails.RemoveRange(context.NovelDetails);
-                context.WebDetails.RemoveRange(context.WebDetails);
-                context.SaveChanges();
-                if(!(ContentFrame.Content is HomePage))
+                if (contentFrameStatic.Content is NovelPage)
                 {
-                    ContentFrame.Navigate(typeof(NovelPage));
+                    context.Episodes.RemoveRange(context.Episodes);
+                    context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
+                    context.Chapters.RemoveRange(context.Chapters);
+                    context.Novels.RemoveRange(context.Novels);
+                    context.NovelDetails.RemoveRange(context.NovelDetails);
+                    context.WebDetails.RemoveRange(context.WebDetails);
+                    context.SaveChanges();
+                    contentFrameStatic.Navigate(typeof(NovelPage));
+                }
+                if(contentFrameStatic.Content is EpisodePage)
+                {
+                    context.NovelDetails.RemoveRange(context.NovelDetails);
+                    context.Episodes.RemoveRange(context.Episodes);
+                    context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
+                    context.Chapters.RemoveRange(context.Chapters);
+                    context.SaveChanges();
+                    contentFrameStatic.Navigate(typeof(EpisodePage), EpisodePage.novel);
                 }
             }
         }
 
         private void OnBackRequested(object sender, BackRequestedEventArgs e)
         {
-            Frame rootFrame = ContentFrame;
+            Frame rootFrame = contentFrameStatic;
 
             if (rootFrame.CanGoBack)
             {
                 e.Handled = true;
                 rootFrame.GoBack();
-                MenuItem.SelectedIndex = Menu.GetIndex(rootFrame.GetType());
+                try
+                {
+                    MenuItem.SelectedIndex = navMenu.GetIndex(rootFrame.GetType()).Value;
+                }
+                catch
+                {
+                    MenuItem.SelectedIndex = MenuItem.SelectedIndex;
+                }
             }
         }
 
@@ -175,6 +206,14 @@ namespace LMS_Project
             else
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+            try
+            {
+                MenuItem.SelectedIndex = navMenu.GetIndex(((Frame)sender).Content.GetType()).Value;
+            }
+            catch 
+            {
+                MenuItem.SelectedIndex = MenuItem.SelectedIndex;
             }
         }
 
@@ -200,8 +239,8 @@ namespace LMS_Project
         private void CbSourse_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
-            if(ContentFrame.Content.GetType() != typeof(HomePage))
-                ContentFrame.Navigate(typeof(NovelPage), MainPage.WebSource);
+            if(contentFrameStatic.Content.GetType() != typeof(HomePage))
+                contentFrameStatic.Navigate(typeof(NovelPage), MainPage.WebSource);
         }
 
         private void AttachProgressAndCompletedHandlers(IBackgroundTaskRegistration task)
@@ -271,7 +310,6 @@ namespace LMS_Project
             await new Sublightnovel().CheckConnection();
             try
             {
-                LoadingIndicator.IsActive = true;
                 using (var context = new DataManager())
                 {
                     WebSource[] sourses =
@@ -295,7 +333,6 @@ namespace LMS_Project
             }
             finally
             {
-                LoadingIndicator.IsActive = false;
                 MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
             }
         }

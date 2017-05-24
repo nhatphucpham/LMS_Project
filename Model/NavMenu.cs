@@ -21,11 +21,14 @@ namespace LMS_Project.Model
                 new NavItem(3, "\xE115", "Cài đặt", typeof(Setting))
             };
         }
-        public int GetIndex(Type Page)
+        public int? GetIndex(Type Page)
         {
-            NavItem item = MenuItems[0];
+            NavItem item = null;
             MenuItems.ForEach(o => { if (o.Page == Page) item = o; });
-            return item.Index;
+            if (item != null)
+                return item.Index;
+            else
+                return null;
         }
     }
 }

@@ -136,6 +136,7 @@ namespace LMS_Project.Model
                 int index2 = 0;
                 int length = 0;
                 int length2 = 0;
+                bool mainContent = false;
 
                 for (int i = 0; i < StringHtml.Length; i++)
                 {
@@ -174,150 +175,106 @@ namespace LMS_Project.Model
 
                 bool IsEpisode = false;
                 string TypeChapter = "Light Novel";
-                bool isGetType = false;
 
                 foreach (var item in SourceAnalysis.m_HTML)
                 {
-                    if (item.ToLower().Contains("thông báo"))
-                        isGetType = true;
-
-
-                    if (item.ToLower().Remove(0, 2).Trim() == "web novel")
+                    if (item.Contains("post-single-content box mark-links entry-content"))
+                        mainContent = true;
+                    if (mainContent)
                     {
-                        TypeChapter = "Web Novel";
-                    }
-
-                    if (item.ToLower().Remove(0, 2).Trim() == "light novel")
-                    {
-                        TypeChapter = "Light Novel";
-                    }
-
-                    if (item.ToLower().Remove(0, 2) == " manga")
-                    {
-                        TypeChapter = "Manga";
-                    }
-
-                    string nexxt_item = SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) + 1];
-                    if (item.ToLower().Contains("nội dung") || item.ToLower().Contains("tóm tắt"))
-                    {
-                        SummanyWrite = true;
-                        pre_Item = item;
-                        continue;
-                    }
-                    if (item.ToLower().Contains("iii"))
-                    {
-                        SummanyWrite = false;
-                    }
-                    if (item.Contains("<strong"))
-                        IsEpisode = true;
-                    if (item.Contains("/strong"))
-                        IsEpisode = false;
-
-                    if (item.ToLower().Contains("danh sách") || item.Contains("Web Novel") || (item.Contains("/ Tác Phẩm")&& pre_Item.Contains("span")))
-                    {
-                        if (IsEpisode || System.Text.RegularExpressions.Regex.IsMatch(item, @"\w*/[\s,\w]*"))
+                        if (item.ToLower().Remove(0, 2).Trim() == "web novel")
                         {
-                            chapterWrite = true;
+                            TypeChapter = "Web Novel";
+                        }
+
+                        if (item.ToLower().Remove(0, 2).Trim() == "light novel")
+                        {
+                            TypeChapter = "Light Novel";
+                        }
+
+                        if (item.ToLower().Remove(0, 2) == "manga")
+                        {
+                            TypeChapter = "Manga";
+                        }
+
+                        string nexxt_item = SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) + 1];
+                        if (item.ToLower().Contains("nội dung") || item.ToLower().Contains("tóm tắt"))
+                        {
+                            SummanyWrite = true;
                             pre_Item = item;
-                            IsEpisode = false;
                             continue;
                         }
-                    }
-                    if (SummanyWrite)
-                    {
-                        if (!item.Contains("["))
+                        if (item.ToLower().Contains("iii"))
                         {
-                            if (item.ToLower().Contains("tác giả"))
-                            {
-                                novel.Author = item.Substring(item.IndexOf(":") + 1);
-                            }
-                            if (!item.ToLower().Contains("THÔNG BÁO".ToLower()))
-                            {
-
-                                if (!item.Contains("<"))
-                                {
-                                    novel.Summany += item.Contains("\n")?item.Remove(0, 2):item;
-                                }
-                            }
+                            SummanyWrite = false;
                         }
-
-                    }
-                    if (chapterWrite)
-                    {
-
                         if (item.Contains("<strong"))
-                        {
                             IsEpisode = true;
-                        }
+                        if (item.Contains("/strong"))
+                            IsEpisode = false;
 
-                        if (!item.Contains("<"))
+                        if (item.ToLower().Contains("danh sách") || item.Contains("Web Novel") || (item.Contains("/ Tác Phẩm") && pre_Item.Contains("span")))
                         {
-                            string template = item.ToLower();
-                            try
+                            if (IsEpisode || System.Text.RegularExpressions.Regex.IsMatch(item, @"\w*/[\s,\w]*"))
                             {
-                                template = item.ToLower().Substring(0, 10);
+                                chapterWrite = true;
+                                pre_Item = item;
+                                IsEpisode = false;
+                                continue;
                             }
-                            catch
+                        }
+                        if (SummanyWrite)
+                        {
+                            if (!item.Contains("["))
                             {
-                                template = item.ToLower();
-                            }
-                            if (template.Contains("tập") || 
-                                template.Contains("quyển") ||
-                                template.Contains("web novel") || 
-                                template.Contains("arc"))
-                            {
-                                if (IsEpisode || System.Text.RegularExpressions.Regex.IsMatch(item, @"\w{3} \d*"))
+                                if (item.ToLower().Contains("tác giả"))
                                 {
-                                    episode = new Episode()
-                                    {
-                                        EpisodeId = episodes.Count + 1,
-                                        Name = string.Format("{0}\n{1}", TypeChapter, item.Contains("\n\n") ? item.Remove(0, 2) : item)
-                                    };
-                                    if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
-                                    {
+                                    novel.Author = item.Substring(item.IndexOf(":") + 1);
+                                }
+                                if (!item.ToLower().Contains("THÔNG BÁO".ToLower()))
+                                {
 
-                                        NewEpisodeList.Add(episode);
-                                        episodes.Add(episode);
-                                        var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
-                                        novelDetails.Add(detail);
-                                        NewNovelDetailList.Add(detail);
+                                    if (!item.Contains("<"))
+                                    {
+                                        novel.Summany += item.Contains("\n") ? item.Remove(0, 2) : item;
                                     }
-
                                 }
                             }
-                        
 
-                            if ((pre_Item != null && pre_Item.Contains("href")) || AddressLine  != "")
+                        }
+                        if (chapterWrite)
+                        {
+
+                            if (item.Contains("<strong"))
                             {
-                                TitleLine = item;
+                                IsEpisode = true;
                             }
-                        }
 
-                        if (item.Contains("/strong"))
-                        {
-                            IsEpisode = false;
-                        }
-
-                        if (item.Contains("href"))
-                        {
-                            AddressLine = item;
-                        }
-
-                        if (AddressLine != "")
-                        {
-                            var chapter = GetChapterFromHtmlLine(AddressLine, TitleLine);
-                            if (chapter != null)
+                            if (!item.Contains("<"))
                             {
-                                if (context.Chapters.Where(c => c.Name == chapter.Name).Count() == 0)
+                                string template = item.ToLower();
+                                try
                                 {
-                                    if (episode.Name == null)
+                                    template = item.ToLower().Substring(0, 10);
+                                }
+                                catch
+                                {
+                                    template = item.ToLower();
+                                }
+                                if (template.Contains("tập") ||
+                                    template.Contains("quyển") ||
+                                    template.Contains("web novel") ||
+                                    template.Contains("manga") ||
+                                    template.Contains("arc"))
+                                {
+                                    if (IsEpisode || System.Text.RegularExpressions.Regex.IsMatch(item, @"\w{3} \d+", System.Text.RegularExpressions.RegexOptions.Compiled) )
                                     {
                                         episode = new Episode()
                                         {
                                             EpisodeId = episodes.Count + 1,
-                                            Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
+                                            Name = string.Format("{0}\n{1}", TypeChapter, item.Contains("\n\n") ? item.Remove(0, 2) : item)
                                         };
-                                        if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
+                                        if (NewEpisodeList.Where(c => c.Name == episode.Name).Count() == 0)
                                         {
 
                                             NewEpisodeList.Add(episode);
@@ -326,91 +283,138 @@ namespace LMS_Project.Model
                                             novelDetails.Add(detail);
                                             NewNovelDetailList.Add(detail);
                                         }
+
                                     }
-
-                                    var episodeDetail = new EpisodeDetail()
-                                    {
-                                        EpisodeId = episode.EpisodeId,
-                                        ChapterId = chapter.ChapterId
-                                    };
-
-                                    NewEpisodeDetailList.Add(episodeDetail);
-                                    episodeDetails.Add(episodeDetail);
-
-                                    ChapterInEpisode = episodeDetails.Where(w => w.EpisodeId == episode.EpisodeId).Count();
-
-                                    chapter.NumberInEpisode = ChapterInEpisode;
-                                    chapters.Add(chapter);
-                                    NewChapterList.Add(chapter);
                                 }
-                                AddressLine = "";
-                                TitleLine = "";
+
+
+                                if ((pre_Item != null && pre_Item.Contains("href")) || AddressLine != "")
+                                {
+                                    TitleLine = item;
+                                }
                             }
+
+                            if (item.Contains("/strong"))
+                            {
+                                IsEpisode = false;
+                            }
+
+                            if (item.Contains("href"))
+                            {
+                                AddressLine = item;
+                            }
+
+                            if (AddressLine != "")
+                            {
+                                var chapter = GetChapterFromHtmlLine(AddressLine, TitleLine);
+                                if (chapter != null)
+                                {
+                                    if (context.Chapters.Where(c => c.Name == chapter.Name).Count() == 0)
+                                    {
+                                        if (episode.Name == null)
+                                        {
+                                            episode = new Episode()
+                                            {
+                                                EpisodeId = episodes.Count + 1,
+                                                Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
+                                            };
+                                            if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
+                                            {
+
+                                                NewEpisodeList.Add(episode);
+                                                episodes.Add(episode);
+                                                var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
+                                                novelDetails.Add(detail);
+                                                NewNovelDetailList.Add(detail);
+                                            }
+                                        }
+
+                                        var episodeDetail = new EpisodeDetail()
+                                        {
+                                            EpisodeId = episode.EpisodeId,
+                                            ChapterId = chapter.ChapterId
+                                        };
+
+                                        NewEpisodeDetailList.Add(episodeDetail);
+                                        episodeDetails.Add(episodeDetail);
+
+                                        ChapterInEpisode = episodeDetails.Where(w => w.EpisodeId == episode.EpisodeId).Count();
+
+                                        chapter.NumberInEpisode = ChapterInEpisode;
+                                        chapters.Add(chapter);
+                                        NewChapterList.Add(chapter);
+                                    }
+                                    AddressLine = "";
+                                    TitleLine = "";
+                                }
+                            }
+
+                            var ty = item.ToLower().Remove(0, 2).Trim();
+
+
+                            if (ty == "web novel")
+                            {
+                                TypeChapter = "Web Novel";
+                                episode = new Episode()
+                                {
+                                    EpisodeId = episodes.Count + 1,
+                                    Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
+                                };
+                                if (NewEpisodeList.Where(c => c.Name == episode.Name).Count() == 0)
+                                {
+
+                                    NewEpisodeList.Add(episode);
+                                    episodes.Add(episode);
+                                    var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
+                                    novelDetails.Add(detail);
+                                    NewNovelDetailList.Add(detail);
+                                }
+                            }
+
+                            if (ty == "light novel")
+                            {
+                                TypeChapter = "Light Novel";
+                                episode = new Episode()
+                                {
+                                    EpisodeId = episodes.Count + 1,
+                                    Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
+                                };
+                                if (NewEpisodeList.Where(c => c.Name == episode.Name).Count() == 0)
+                                {
+
+                                    NewEpisodeList.Add(episode);
+                                    episodes.Add(episode);
+                                    var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
+                                    novelDetails.Add(detail);
+                                    NewNovelDetailList.Add(detail);
+                                }
+                            }
+
+                            if (ty == "manga" || (item.ToLower().Contains("manga") && !item.Contains("<")))
+                            {
+                                TypeChapter = "Manga";
+                                episode = new Episode()
+                                {
+                                    EpisodeId = episodes.Count + 1,
+                                    Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
+                                };
+                                if (NewEpisodeList.Where(c => c.Name == episode.Name).Count() == 0)
+                                {
+
+                                    NewEpisodeList.Add(episode);
+                                    episodes.Add(episode);
+                                    var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
+                                    novelDetails.Add(detail);
+                                    NewNovelDetailList.Add(detail);
+                                }
+                            }
+
+                            if (item.Contains("text/rocketscript"))
+                                break;
                         }
 
-                        if (item.ToLower().Remove(0, 2).Trim() == "web novel")
-                        {
-                            TypeChapter = "Web Novel";
-                            episode = new Episode()
-                            {
-                                EpisodeId = episodes.Count + 1,
-                                Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
-                            };
-                            if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
-                            {
-
-                                NewEpisodeList.Add(episode);
-                                episodes.Add(episode);
-                                var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
-                                novelDetails.Add(detail);
-                                NewNovelDetailList.Add(detail);
-                            }
-                        }
-
-                        if (item.ToLower().Remove(0, 2).Trim() == "light novel")
-                        {
-                            TypeChapter = "Light Novel";
-                            episode = new Episode()
-                            {
-                                EpisodeId = episodes.Count + 1,
-                                Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
-                            };
-                            if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
-                            {
-
-                                NewEpisodeList.Add(episode);
-                                episodes.Add(episode);
-                                var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
-                                novelDetails.Add(detail);
-                                NewNovelDetailList.Add(detail);
-                            }
-                        }
-
-                        if (item.ToLower().Remove(0, 2).Trim() == "manga")
-                        {
-                            TypeChapter = "Manga";
-                            episode = new Episode()
-                            {
-                                EpisodeId = episodes.Count + 1,
-                                Name = string.Format("{0}\n{1}", TypeChapter, "Khởi động")
-                            };
-                            if (context.Episodes.Where(c => c.Name == episode.Name).Count() == 0)
-                            {
-
-                                NewEpisodeList.Add(episode);
-                                episodes.Add(episode);
-                                var detail = new NovelDetail() { EpisodeId = episode.EpisodeId, NovelId = novel.NovelId };
-                                novelDetails.Add(detail);
-                                NewNovelDetailList.Add(detail);
-                            }
-                        }
-
-                        if (item.Contains("text/rocketscript"))
-                            break;
+                        pre_Item = item;
                     }
-
-
-                    pre_Item = item;
                 }
                 if (episodes.Count == BeginEpisodeCount)
                 {

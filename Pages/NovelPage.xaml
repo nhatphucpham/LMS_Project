@@ -10,22 +10,26 @@
 
     <Page.Resources>
         <DataTemplate x:DataType="data:Novel" x:Key="NovelsDataTemplate">
-            <Grid Background="{ThemeResource SystemControlBackgroundBaseMediumBrush}">
-                <Image HorizontalAlignment="Center" Source="{x:Bind ImageUrl}" VerticalAlignment="Center" Stretch="Fill" x:Phase="1"/>
-                <StackPanel Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Padding="10,0">
-                    <TextBlock FontSize="20" Text="{x:Bind Title}" HorizontalAlignment="Center" VerticalAlignment="Bottom" TextWrapping="Wrap" x:Phase="0" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" TextAlignment="Center"/>
-                </StackPanel>
+            <Grid Background="{ThemeResource SystemControlBackgroundBaseMediumBrush}" >
+                <Image HorizontalAlignment="Center" Source="{x:Bind ImageUrl}" 
+                       VerticalAlignment="Center" Stretch="Fill"/>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlHighlightAltListAccentMediumBrush}" MinHeight="55">
+                    <TextBlock FontSize="16" Text="{x:Bind Title}"  MaxLines="2"
+                               TextWrapping="Wrap" TextTrimming="CharacterEllipsis" TextAlignment="Center" 
+                               Foreground="White" Margin="5" VerticalAlignment="Center"/>
+                </Grid>
             </Grid>
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" Padding="5" Margin="5">
+    <Grid Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" Padding="5">
         <ProgressRing x:Name="LoadingIndicator"></ProgressRing>
         <GridView x:Name="MainGridView" ItemsSource="{Binding}" 
                   ItemTemplate="{StaticResource NovelsDataTemplate}" 
                   IsItemClickEnabled="true"
                   Padding="10"
-                  ItemClick="MainGridView_ItemClick" Loaded="MainGridView_Loaded" ShowsScrollingPlaceholders="True" SizeChanged="MainGridView_SizeChanged">
+                  ItemClick="MainGridView_ItemClick" 
+                  Loaded="MainGridView_Loaded" SizeChanged="MainGridView_SizeChanged" >
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
                     <Setter Property="Margin" Value="0,0,20,20"/>

@@ -12,25 +12,29 @@
     <Page.Resources>
         <DataTemplate x:DataType="data:Chapter" x:Key="ChapterDataTemplate">
             <StackPanel HorizontalAlignment="Center" Width="250" Padding="10">
-                <TextBlock FontSize="12" Text="{x:Bind NumberInEpisode}" HorizontalAlignment="Left" />
-                <TextBlock FontSize="12" Text="{x:Bind Name}" HorizontalAlignment="Left" />
-                <TextBlock FontSize="12" Text="{x:Bind WebAddress}" HorizontalAlignment="Left" />
+                <TextBlock FontSize="21" Text="{x:Bind NumberInEpisode}" HorizontalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                <TextBlock FontSize="18" Text="{x:Bind Name}" HorizontalAlignment="Center" TextTrimming="WordEllipsis" />
+                <TextBlock FontSize="12" Text="{x:Bind WebAddress}" HorizontalAlignment="Left" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Loaded="Grid_Loaded">
+    <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Loaded="Grid_Loaded" SizeChanged="Grid_SizeChanged">
         <ProgressRing x:Name="LoadingIndicator"></ProgressRing>
-        <GridView x:Name="MainGridView"
+        <TextBlock x:Name="tbMessage" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" CharacterSpacing="1"/>
+        <ListView x:Name="MainGridView"
                   ItemsSource="{Binding}"
                   ItemTemplate="{StaticResource ChapterDataTemplate}" 
                   IsItemClickEnabled="true"             
-                  ItemClick="MainGridView_ItemClick">
-            <GridView.ItemsPanel>
+                  ItemClick="MainGridView_ItemClick" Margin="0,0,0,100">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>
+            </ListView.ItemsPanel>
+        </ListView>
+        <Grid VerticalAlignment="Bottom" Height="100" Background="{ThemeResource SystemControlForegroundAccentBrush}">
+            <TextBlock Text="{x:Bind Title}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" FontFamily="Sylfaen" MaxLines="2" TextWrapping="Wrap"/>
+        </Grid>
     </Grid>
 </Page>

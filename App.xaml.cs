@@ -140,7 +140,7 @@ namespace LMS_Project
         private async void OnSuspendingAsync(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            if (MainPage.contentFrame.Content.GetType() == typeof(Pages.ViewNovelPage))
+            if (MainPage.contentFrameStatic.Content.GetType() == typeof(Pages.ViewNovelPage))
             {
                 if (MainPage.CurrentChapter != null)
                 {

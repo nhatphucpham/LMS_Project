@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
+using Windows.Graphics.Display;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -18,10 +19,10 @@ namespace LMS_Project.Pages
     /// </summary>
     public sealed partial class EpisodePage : Page
     {
-        private Novel novel;
+        public static Novel novel;
 
         public string ImageUrl { get { return novel.ImageUrl; } }
-        public string Name { get { return novel.Title; } }
+        public string Title { get { return novel.Title; } }
 
         public EpisodePage()
         {
@@ -35,11 +36,12 @@ namespace LMS_Project.Pages
                 NovelGrid.Width = double.NaN;
                 NovelGrid.Height = 195;
 
-                NovelGrid.RowDefinitions[0].Height = new GridLength(400, GridUnitType.Star);
+                NovelGrid.RowDefinitions[0].Height = new GridLength(200, GridUnitType.Star);
+                NovelGrid.RowDefinitions[1].Height = new GridLength(70, GridUnitType.Star);
 
                 var ellipse = NovelGrid.Children[0] as Windows.UI.Xaml.Shapes.Ellipse;
-                ellipse.Width = 150;
-                ellipse.Height = 150;
+                ellipse.Width = 120;
+                ellipse.Height = 120;
 
                 var title = NovelGrid.Children[1] as TextBlock;
                 title.FontSize = 18;
@@ -178,6 +180,37 @@ namespace LMS_Project.Pages
             {
                 Capture = true;
                 pointerPoint = e.GetCurrentPoint(NovelGrid);
+            }
+        }
+
+        private void MainGridView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
+            {
+                var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                if (DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.Portrait)
+                    wrap.ItemWidth = e.NewSize.Width  / 2;
+                if (DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.Landscape ||
+                    DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.LandscapeFlipped)
+                    wrap.ItemWidth = e.NewSize.Width / 3;
+            }
+            else
+            {
+                if (e.NewSize.Width > 860)
+                {
+                    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                    wrap.ItemWidth = (e.NewSize.Width - 30) / 5;
+                }
+                else if (e.NewSize.Width > 560)
+                {
+                    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                    wrap.ItemWidth = (e.NewSize.Width - 30) / 4;
+                }
+                else
+                {
+                    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
+                    wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
+                }
             }
         }
     }
