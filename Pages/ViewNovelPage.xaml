@@ -10,9 +10,9 @@
 
     <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Loaded="Grid_Loaded">
         <ProgressRing x:Name="LoadingIndicator"/>
-        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="100" Background="{ThemeResource SystemControlForegroundAccentBrush}">
+        <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="70" Background="{ThemeResource SystemControlForegroundAccentBrush}">
             <TextBlock Text="{x:Bind Title}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
         </Grid>
-        <FlipView x:Name="flView" Margin="0, 0, 0, 100"/>
+        <WebView x:Name="wView" Margin="0, 0, 0, 70"/>
     </Grid>
 </Page>

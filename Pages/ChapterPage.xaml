@@ -11,10 +11,10 @@
 
     <Page.Resources>
         <DataTemplate x:DataType="data:Chapter" x:Key="ChapterDataTemplate">
-            <StackPanel HorizontalAlignment="Center" Width="250" Padding="10">
+            <StackPanel HorizontalAlignment="Center" Padding="10">
                 <TextBlock FontSize="21" Text="{x:Bind NumberInEpisode}" HorizontalAlignment="Center" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
                 <TextBlock FontSize="18" Text="{x:Bind Name}" HorizontalAlignment="Center" TextTrimming="WordEllipsis" />
-                <TextBlock FontSize="12" Text="{x:Bind WebAddress}" HorizontalAlignment="Left" Foreground="{ThemeResource SystemControlForegroundAccentBrush}"/>
+                <TextBlock FontSize="12" Text="{x:Bind WebAddress}" HorizontalAlignment="Left" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" TextTrimming="CharacterEllipsis"/>
             </StackPanel>
         </DataTemplate>
     </Page.Resources>
@@ -22,11 +22,11 @@
     <Grid Background="{ThemeResource SystemControlBackgroundAltHighBrush}" Loaded="Grid_Loaded" SizeChanged="Grid_SizeChanged">
         <ProgressRing x:Name="LoadingIndicator"></ProgressRing>
         <TextBlock x:Name="tbMessage" Text="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" CharacterSpacing="1"/>
-        <ListView x:Name="MainGridView"
+        <ListView x:Name="MainListView"
                   ItemsSource="{Binding}"
                   ItemTemplate="{StaticResource ChapterDataTemplate}" 
                   IsItemClickEnabled="true"             
-                  ItemClick="MainGridView_ItemClick" Margin="0,0,0,100">
+                  ItemClick="MainGridView_ItemClick" Margin="0,0,0,100" SizeChanged="MainListView_SizeChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid Orientation="Horizontal"/>

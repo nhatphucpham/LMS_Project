@@ -2,6 +2,15 @@
   "version": 2,
   "targets": {
     "UAP,Version=v10.0": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -2781,6 +2790,15 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -5588,6 +5606,15 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -8434,6 +8461,15 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -11250,6 +11286,15 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -14105,6 +14150,15 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -16921,6 +16975,15 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
+      "ksemenenko.ColorThief/1.1.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/UAP10/ColorThief.UWP.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
         "type": "package",
         "dependencies": {
@@ -19777,6 +19840,30 @@
     }
   },
   "libraries": {
+    "ksemenenko.ColorThief/1.1.0.3": {
+      "sha512": "2NyUr1mCfVz+XAgQ1+LznHa/CTmw380/I6TOtBeKI8ppdi+/osC/+Oa6+I51aQ5/tlR7BLFg04RFFy9o9jhvmw==",
+      "type": "package",
+      "path": "ksemenenko.colorthief/1.1.0.3",
+      "files": [
+        "ksemenenko.colorthief.1.1.0.3.nupkg.sha512",
+        "ksemenenko.colorthief.nuspec",
+        "lib/MonoAndroid10/ColorThief.Android.dll",
+        "lib/MonoAndroid10/ColorThief.Android.pdb",
+        "lib/MonoAndroid10/ColorThief.Android.xml",
+        "lib/UAP10/ColorThief.UWP.dll",
+        "lib/UAP10/ColorThief.UWP.pdb",
+        "lib/UAP10/ColorThief.UWP.xml",
+        "lib/Xamarin.iOS10/ColorThief.iOS.dll",
+        "lib/Xamarin.iOS10/ColorThief.iOS.pdb",
+        "lib/Xamarin.iOS10/ColorThief.iOS.xml",
+        "lib/net45/ColorThief.Desktop.v45.dll",
+        "lib/net45/ColorThief.Desktop.v45.pdb",
+        "lib/net45/ColorThief.Desktop.v45.xml",
+        "lib/net46/ColorThief.Desktop.v46.dll",
+        "lib/net46/ColorThief.Desktop.v46.pdb",
+        "lib/net46/ColorThief.Desktop.v46.xml"
+      ]
+    },
     "Microsoft.AspNetCore.Hosting.Abstractions/1.1.1": {
       "sha512": "m93r3mNu/igz8YLJ6ra01FeMdKp0s+UKoq5WGqRZ6M9iJJO6TDyLMU+xE9HfsKeSKq6apPJOHDakjRJU2+e+PQ==",
       "type": "package",
@@ -26721,7 +26808,8 @@
       "Microsoft.EntityFrameworkCore.Sqlite >= 1.1.1",
       "Microsoft.EntityFrameworkCore.Tools >= 1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
-      "Newtonsoft.Json >= 10.0.2"
+      "Newtonsoft.Json >= 10.0.2",
+      "ksemenenko.ColorThief >= 1.1.0.3"
     ],
     "UAP,Version=v10.0": []
   },
@@ -26737,6 +26825,7 @@
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
+      "ksemenenko.ColorThief": "1.1.0.3",
       "Microsoft.EntityFrameworkCore.Sqlite": "1.1.1",
       "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",

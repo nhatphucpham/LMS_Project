@@ -40,77 +40,97 @@ namespace LMS_Project.Model
                     bool Nope1 = false;
                     bool Nope2 = false;
                     StringHtml = "";
+
+                    string pre_Item = "";
                     while (read.Peek() >= 0)
                     {
                         string str = await read.ReadLineAsync();
                         if (str.Contains("</style>"))
+                        {
                             Nope1 = true;
+                            continue;
+                        }
                         if (str.Contains("reaction-buttons"))
                             Nope1 = false;
                         if (Nope1)
                         {
-                            if (str.Contains("/h3"))
+                            if (str.Contains("/h3") && Nope2 == false)
+                            {
                                 Nope2 = true;
+                                continue;
+                            }
                             if (Nope2)
                             {
-                                StringHtml += str + "\n\r";
-                                content_HTML.Add(WebUtility.HtmlDecode(str));
+                                str = str.Replace("&nbsp;", " ");
+                                str = str.Replace("#F3F3F3", "transparent");
+                                
+                                if (str.Contains("<p") && !str.Contains("align"))
+                                {
+                                    str = str.Insert(str.IndexOf("<p") + 2, " align=\"justify\" ");
+                                }
+                                if (str.Contains("<span"))
+                                {
+                                    if (str.Contains("style"))
+                                    {
+                                        if (str.Contains("text-align:"))
+                                        {
+                                            str = str.Replace("left", "justify");
+                                            str = str.Insert(str.IndexOf("style") + 7, " display: flex;");
+                                        }
+                                    }
+                                }
+                                StringHtml += str + " ";
                             }
                         }
+
+                        pre_Item = str;
                     }
-                    httpClient.Dispose();
-                    for (int i = 0; i < content_HTML.Count; i++)
+
+                    StringHtml = StringHtml.Remove(0, StringHtml.IndexOf("Tập"));
+                    StringHtml = StringHtml.Remove(0, StringHtml.IndexOf("/div") + 5).Trim();
+                    StringHtml = StringHtml.Remove(0, StringHtml.IndexOf("/div") + 5).Trim();
+
+                    StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >\n<body leftmargin=\"10\" rightmargin=\"20\" topmargin=\"10\" bottommargin=\"10\" style=\"background-color: transparent;\">\n");
+                    StringHtml = StringHtml.Insert(StringHtml.Count(), "</body>\n</html>");
+
+
+                    int begin = 0;
+                    int end = 0;
+
+                    for (int i = 0; i < StringHtml.Length; i++)
                     {
-                        string item = content_HTML[i];
-                        if (item.Contains(chapter.WebAddress))
+                        var c = StringHtml[i];
+                        if (i > 0 && c == ' ' && (StringHtml[i - 1] == '>' || StringHtml[i + 1] == '<'))
                         {
-                            content_HTML.RemoveAt(i);
+                            StringHtml = StringHtml.Remove(i, 1);
                             i--;
-                            Nope1 = true;
-                            continue;
                         }
-                        if (item.Contains("star-ratings"))
-                            Nope1 = false;
-                        if (Nope1)
+
+                        if (c == '>')
                         {
-                            while (item.Contains("<"))
+                            if ((i + 1) < StringHtml.Length && StringHtml[i + 1] != '\n')
                             {
-                                if (item.Contains(">") && item.IndexOf("<") < item.IndexOf(">"))
-                                    item = item.Remove(item.IndexOf("<"), item.IndexOf(">") - item.IndexOf("<") + 1);
-                                else
-                                {
-                                    item = item.Remove(item.IndexOf("<"), 4);
-                                }
-                            }
-
-                            content_HTML[i] = item;
-
-                            if (item == "")
-                            {
-                                if (i > 0 && content_HTML[i - 1] == "")
-                                {
-                                    content_HTML.RemoveAt(i);
-                                    i--;
-                                }
-                            }
-                            else
-                            {
-                                if (i > 0 && content_HTML[i - 1] != "")
-                                {
-                                    content_HTML[i - 1] += string.Format(" {0}", item);
-                                    content_HTML.RemoveAt(i);
-                                    i--;
-                                    continue;
-                                }
-                                context.Chapters.Single(c => c.ChapterId == id).Content += item;
+                                StringHtml = StringHtml.Insert(i + 1, "\n");
                             }
                         }
-                        else
+                        else if (c == '<')
                         {
-                            content_HTML.RemoveAt(i);
-                            i--;
+                            if (i > 0 && StringHtml[i - 1] != '\n')
+                            {
+                                StringHtml = StringHtml.Insert(i, "\n");
+                            }
+                        }
+
+                        if (StringHtml[i] == '\n')
+                            end = i;
+                        if (end > begin && !content_HTML.Contains(StringHtml.Substring(begin, end - begin)))
+                        {
+                            content_HTML.Add(StringHtml.Substring(begin, end - begin));
+                            begin = end + 1;
                         }
                     }
+
+                    httpClient.Dispose();
                     return content_HTML;
                 }
                 catch
@@ -224,7 +244,7 @@ namespace LMS_Project.Model
                                     var episode = new Episode()
                                     {
                                         EpisodeId = episodes.Count + 1,
-                                        Name = string.Format("{0}: Tập {1}", novel.Title, iEpi),
+                                        Name = string.Format("Tập {0}", iEpi),
                                         Image = ""
                                     };
 
@@ -248,7 +268,8 @@ namespace LMS_Project.Model
                                         episodeDetails.Add(epDetail);
                                         NewEpisodeDetailList.Add(epDetail);
                                     }
-                                    chapter.NumberInEpisode = episodeDetails.Where(e => e.EpisodeId == episodes[episodes.Count - 1].EpisodeId).Count();
+
+                                    chapter.NumberInEpisode = NewEpisodeDetailList.Where(e => e.EpisodeId == epDetail.EpisodeId).Count();
                                     chapters.Add(chapter);
                                     NewChapterList.Add(chapter);
                                 }

@@ -55,7 +55,7 @@ namespace LMS_Project.Pages
                 if(episode != null)
                 {
                     var list = NovelPage.model.GetChaptersFromEpisodeId(episode.EpisodeId).ToList().OrderBy(o => o.NumberInEpisode);
-                    MainGridView.ItemsSource = list;
+                    MainListView.ItemsSource = list;
 
                     if (list== null || list.Count() == 0)
                         tbMessage.Text = "Không có chương nào hiện tại ở tập này";
@@ -70,6 +70,20 @@ namespace LMS_Project.Pages
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
 
+        }
+
+        private void MainListView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var wrap = MainListView.ItemsPanelRoot as ItemsWrapGrid;
+            wrap.ItemWidth = (e.NewSize.Width - 10) / 2;
+            if (e.NewSize.Width > 830)
+            {
+                wrap.ItemWidth = (e.NewSize.Width - 20) / 3;
+            }
+            if (e.NewSize.Width > 1050)
+            {
+                wrap.ItemWidth = (e.NewSize.Width - 20) / 4;
+            }
         }
     }
 }

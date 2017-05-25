@@ -31,8 +31,12 @@ namespace LMS_Project.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.cbTitle.SelectedIndex = (new DataManager()).WebSourses.Single(s => s.Name == (sender as Button).Name.ToString()).WebId - 1;
-            Frame.Navigate(typeof(NovelPage));
+            if (MainPage.cbTitle.Items != null)
+            {
+                var item = (new DataManager()).WebSourses.Single(s => s.Name == (sender as Button).Name.ToString());
+                MainPage.cbTitle.SelectedIndex = item.WebId - 1;
+                Frame.Navigate(typeof(NovelPage));
+            }
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)

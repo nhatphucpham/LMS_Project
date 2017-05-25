@@ -27,7 +27,7 @@ namespace LMS_Project.Pages
         Chapter chapter;
         List<WebView> webViews;
 
-        public string Title { get { return chapter.Name; } }
+        public string Title { get { return chapter != null ? chapter.Name : "Không tìm thấy"; } }
         public ViewNovelPage()
         {
             this.InitializeComponent();
@@ -38,12 +38,12 @@ namespace LMS_Project.Pages
             chapter = e.Parameter as Chapter;
             if (chapter == null)
             {
-                if(MainPage.CurrentChapter != null)
+                if (MainPage.CurrentChapter != null)
                 {
                     chapter = MainPage.CurrentChapter;
                 }
                 else
-                    flView.Items.Add(new TextBlock() { Text = "Cannot see any chapter's history in here!" });
+                    wView.NavigateToString("<b><p style=\"font-size: 24; display: flex; text-align: center;\">Không có chương nào đã chọn</p></b>");
             }
         }
 
@@ -80,12 +80,9 @@ namespace LMS_Project.Pages
                         MainPage.cbTitle.SelectedIndex = 0;
                     else
                         MainPage.cbTitle.SelectedIndex = 1;
-
-                    var webView = new WebView();
+                    
                     MainPage.CurrentChapter = NovelPage.model.GetChapter(chapter.ChapterId);
-                    webView.NavigateToString(NovelPage.model.StringHtml);
-                    webView.IsHitTestVisible = false;
-                    flView.Items.Add(webView);
+                    wView.NavigateToString(NovelPage.model.StringHtml);
                 }
             }
             finally
