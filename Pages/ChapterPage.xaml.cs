@@ -42,7 +42,7 @@ namespace LMS_Project.Pages
             }
         }
 
-        private void MainGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void MainListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Frame.Navigate(typeof(ViewNovelPage), e.ClickedItem);
         }

@@ -213,5 +213,10 @@ namespace LMS_Project.Pages
                 }
             }
         }
+
+        private void NovelGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ellipse.Height = ellipse.Width = 15d / 32 * e.NewSize.Height;
+        }
     }
 }

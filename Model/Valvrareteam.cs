@@ -504,20 +504,30 @@ namespace LMS_Project.Model
                             SourceAnalysis.m_HTML.Add(item);
                     }
                 }
+                
+
                 StringHtml = "";
                 bool isContent = false;
+                bool ad = false;
+
+                bool text = false;
+                int indexText = 0;
+                bool special = false;
+
                 string pre_item = "";
                 for(int i = 0; i < SourceAnalysis.m_HTML.Count; i++)
                 {
-                    if (SourceAnalysis.m_HTML[0].Contains("/"))
-                    {
-                        SourceAnalysis.m_HTML.RemoveAt(0);
-                        i--;
-
-                    }
                     if (i >= 0)
                     {
                         var item = SourceAnalysis.m_HTML[i];
+
+                        if (i == 0 && item.Contains("/"))
+                        {
+                            SourceAnalysis.m_HTML.RemoveAt(i);
+                            i--;
+                            continue;
+                        }
+
                         if (item.Contains("THÔNG BÁO") && pre_item.Contains("span"))
                         {
                             isContent = true;
@@ -530,10 +540,65 @@ namespace LMS_Project.Model
                         {
                             isContent = false;
                         }
+
                         if (isContent)
                         {
-                            if (!item.Contains("scrip") && !item.Contains("google"))
-                                StringHtml += item;
+                            if (item.Contains("<div") && pre_item.Contains("/p"))
+                            {
+                                ad = true;
+                                pre_item = item;
+                                SourceAnalysis.m_HTML.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+                            if (item.Contains("/div") && ad)
+                            {
+                                ad = false;
+                                pre_item = item;
+                                SourceAnalysis.m_HTML.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+
+                            if (item.Contains("<p"))
+                            {
+                                if(!item.Contains("text-align"))
+                                {
+                                    m_HTML[i] = item.Insert(2, " style=\"text-align: justify;\" ");
+                                    item = m_HTML[i];
+                                }
+                                text = true;
+                            }
+                            if (item.Contains("/p"))
+                            {
+                                if(special && indexText != 0)
+                                {
+                                    m_HTML[indexText] = m_HTML[indexText].Replace("<", "＜");
+                                    m_HTML[indexText] = m_HTML[indexText].Replace(">", "＞");
+                                }
+                                text = false;
+                            }
+
+                            if (ad)
+                            {
+                                pre_item = item;
+                                SourceAnalysis.m_HTML.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+                            if (text && !item.Contains("<p") && !item.Contains("/p"))
+                            {
+                                if (item.Contains("<"))
+                                {
+                                    special = true;
+                                    indexText = i;
+                                }
+                                if (item.Contains("</"))
+                                {
+                                    special = false;
+                                }
+                            }
+
                         }
                         else
                         {
@@ -546,8 +611,10 @@ namespace LMS_Project.Model
 
             }
 
-            StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >");
-            StringHtml = StringHtml.Insert(StringHtml.Count(), "</html>");
+            m_HTML.ForEach(m => StringHtml += string.Format("{0}\n", m));
+
+            StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >\n<body leftmargin=\"10\" rightmargin=\"20\" topmargin=\"10\" bottommargin=\"10\" style=\"background-color: transparent;\">\n");
+            StringHtml = StringHtml.Insert(StringHtml.Count(), "</body>\n</html>");
 
             return SourceAnalysis.m_HTML;
         }
