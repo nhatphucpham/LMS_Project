@@ -220,7 +220,8 @@ namespace LMS_Project.Model
                         if (item.Contains("/strong"))
                             IsEpisode = false;
 
-                        if (item.ToLower().Contains("danh sách")
+                        if (item.ToLower().Contains("danh sách") 
+                            || item.ToLower().Contains("danh sách")
                             || item.Contains("Web Novel") 
                             || (item.Contains("/ Tác Phẩm") && pre_Item.Contains("span")))
                         {
@@ -298,11 +299,10 @@ namespace LMS_Project.Model
                                 }
                                 if (template.Contains("tập") ||
                                     template.Contains("quyển") ||
-                                    template.Contains("web novel") ||
-                                    template.Contains("manga") ||
+                                    template.Contains("PHẦN".ToLower()) ||
                                     template.Contains("arc"))
                                 {
-                                    if (IsEpisode || Regex.IsMatch(item, @"\w{3} \d+") )
+                                    if (IsEpisode || Regex.IsMatch(item, @"\w{3,5} \d+") )
                                     {
                                         episode = new Episode()
                                         {
@@ -671,7 +671,23 @@ namespace LMS_Project.Model
                 {
                     string address = AddressLine.Substring(index, length);
                     if (address.Contains("valvrareteam"))
+                    {
+                        if (chapters.Where(s => s.WebAddress == address).Count() != 0)
+                        {
+                            var name = chapters.Single(s => s.WebAddress == address).Name;
+                            if(chapters.Where(w=>w.Name == TitleLine + name).Count() != 0)
+                            {
+                                chapters[chapters.Count - 1].Name = TitleLine;
+                                return null;
+                            }
+
+                            if (name != TitleLine && name.Remove(0, 4) != TitleLine)
+                                name += name[name.Length - 1] == ' ' ? TitleLine : " " + TitleLine;
+                            chapters.Single(s => s.WebAddress == address).Name = name;
+                            return null;
+                        }
                         chapter.WebAddress = address;
+                    }
                     else
                         return null;
                 }
@@ -700,6 +716,13 @@ namespace LMS_Project.Model
                     chapter.Name = name;
                 else
                     return null;
+
+                
+            }
+            if (chapter.Name.Contains("Giao"))
+            {
+                chapters[chapters.Count - 1].Name = chapter.Name;
+                return null;
             }
             return chapter;
         }
