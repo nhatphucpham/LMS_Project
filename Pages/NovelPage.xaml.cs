@@ -3,6 +3,8 @@ using LMS_Project.Data;
 using LMS_Project.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -34,7 +36,8 @@ namespace LMS_Project.Pages
         public static SourceAnalysis model;
         
         private List<Novel> novels;
-             
+        private Novel novel;
+        
         public NovelPage()
         {
             this.InitializeComponent();
@@ -70,15 +73,39 @@ namespace LMS_Project.Pages
             return gridView;
         }
 
+        private async Task<Brush> GetColorFromImage(string url)
+        {
+            RandomAccessStreamReference random = RandomAccessStreamReference.CreateFromUri(new Uri(url));
+            using (IRandomAccessStream stream = await random.OpenReadAsync())
+            {
+                //Create a decoder for the image
+                var decoder = await BitmapDecoder.CreateAsync(stream);
+                var colorThief = new ColorThief();
+                var color = await colorThief.GetColor(decoder);
+                return new SolidColorBrush(Windows.UI.Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B));
+            }
+        }
+
         private async void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                var novel = (sender as GridView).SelectedItem as Novel;
-                LoadingIndicator.IsActive = true;
+                SummanyTextBlock.Text = "";
+                prSummany.IsActive = true;
+                
+                novel = (sender as GridView).SelectedItem as Novel;
+                ellipse.Fill = new ImageBrush();
+                var imageBrush = (ellipse.Fill as ImageBrush);
+                imageBrush.ImageSource = new BitmapImage(new Uri(novel.ImageUrl));
+                imageBrush.Stretch = Stretch.UniformToFill;
+
+                SummanyBorder.Background = await GetColorFromImage(novel.ImageUrl);
+
+                if (SummanyBorder.Visibility == Visibility.Collapsed)
+                    SummanyBorder.Visibility = Visibility.Visible;
+
                 if (NovelPage.model.Sourse == null)
                     NovelPage.model.Sourse = MainPage.WebSource;
-                var novels = NovelPage.model.GetNovelFromWebSourse(MainPage.WebSource.Address);
 
                 List<Episode> episodes;
 
@@ -96,12 +123,19 @@ namespace LMS_Project.Pages
                     }
                     NovelPage.model.LoadEpisode(novel.NovelId);
                     episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId);
+                    novel = NovelPage.model.GetNovel(novel.NovelId);
+                    SummanyTextBlock.Text = novel.Summany;
                 }
+            }
+            catch
+            {
+
             }
             finally
             {
-                LoadingIndicator.IsActive = false;
+                prSummany.IsActive = false;
             }
+            Debug.WriteLine(((ellipse.Fill as ImageBrush).ImageSource as BitmapImage).UriSource);
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -114,31 +148,10 @@ namespace LMS_Project.Pages
         {
             var grid = sender as Grid;
             var image = grid.Children[0] as Image;
-            RandomAccessStreamReference random = RandomAccessStreamReference.CreateFromUri((image.Source as BitmapImage).UriSource);
-            using (IRandomAccessStream stream = await random.OpenReadAsync())
-            {
-                //Create a decoder for the image
-                var decoder = await BitmapDecoder.CreateAsync(stream);
-                var colorThief = new ColorThief();
-                var color = await colorThief.GetColor(decoder);
-                grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B));
-            }
-        }
 
-        private void flipView_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            scrollViewer.Height = scrollViewer.Height;
+            grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
         }
-
-        private void border_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if(e.NewSize.Height < 342.39999389648438)
-            {
-                border.Margin = new Thickness(25, 25, 25, 0);
-                border.Height = 342.39999389648438;
-            }
-        }
-
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var offset = scrollViewer.HorizontalOffset;
@@ -161,6 +174,18 @@ namespace LMS_Project.Pages
                 lButton.Visibility = Visibility.Collapsed;
             if (scrollViewer.HorizontalOffset == scrollViewer.ScrollableWidth)
                 rButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void Border_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ellipse.Width = ellipse.ActualHeight;
+        }
+
+        private void StackPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var stack = sender as StackPanel;
+            var grid = stack.Children[1] as Grid;
+            grid.Width = e.NewSize.Width - e.NewSize.Height - 50;
         }
 
         private async void scrollViewer_Loaded(object sender, RoutedEventArgs e)
@@ -203,46 +228,16 @@ namespace LMS_Project.Pages
                 }
                 novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
                 var gv = AddNewGridView(20);
-                if ((gv.ItemsSource as List<Novel>).Count > 0)
+                var lt = (gv.ItemsSource as List<Novel>);
+                if (lt.Count > 0)
                     scrollViewer.Content = gv;
-                
-                //MainGridView.ItemsSource = novels;
+                if (lt.Count < 5)
+                    rButton.Visibility = Visibility.Collapsed;
             }
             finally
             {
                 LoadingIndicator.IsActive = false;
             }
         }
-
-        //private void MainGridView_SizeChanged(object sender, SizeChangedEventArgs e)
-        //{
-        //    var wrap = MainGridView.ItemsPanelRoot as ItemsWrapGrid;
-        //    if (MainGridView.ItemsSource != null && !((MainGridView.ItemsSource as List<Novel>).Count < 5))
-        //    {
-        //        if (Windows.System.Profile.AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
-        //        {
-        //            if (DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.Portrait)
-        //                wrap.ItemWidth = (e.NewSize.Width - 20) / 2;
-        //            if (DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.Landscape ||
-        //                DisplayInformation.GetForCurrentView().CurrentOrientation == DisplayOrientations.LandscapeFlipped)
-        //                wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
-        //        }
-        //        else
-        //        {
-        //            if (e.NewSize.Width > 860)
-        //            {
-        //                wrap.ItemWidth = (e.NewSize.Width - 50) / 5;
-        //            }
-        //            else if (e.NewSize.Width > 560)
-        //            {
-        //                wrap.ItemWidth = (e.NewSize.Width - 40) / 4;
-        //            }
-        //            else
-        //            {
-        //                wrap.ItemWidth = (e.NewSize.Width - 30) / 3;
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

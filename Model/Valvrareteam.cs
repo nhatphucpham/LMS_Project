@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LMS_Project.Data;
+using System.Text.RegularExpressions;
 
 namespace LMS_Project.Model
 {
@@ -197,25 +198,33 @@ namespace LMS_Project.Model
                             TypeChapter = "Manga";
                         }
 
-                        string nexxt_item = SourceAnalysis.m_HTML[SourceAnalysis.m_HTML.IndexOf(item) + 1];
-                        if (item.ToLower().Contains("nội dung") || item.ToLower().Contains("tóm tắt"))
+                        if (item.Contains("Tác giả:") || item.Contains("Tác giả:"))
+                        {
+                            var author = m_HTML[m_HTML.IndexOf(item) + 2];
+                            novel.Author = author.Contains("\n\n") ? author.Remove(0, 2) : author;
+                        }
+
+                        var temp = item.Contains("\n\n") ? item.Remove(0, 2) : item;
+
+                        if (((temp.ToLower().Contains("nội dung") || temp.ToLower().Contains("nội dung")) && (Regex.IsMatch(temp, @"^(\w{1,3}/)[\w,\s]+") || (Regex.IsMatch(temp, @"^(\w{1,3}\.)[\w,\s]+")) )) 
+                            || temp.ToLower().Contains("tóm tắt cốt truyện")
+                            || temp.ToLower().Contains("tóm tắt nội dung")
+                            || item.Contains("http://valvrareteam.com/wp-content/uploads/2016/03/Untitled-2.jpg"))
                         {
                             SummanyWrite = true;
                             pre_Item = item;
                             continue;
-                        }
-                        if (item.ToLower().Contains("iii"))
-                        {
-                            SummanyWrite = false;
                         }
                         if (item.Contains("<strong"))
                             IsEpisode = true;
                         if (item.Contains("/strong"))
                             IsEpisode = false;
 
-                        if (item.ToLower().Contains("danh sách") || item.Contains("Web Novel") || (item.Contains("/ Tác Phẩm") && pre_Item.Contains("span")))
+                        if (item.ToLower().Contains("danh sách")
+                            || item.Contains("Web Novel") 
+                            || (item.Contains("/ Tác Phẩm") && pre_Item.Contains("span")))
                         {
-                            if (IsEpisode || System.Text.RegularExpressions.Regex.IsMatch(item, @"\w*/[\s,\w]*"))
+                            if (IsEpisode || ( Regex.IsMatch(item, @"^(\w{1,3}/)[\s,\w]+") ||(Regex.IsMatch(item, @"^(\w{1,3}\.)[\s,\w]+"))))
                             {
                                 chapterWrite = true;
                                 pre_Item = item;
@@ -225,19 +234,45 @@ namespace LMS_Project.Model
                         }
                         if (SummanyWrite)
                         {
-                            if (!item.Contains("["))
+                            if (item.ToLower().Contains("tác giả"))
                             {
-                                if (item.ToLower().Contains("tác giả"))
-                                {
-                                    novel.Author = item.Substring(item.IndexOf(":") + 1);
-                                }
-                                if (!item.ToLower().Contains("THÔNG BÁO".ToLower()))
+                                novel.Author = item.Substring(item.IndexOf(":") + 1);
+                            }
+                            temp = (item.Contains("\n\n")) ? item.Remove(0, 2) : item;
+                            if (Regex.IsMatch(temp, @"^(\w{1,3}/)[\w,\s]+") || Regex.IsMatch(temp, @"^(\w{1,3}\.)[\w,\s]+"))
+                            {
+                                SummanyWrite = false;
+                                pre_Item = item;
+                                continue;
+                            }
+
+                            if (!item.ToLower().Contains("THÔNG BÁO".ToLower()))
+                            {
+                                if (!item.Contains("<"))
                                 {
 
-                                    if (!item.Contains("<"))
+                                    temp = (item.Contains("\n\n")) ? item.Remove(0, 2) : item;
+                                    var sum = novel.Summany == null ? temp : string.Format("\n{0}", temp);
+                                    if (novel.Summany != null)
                                     {
-                                        novel.Summany += item.Contains("\n") ? item.Remove(0, 2) : item;
+                                        if (sum.Contains("\n"))
+                                        {
+                                            sum = (char.IsWhiteSpace(sum[1]) || (sum[1]) == '.') ? sum.Remove(0, 1) : sum;
+                                        }
+                                        if (sum.Contains("\n"))
+                                        {
+                                            sum = (char.IsWhiteSpace(novel.Summany[novel.Summany.Count() - 1])) ? sum.Remove(0, 1) : sum;
+                                        }
                                     }
+
+                                    novel.Summany += sum;
+
+                                }
+                                if (item.Contains("http://valvrareteam.com/wp-content/uploads/2016/03/Untitled-4.jpg"))
+                                {
+                                    SummanyWrite = false;
+                                    pre_Item = item;
+                                    continue;
                                 }
                             }
 
@@ -267,7 +302,7 @@ namespace LMS_Project.Model
                                     template.Contains("manga") ||
                                     template.Contains("arc"))
                                 {
-                                    if (IsEpisode || System.Text.RegularExpressions.Regex.IsMatch(item, @"\w{3} \d+", System.Text.RegularExpressions.RegexOptions.Compiled) )
+                                    if (IsEpisode || Regex.IsMatch(item, @"\w{3} \d+") )
                                     {
                                         episode = new Episode()
                                         {
@@ -408,7 +443,6 @@ namespace LMS_Project.Model
                                     NewNovelDetailList.Add(detail);
                                 }
                             }
-
                             if (item.Contains("text/rocketscript"))
                                 break;
                         }

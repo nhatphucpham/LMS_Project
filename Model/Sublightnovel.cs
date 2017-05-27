@@ -92,8 +92,9 @@ namespace LMS_Project.Model
 
                     StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >\n<body leftmargin=\"10\" rightmargin=\"20\" topmargin=\"10\" bottommargin=\"10\" style=\"background-color: transparent;\">\n");
                     StringHtml = StringHtml.Insert(StringHtml.Count(), "</body>\n</html>");
-
-
+                    
+                    chapter.Content = StringHtml;
+                    context.SaveChanges();
                     int begin = 0;
                     int end = 0;
 
@@ -343,7 +344,7 @@ namespace LMS_Project.Model
                         thisNovel.Author = s.Substring(index, length);
                     }
 
-                    if (s.Contains("text-align: justify;"))
+                    if (s.Contains("div style=\"text-align: justify;\""))
                     {
                         sumany = true;
                         continue;
