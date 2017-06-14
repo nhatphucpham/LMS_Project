@@ -20,6 +20,8 @@ namespace LMS_Project.Migrations
                     b.Property<int>("ChapterId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("EpisodeId");
+
                     b.Property<string>("Content");
 
                     b.Property<string>("Name");
@@ -40,32 +42,25 @@ namespace LMS_Project.Migrations
                     b.Property<int>("EpisodeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Image");
+                    b.Property<int>("NovelId");
 
                     b.Property<string>("Name");
 
                     b.Property<int>("WebId");
+
+                    b.Property<string>("TypeOfNovel");
 
                     b.HasKey("EpisodeId");
 
                     b.ToTable("Episodes");
                 });
 
-            modelBuilder.Entity("LMS_Project.Data.EpisodeDetail", b =>
-                {
-                    b.Property<int>("ChapterId");
-
-                    b.Property<int>("EpisodeId");
-
-                    b.HasKey("ChapterId", "EpisodeId");
-
-                    b.ToTable("EpisodeDetails");
-                });
-
             modelBuilder.Entity("LMS_Project.Data.Novel", b =>
                 {
                     b.Property<int>("NovelId")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("WebId");
 
                     b.Property<string>("Address");
 
@@ -78,28 +73,6 @@ namespace LMS_Project.Migrations
                     b.HasKey("NovelId");
 
                     b.ToTable("Novels");
-                });
-
-            modelBuilder.Entity("LMS_Project.Data.NovelDetail", b =>
-                {
-                    b.Property<int>("NovelId");
-
-                    b.Property<int>("EpisodeId");
-
-                    b.HasKey("NovelId", "EpisodeId");
-
-                    b.ToTable("NovelDetails");
-                });
-
-            modelBuilder.Entity("LMS_Project.Data.WebDetail", b =>
-                {
-                    b.Property<int>("WebId");
-
-                    b.Property<int>("NovelId");
-
-                    b.HasKey("WebId", "NovelId");
-
-                    b.ToTable("WebDetails");
                 });
 
             modelBuilder.Entity("LMS_Project.Data.WebSourse", b =>

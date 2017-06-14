@@ -90,7 +90,7 @@ namespace LMS_Project.Pages
         {
             try
             {
-                SummanyTextBlock.Text = "";
+                SummanyTextBlock.Text = "Loading...";
                 prSummany.IsActive = true;
                 
                 novel = (sender as GridView).SelectedItem as Novel;
@@ -110,7 +110,7 @@ namespace LMS_Project.Pages
                 List<Episode> episodes;
 
                 if (novel != null)
-                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId);
+                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId).ToList();
                 else
                     episodes = new List<Episode>();
 
@@ -122,20 +122,25 @@ namespace LMS_Project.Pages
                         await NovelPage.model.CheckConnection();
                     }
                     NovelPage.model.LoadEpisode(novel.NovelId);
-                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId);
-                    novel = NovelPage.model.GetNovel(novel.NovelId);
-                    SummanyTextBlock.Text = novel.Summany;
+                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId).ToList();
                 }
+                Debug.WriteLine(novel);
             }
             catch
             {
-
+                throw;
             }
             finally
             {
+                novel = NovelPage.model.GetNovel(novel.NovelId);
+                SummanyTextBlock.Text = "Hiện Chưa có tóm tắt cho truyện này";
+                if (novel.Summany != null)
+                {
+                    SummanyTextBlock.Text = novel.Summany;
+                }
                 prSummany.IsActive = false;
             }
-            Debug.WriteLine(((ellipse.Fill as ImageBrush).ImageSource as BitmapImage).UriSource);
+            Debug.WriteLine(novel.Summany != null ? novel.Summany : "nothing");
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -200,7 +205,7 @@ namespace LMS_Project.Pages
                         NovelPage.model = new Sublightnovel();
                 }
 
-                novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
+                novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId).ToList();
 
                 if (novels == null || novels.Count == 0)
                 {
@@ -226,7 +231,7 @@ namespace LMS_Project.Pages
                     }
 
                 }
-                novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
+                novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId).ToList();
                 var gv = AddNewGridView(20);
                 var lt = (gv.ItemsSource as List<Novel>);
                 if (lt.Count > 0)
