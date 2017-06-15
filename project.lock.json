@@ -1,4 +1,5 @@
 {
+  "locked": false,
   "version": 2,
   "targets": {
     "UAP,Version=v10.0": {
@@ -825,18 +826,6 @@
           "runtimes/osx-x64/native/libsqlite3.dylib": {
             "assetType": "native",
             "rid": "osx-x64"
-          },
-          "runtimes/win10-arm/nativeassets/uap10.0/sqlite3.dll": {
-            "assetType": "native",
-            "rid": "win10-arm"
-          },
-          "runtimes/win10-x64/nativeassets/uap10.0/sqlite3.dll": {
-            "assetType": "native",
-            "rid": "win10-x64"
-          },
-          "runtimes/win10-x86/nativeassets/uap10.0/sqlite3.dll": {
-            "assetType": "native",
-            "rid": "win10-x86"
           },
           "runtimes/win7-x64/native/sqlite3.dll": {
             "assetType": "native",
@@ -3818,9 +3807,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        },
-        "native": {
-          "runtimes/win10-arm/nativeassets/uap10.0/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -6673,9 +6659,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        },
-        "native": {
-          "runtimes/win10-arm/nativeassets/uap10.0/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -9500,7 +9483,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x64/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x64/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -12364,7 +12347,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x64/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x64/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -15189,7 +15172,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x86/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x86/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -18053,7 +18036,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x86/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x86/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -20331,14 +20314,13 @@
       ]
     },
     "Microsoft.NETCore.UniversalWindowsPlatform/5.2.2": {
-      "sha512": "9UHv2YObWmcF8gqtBoDC4UW5gdHzFRtaZ5KtB9QKvCy+NC9LH1DMYyOI/ltupjVZlwYEulj3msjBXys9/QI6nw==",
+      "sha512": "eHccUiYTkiY8xeixRA0DV9mcFpi9GA9UzKt3v0d6NtNGrGefhmqwnb60PSWQPe49tXbxZaP0x+W0ghvj6hflHg==",
       "type": "package",
-      "path": "microsoft.netcore.universalwindowsplatform/5.2.2",
       "files": [
+        "Microsoft.NETCore.UniversalWindowsPlatform.5.2.2.nupkg.sha512",
+        "Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
         "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "microsoft.netcore.universalwindowsplatform.5.2.2.nupkg.sha512",
-        "microsoft.netcore.universalwindowsplatform.nuspec"
+        "dotnet_library_license.txt"
       ]
     },
     "Microsoft.NETCore.Windows.ApiSets/1.0.1": {
@@ -26812,47 +26794,5 @@
       "ksemenenko.ColorThief >= 1.1.0.3"
     ],
     "UAP,Version=v10.0": []
-  },
-  "packageFolders": {
-    "C:\\Users\\Mantis\\.nuget\\packages\\": {}
-  },
-  "project": {
-    "restore": {
-      "projectUniqueName": "C:\\Users\\Mantis\\Documents\\GitHub\\LMS_Project\\LMS_Project.csproj",
-      "projectName": "LMS_Project",
-      "projectPath": "C:\\Users\\Mantis\\Documents\\GitHub\\LMS_Project\\LMS_Project.csproj",
-      "projectJsonPath": "C:\\Users\\Mantis\\Documents\\GitHub\\LMS_Project\\project.json",
-      "projectStyle": "ProjectJson"
-    },
-    "dependencies": {
-      "ksemenenko.ColorThief": "1.1.0.3",
-      "Microsoft.EntityFrameworkCore.Sqlite": "1.1.1",
-      "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
-      "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-      "Newtonsoft.Json": "10.0.2"
-    },
-    "frameworks": {
-      "uap10.0": {}
-    },
-    "runtimes": {
-      "win10-arm": {
-        "#import": []
-      },
-      "win10-arm-aot": {
-        "#import": []
-      },
-      "win10-x64": {
-        "#import": []
-      },
-      "win10-x64-aot": {
-        "#import": []
-      },
-      "win10-x86": {
-        "#import": []
-      },
-      "win10-x86-aot": {
-        "#import": []
-      }
-    }
   }
 }

@@ -101,6 +101,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ShowDialog.cs" />
     <Compile Include="Data\Chapter.cs" />
     <Compile Include="Data\Novel.cs" />
     <Compile Include="Data\DataManager.cs" />
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="Model\NavItem.cs" />
     <Compile Include="Model\NavMenu.cs" />
+    <Compile Include="Pages\Waiting.xaml.cs">
+      <DependentUpon>Waiting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +230,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Waiting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
