@@ -106,9 +106,6 @@
     <Compile Include="Data\Novel.cs" />
     <Compile Include="Data\DataManager.cs" />
     <Compile Include="Data\Episode.cs" />
-    <Compile Include="Data\EpisodeDetail.cs" />
-    <Compile Include="Data\NovelDetail.cs" />
-    <Compile Include="Data\WebDetail.cs" />
     <Compile Include="Data\WebSource.cs" />
     <Compile Include="Migrations\20170503035354_NovelMigration.cs" />
     <Compile Include="Migrations\20170503035354_NovelMigration.designer.cs">

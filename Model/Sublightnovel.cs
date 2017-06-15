@@ -17,13 +17,16 @@ namespace LMS_Project.Model
         {
             if (episodes == null)
             {
-                novelDetails = new List<NovelDetail>();
                 thisNovel = new Novel();
                 episodes = new List<Episode>();
                 chapters = new List<Chapter>();
-                episodeDetails = new List<EpisodeDetail>();
+                NewChapterList = new List<Chapter>();
+                NewEpisodeList = new List<Episode>();
             }
         }
+
+        List<Chapter> NewChapterList;
+        List<Episode> NewEpisodeList;
 
         public override async Task<List<string>> LoadContent(int id)
         {
@@ -178,21 +181,21 @@ namespace LMS_Project.Model
                 return null;
             }
             int iEp = (ep != "") ? int.Parse(ep.Substring(ep.Length - 1)) : 0;
-            if (chapters.Where(b => b.Name == title).Count() == 0)
+            if (chapters.Where(b => b.Name == title).Count() == 0 || NewChapterList.Where(b => b.Name == title).Count() == 0)
             {
                 Chapter chapter = new Chapter()
                 {
-                    ChapterId = chapters.Count() + 1,
-                    WebId = Sourse.WebId,
+                    ChapterId = chapters.Count() + NewChapterList.Count + 1,
                     Name = title,
                     Content = null,
                     WebAddress = address
                 };
                 if (iEp > 0)
                 {
-                    if (episodeDetails.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0)
+                    if (chapters.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0
+                        && NewChapterList.Where(b => b.ChapterId == chapter.ChapterId && b.EpisodeId == iEp).Count() == 0)
                     {
-                        episodeDetails.Add(new EpisodeDetail() { EpisodeId = iEp, ChapterId = chapter.ChapterId });
+                        chapter.EpisodeId = iEp;
                     }
                 }
                 
@@ -202,6 +205,7 @@ namespace LMS_Project.Model
             return null;
         }
 
+
         ///Find and detect and set the chapters and the episodes
         public override void LoadEpisode(int NovelId)
         {
@@ -209,13 +213,7 @@ namespace LMS_Project.Model
             {
                 chapters = context.Chapters.ToList();
                 episodes = context.Episodes.ToList();
-                episodeDetails = context.EpisodeDetails.ToList();
                 var novel = context.Novels.Single(s => s.NovelId == NovelId);
-                novelDetails = context.NovelDetails.ToList();
-                List<Chapter> NewChapterList = new List<Chapter>();
-                List<Episode> NewEpisodeList = new List<Episode>();
-                List<EpisodeDetail> NewEpisodeDetailList = new List<EpisodeDetail>();
-                List<NovelDetail> NewNovelDetailList = new List<NovelDetail>();
 
                 string strEpi = "";
                 int iEpi = -1;
@@ -240,38 +238,23 @@ namespace LMS_Project.Model
                             Chapter chapter = GetChapterFromHtmlLine(s);
                             if (chapter != null && chapters.Where(w=>w.WebAddress == chapter.WebAddress).Count() == 0)
                             {
-                                if (chapters.Where(w=>w.Name == chapter.Name).Count() == 0)
+                                if (chapters.Where(w=>w.Name == chapter.Name).Count() == 0 && NewChapterList.Where(w=>w.Name == chapter.Name).Count() == 0)
                                 {
                                     var episode = new Episode()
                                     {
-                                        EpisodeId = episodes.Count + 1,
+                                        EpisodeId = episodes.Count + NewEpisodeList.Count + 1,
                                         Name = string.Format("Tập {0}", iEpi),
-                                        Image = ""
+                                        TypeOfNovel = "Light Novel",
+                                        NovelId = novel.NovelId
                                     };
 
-                                    if (episodes.Where(w => w.Name == episode.Name).Count() == 0)
+                                    if (episodes.Where(w => w.Name == episode.Name).Count() == 0 && NewEpisodeList.Where(w => w.Name == episode.Name).Count() == 0)
                                     {
-                                        episodes.Add(episode);
                                         NewEpisodeList.Add(episode);
-                                        var noDetail = new NovelDetail() { EpisodeId = episodes[episodes.Count - 1].EpisodeId, NovelId = novel.NovelId };
-                                        novelDetails.Add(noDetail);
-                                        NewNovelDetailList.Add(noDetail);
                                     }
 
-                                    var epDetail = new EpisodeDetail()
-                                    {
-                                        EpisodeId = iEpi,
-                                        ChapterId = chapter.ChapterId
-                                    };
-
-                                    if (episodeDetails.Where(w => w.EpisodeId == episode.EpisodeId && w.ChapterId == epDetail.ChapterId).Count() == 0)
-                                    {
-                                        episodeDetails.Add(epDetail);
-                                        NewEpisodeDetailList.Add(epDetail);
-                                    }
-
-                                    chapter.NumberInEpisode = NewEpisodeDetailList.Where(e => e.EpisodeId == epDetail.EpisodeId).Count();
-                                    chapters.Add(chapter);
+                                    chapter.EpisodeId = iEpi;
+                                    chapter.NumberInEpisode = NewChapterList.Where(e => e.EpisodeId == chapter.EpisodeId).Count();
                                     NewChapterList.Add(chapter);
                                 }
                             }
@@ -282,24 +265,17 @@ namespace LMS_Project.Model
 
                 if (NewEpisodeList.Count > 0)
                 {
-                    context.NovelDetails.AddRange(NewNovelDetailList);
                     context.Episodes.AddRange(NewEpisodeList);
                     context.Chapters.AddRange(NewChapterList);
-                    context.EpisodeDetails.AddRange(NewEpisodeDetailList);
                     context.SaveChanges();
                 }
-
-                episodes = context.Episodes.ToList();
-                chapters = context.Chapters.ToList();
-                episodeDetails = context.EpisodeDetails.ToList();
-                novelDetails = context.NovelDetails.ToList();
             }
         }
 
         public override void LoadNovel()
         {
             thisNovel.Address = Sourse.Address;
-            thisNovel.NovelId = (new DataManager()).Novels.Count() + 1;
+            thisNovel.WebId = Sourse.WebId;
             using (var context = new DataManager())
             {
                 bool tilte = false;
@@ -369,9 +345,11 @@ namespace LMS_Project.Model
                     }
                 }
 
-                context.WebDetails.Add(new WebDetail() { WebId = Sourse.WebId, NovelId = thisNovel.NovelId });
-                context.Novels.Add(thisNovel);
-                context.SaveChanges();
+                if (context.Novels.Where(s => s.Title == thisNovel.Title).Count() == 0)
+                {
+                    context.Novels.Add(thisNovel);
+                    context.SaveChanges();
+                }
             }
         }
 

@@ -8,7 +8,8 @@ namespace LMS_Project.Data
     public class Episode
     {
         public int EpisodeId { get; set; }
+        public int NovelId { get; set; }
         public string Name { get; set; }
-        public string Image { get; set; }
+        public string TypeOfNovel { get; set; }
     }
 }

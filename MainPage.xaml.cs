@@ -27,6 +27,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.EntityFrameworkCore;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -129,7 +130,7 @@ namespace LMS_Project
                 current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
             }
 
-            if(current.Content is HomePage || current.Content is ChapterPage || current.Content is ViewNovelPage)
+            if(current.Content is ChapterPage || current.Content is ViewNovelPage)
             {
                 UpdateButton.Visibility = Visibility.Collapsed;
             }
@@ -150,30 +151,64 @@ namespace LMS_Project
         //    if(((NavItem)MenuItem.SelectedItem).Page.GetType() != current.GetType())
         //        current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
         }
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        private async void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new DataManager())
             {
                 if (contentFrameStatic.Content is NovelPage)
                 {
                     context.Episodes.RemoveRange(context.Episodes);
-                    context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
                     context.Chapters.RemoveRange(context.Chapters);
                     context.Novels.RemoveRange(context.Novels);
-                    context.NovelDetails.RemoveRange(context.NovelDetails);
-                    context.WebDetails.RemoveRange(context.WebDetails);
                     context.SaveChanges();
                     contentFrameStatic.Navigate(typeof(NovelPage));
                 }
                 if(contentFrameStatic.Content is EpisodePage)
                 {
-                    context.NovelDetails.RemoveRange(context.NovelDetails);
                     context.Episodes.RemoveRange(context.Episodes);
-                    context.EpisodeDetails.RemoveRange(context.EpisodeDetails);
                     context.Chapters.RemoveRange(context.Chapters);
                     context.SaveChanges();
                     contentFrameStatic.Navigate(typeof(EpisodePage), EpisodePage.novel);
                 }
+                if(contentFrameStatic.Content is HomePage)
+                {
+                    try
+                    {
+                        StorageFolder folder = ApplicationData.Current.LocalFolder;
+                        StorageFile jsonFile = await folder.GetFileAsync("db_lms.db");
+                        await jsonFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+                        context.Database.Migrate();
+                    }
+                    finally
+                    {
+                        await CreateDB();
+                        MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+                    }
+                    contentFrameStatic.Navigate(typeof(HomePage));
+                }
+            }
+        }
+
+        private async Task CreateDB()
+        {
+            using (var context = new DataManager())
+            {
+                await new Sublightnovel().CheckConnection();
+                WebSource[] sourses =
+                {
+                    new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" },
+                    new WebSource() { Name = "Valvrareteam", Address = @"http://valvrareteam.com/" }
+                };
+                foreach (var sourse in sourses)
+                {
+                    if (context.WebSourses.Where(s => s.Name == sourse.Name).Count() == 0)
+                    {
+                        context.WebSourses.Add(sourse);
+                        context.SaveChanges();
+                    }
+                }
+                cbSourse.ItemsSource = (new DataManager()).WebSourses.ToList();
+                cbSourse.SelectedIndex = 0;
             }
         }
 
@@ -261,52 +296,8 @@ namespace LMS_Project
             await new Sublightnovel().CheckConnection();
         }
 
-        public static BackgroundTaskRegistration RegisterBackgroundTask(
-                                                string taskEntryPoint,
-                                                string taskName,
-                                                IBackgroundTrigger trigger,
-                                                IBackgroundCondition condition)
-        {
-
-            //
-            // Register the background task.
-            //
-
-            var builder = new BackgroundTaskBuilder()
-            {
-                Name = taskName,
-                TaskEntryPoint = taskEntryPoint
-            };
-
-            builder.SetTrigger(trigger);
-
-            if (condition != null)
-            {
-
-                builder.AddCondition(condition);
-            }
-
-            BackgroundTaskRegistration task = builder.Register();
-
-            return task;
-
-        }
-
         private async void MySplitView_Loading(FrameworkElement sender, object args)
         {
-            TimeTrigger connectCheckTime = new TimeTrigger(15, false);
-
-            SystemCondition userCondition = new SystemCondition(SystemConditionType.UserPresent);
-
-            await BackgroundExecutionManager.RequestAccessAsync();
-
-            BackgroundTaskRegistration task = RegisterBackgroundTask("BackgroundTasks.TimerBackgroundTask", "Check connection every 5 seconds", connectCheckTime, userCondition);
-
-            if (task != null)
-            {
-                AttachProgressAndCompletedHandlers(task);
-            }
-
             await new Sublightnovel().CheckConnection();
             try
             {

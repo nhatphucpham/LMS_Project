@@ -29,15 +29,10 @@ namespace LMS_Project.Model
 
         public static int CurrentPages { get; set; }
 
-        protected List<NovelDetail> novelDetails;
         protected List<Episode> episodes;
         protected List<Chapter> chapters;
-        protected List<EpisodeDetail> episodeDetails;
-
         protected List<Novel> novels;
-        protected List<WebDetail> webDetails;
-
-
+        
         public SourceAnalysis()
         {
             if (SourceAnalysis.m_HTML == null)
@@ -84,22 +79,28 @@ namespace LMS_Project.Model
         /// </summary>
         /// <param name="NovelId"></param>
         /// <returns></returns>
-        public List<Chapter> GetChaptersFromNovel(int NovelId)
+        public IEnumerable<Chapter> GetChaptersFromNovel(int NovelId)
         {
-            var ChapterList = new List<Chapter>();
             using (var context = new DataManager())
             {
-                var episodes = context.NovelDetails.Where(b => b.NovelId == NovelId).ToList();
-                foreach (var episode in episodes)
+                try
                 {
-                    var chapters = context.EpisodeDetails.Where(c => c.EpisodeId == episode.EpisodeId).ToList();
-                    foreach (var chapter in chapters)
+                    var Episodes = context.Episodes.Where(w => w.NovelId == NovelId);
+                    if (Episodes != null)
                     {
-                        ChapterList.AddRange(context.Chapters.Where(c => c.ChapterId == chapter.ChapterId));
+                        foreach (var episode in Episodes)
+                        {
+                            var Chapters = context.Chapters.Where(w => w.EpisodeId == episode.EpisodeId).ToList();
+                            foreach (var chapter in Chapters)
+                            {
+                                yield return chapter;
+                            }
+                        }
                     }
                 }
+                finally { }
             }
-            return ChapterList;
+
         }
 
         /// <summary>
@@ -107,26 +108,21 @@ namespace LMS_Project.Model
         /// </summary>
         /// <param name="webAddress"></param>
         /// <returns></returns>
-        public List<Novel> GetNovelFromWebSourse(string webAddress)
+        public IEnumerable<Novel> GetNovelFromWebSourse(string webAddress)
         {
-            var NovelList = new List<Novel>();
             using (var context = new DataManager())
             {
                 try
                 {
                     int id = context.WebSourses.Single(w => w.Address == webAddress).WebId;
-                    var novels = context.WebDetails.Where(w => w.WebId == id).ToList();
+                    var novels = context.Novels.Where(w => w.WebId == id).ToList();
                     foreach (var novel in novels)
                     {
-                        NovelList.Add(context.Novels.Single(n => n.NovelId == novel.NovelId));
+                        yield return novel;
                     }
                 }
-                catch
-                {
-                    return null;
-                }
+                finally { }
             }
-            return NovelList;
         }
 
         /// <summary>
@@ -134,27 +130,20 @@ namespace LMS_Project.Model
         /// </summary>
         /// <param name="NovelId"></param>
         /// <returns></returns>
-        public List<Episode> GetEpisodesFromNovelId(int NovelId)
+        public IEnumerable<Episode> GetEpisodesFromNovelId(int NovelId)
         {
-            var EpisodeList = new List<Episode>();
             using (var context = new DataManager())
             {
-                var episodes = context.NovelDetails.Where(b => b.NovelId == NovelId).ToList();
-                foreach (var episode in episodes)
+                var Episodes = context.Episodes.Where(b => b.NovelId == NovelId).ToList();
+                foreach (var episode in Episodes)
                 {
                     try
                     {
-                        var value = context.Episodes.Single(b => b.EpisodeId == episode.EpisodeId);
-
-                        EpisodeList.Add(value);
+                        yield return episode;
                     }
-                    catch
-                    {
-                        return null;
-                    }
+                    finally { }
                 }
             }
-            return EpisodeList;
         }
 
         /// <summary>
@@ -162,18 +151,21 @@ namespace LMS_Project.Model
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Chapter> GetChaptersFromEpisodeId(int id)
+        public IEnumerable<Chapter> GetChaptersFromEpisodeId(int id)
         {
             var chapters_List = new List<Chapter>();
             using (var context = new DataManager())
             {
-                var chapters = context.EpisodeDetails.Where(b => b.EpisodeId == id).ToList();
-                foreach (var chapter in chapters)
+                try
                 {
-                    chapters_List.Add(context.Chapters.Single(b => b.ChapterId == chapter.ChapterId));
+                    var Chapters = context.Chapters.Where(b => b.EpisodeId == id).ToList();
+                    foreach (var chapter in Chapters)
+                    {
+                        yield return chapter;
+                    }
                 }
+                finally { }
             }
-            return chapters_List;
         }
 
 
@@ -242,26 +234,20 @@ namespace LMS_Project.Model
         /// </summary>
         /// <param name="WebId"></param>
         /// <returns></returns>
-        public List<Novel> GetNovels(int WebId)
+        public IEnumerable<Novel> GetNovels(int WebId)
         {
-            var NovelList = new List<Novel>();
             using (var context = new DataManager())
             {
-                var Novels = context.WebDetails.Where(b => b.WebId == WebId).ToList();
-                foreach (var novel in Novels)
+                try
                 {
-                    try
+                    var Novels = context.Novels.Where(b => b.WebId == WebId).ToList();
+                    foreach (var novel in Novels)
                     {
-                        NovelList.Add(context.Novels.Single(b => b.NovelId == novel.NovelId));
-                    }
-                    catch
-                    {
-                        NovelList = null;
-                        break;
+                        yield return novel;
                     }
                 }
+                finally { }
             }
-            return NovelList;
         }
 
         bool one2Time = false;
@@ -319,13 +305,17 @@ namespace LMS_Project.Model
         /// <returns></returns>
         public static WebSource GetWebSourceOfChapter(int id)
         {
-            using (var context = new DataManager())
+            try
             {
-                var eDetail = context.EpisodeDetails.Single(s => s.ChapterId == id);
-                var nDetai = context.NovelDetails.Single(s => s.EpisodeId == eDetail.EpisodeId);
-                var wDetail = context.WebDetails.Single(s => s.NovelId == nDetai.NovelId);
-                return context.WebSourses.Single(s => s.WebId == wDetail.WebId);
+                using (var context = new DataManager())
+                {
+                    int episodeId = context.Chapters.Single(s => s.ChapterId == id).EpisodeId;
+                    int novelId = context.Episodes.Single(s => s.EpisodeId == episodeId).NovelId;
+                    int webId = context.Novels.Single(s => s.NovelId == novelId).WebId;
+                    return context.WebSourses.Single(s => s.WebId == webId);
+                }
             }
+            catch { return null; }
         }
 
         /// <summary>

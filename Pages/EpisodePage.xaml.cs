@@ -9,6 +9,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using Windows.Graphics.Display;
+using System.Linq;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -96,7 +97,7 @@ namespace LMS_Project.Pages
                 List<Episode> episodes;
 
                 if (novel != null)
-                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId);
+                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId).ToList();
                 else
                     episodes = new List<Episode>();
 
@@ -108,7 +109,7 @@ namespace LMS_Project.Pages
                         await NovelPage.model.CheckConnection();
                     }
                     NovelPage.model.LoadEpisode(novel.NovelId);
-                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId);
+                    episodes = NovelPage.model.GetEpisodesFromNovelId(novel.NovelId).ToList();
                 }
                 MainGridView.ItemsSource = episodes;
             }
