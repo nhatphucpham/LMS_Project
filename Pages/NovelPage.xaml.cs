@@ -154,16 +154,10 @@ namespace LMS_Project.Pages
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            Common.ShowDialog.getInstance().ShowWaiting("Waiting...");
+        {  
             var grid = sender as Grid;
             var image = grid.Children[0] as Image;
-<<<<<<< HEAD
-            grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
-
-=======
                 grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
->>>>>>> origin/master
             SearchBox.ItemsSource = novels;
             Common.ShowDialog.getInstance().HideWaiting();
         }
