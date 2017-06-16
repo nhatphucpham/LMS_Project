@@ -25,6 +25,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -34,23 +35,26 @@ namespace LMS_Project.Pages
     public sealed partial class NovelPage : Page
     {
         public static SourceAnalysis model;
-        
+
         private List<Novel> novels;
         private Novel novel;
-        
+        private bool flag;
+        private static readonly Random rand = new Random();
+
         public NovelPage()
         {
+            flag = false;
             this.InitializeComponent();
         }
         int i = 0, j = 0;
-        private GridView AddNewGridView( int count)
+        private GridView AddNewGridView(int count)
         {
             var gridView = new GridView()
             {
                 ItemTemplate = Resources["NovelsDataTemplate"] as DataTemplate
             };
             List<Novel> IDs = new List<Novel>();
-            while(i < j + count)
+            while (i < j + count)
             {
                 if (novels.Count > i)
                 {
@@ -92,7 +96,7 @@ namespace LMS_Project.Pages
             {
                 SummanyTextBlock.Text = "Loading...";
                 prSummany.IsActive = true;
-                
+
                 novel = (sender as GridView).SelectedItem as Novel;
                 ellipse.Fill = new ImageBrush();
                 var imageBrush = (ellipse.Fill as ImageBrush);
@@ -145,7 +149,7 @@ namespace LMS_Project.Pages
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if(e.ClickedItem == (sender as GridView).SelectedItem)
+            if (e.ClickedItem == (sender as GridView).SelectedItem)
                 Frame.Navigate(typeof(EpisodePage), e.ClickedItem);
         }
 
@@ -153,10 +157,12 @@ namespace LMS_Project.Pages
         {
             var grid = sender as Grid;
             var image = grid.Children[0] as Image;
-
             grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
+
+            SearchBox.ItemsSource = novels;
+            Common.ShowDialog.getInstance().HideWaiting();
         }
-        
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var offset = scrollViewer.HorizontalOffset;
@@ -171,6 +177,50 @@ namespace LMS_Project.Pages
             var View = scrollViewer.ViewportWidth;
             scrollViewer.ChangeView(offset + View, 0, 1);
             lButton.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Common.ShowDialog.getInstance().ShowWaiting("Waiting...");
+            try
+            {
+                button.Content = button.Content.ToString().Equals("Tất Cả") ? "Mới Nhất" : "Tất Cả";
+                label.Text = label.Text.Equals("Tất Cả") ? "Mới Nhất" : "Tất Cả";
+                var gv = new GridView();
+                if (flag == false)
+                {
+                    flag = true;
+                    gv = new GridView()
+                    {
+                        ItemTemplate = Resources["NovelsDataTemplate"] as DataTemplate
+                    };
+
+                    gv.ItemsSource = novels;
+                    gv.IsItemClickEnabled = true;
+                    gv.ItemClick += GridView_ItemClick;
+                    gv.SelectionChanged += GridView_SelectionChanged;
+                    string template = "<ItemsPanelTemplate xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\">"
+                        + "<ItemsWrapGrid Orientation = \"Vertical\" MaximumRowsOrColumns=\"1\"/></ItemsPanelTemplate> ";
+                    gv.ItemsPanel = (ItemsPanelTemplate)Windows.UI.Xaml.Markup.XamlReader.Load(template);
+                }
+                else
+                {
+                    flag = false;
+                    novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId).ToList();
+                    gv = AddNewGridView(20);
+                }
+                var lt = (gv.ItemsSource as List<Novel>);
+                if (lt.Count > 0)
+                    scrollViewer.Content = gv;
+                if (lt.Count < 5)
+                    rButton.Visibility = Visibility.Collapsed;
+            }
+            finally
+            {
+                LoadingIndicator.IsActive = false;
+                Common.ShowDialog.getInstance().HideWaiting();
+            }
+
         }
 
         private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -193,8 +243,40 @@ namespace LMS_Project.Pages
             grid.Width = e.NewSize.Width - e.NewSize.Height - 50;
         }
 
+        private void SearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            try
+            {
+                var listsearch = new List<Novel>();
+                foreach (var item in novels)
+                {
+                    if (item.Title.ToLower().Contains(sender.Text.ToLower()))
+                        listsearch.Add(item);
+                }
+                SearchBox.ItemsSource = listsearch;
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            try
+            {
+                novel = args.ChosenSuggestion as Novel;
+                Frame.Navigate(typeof(EpisodePage), novel);
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
         private async void scrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
+
             try
             {
                 if (MainPage.WebSource != null)

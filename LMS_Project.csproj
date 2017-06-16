@@ -101,6 +101,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\ShowDialog.cs" />
     <Compile Include="Data\Chapter.cs" />
     <Compile Include="Data\Novel.cs" />
     <Compile Include="Data\DataManager.cs" />
@@ -137,6 +138,9 @@
     </Compile>
     <Compile Include="Model\NavItem.cs" />
     <Compile Include="Model\NavMenu.cs" />
+    <Compile Include="Pages\Waiting.xaml.cs">
+      <DependentUpon>Waiting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +150,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\background.jpg" />
+    <Content Include="Assets\BadgeLogo.scale-100.png" />
+    <Content Include="Assets\BadgeLogo.scale-125.png" />
+    <Content Include="Assets\BadgeLogo.scale-150.png" />
+    <Content Include="Assets\BadgeLogo.scale-200.png" />
+    <Content Include="Assets\BadgeLogo.scale-400.png" />
     <Content Include="Assets\border1.png" />
     <Content Include="Assets\border2.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
@@ -184,6 +193,12 @@
     <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-32.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\wall.jpg" />
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-125.png" />
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
@@ -223,6 +238,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Waiting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

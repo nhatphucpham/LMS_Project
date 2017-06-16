@@ -9,7 +9,5 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ToggleSwitch x:Name="DarkModeToggle"  Header="Dark Mode" Toggled="DarkModeToggle_Toggled" HorizontalAlignment="Left" Margin="101,72,0,0" VerticalAlignment="Top"/>
-            <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="164" Margin="152,145,0,0"/>
-            <TextBlock HorizontalAlignment="Left" Margin="101,152,0,0" TextWrapping="Wrap" Text="Font:" VerticalAlignment="Top"/>
     </Grid>
 </Page>

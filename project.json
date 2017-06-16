@@ -1,6 +1,6 @@
 ﻿{
   "dependencies": {
-    "ksemenenko.ColorThief": "1.1.0.3",
+    "ksemenenko.ColorThief": "1.1.0.2",
     "Microsoft.EntityFrameworkCore.Sqlite": "1.1.1",
     "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",

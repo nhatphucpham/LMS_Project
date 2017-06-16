@@ -2,7 +2,7 @@
   "version": 2,
   "targets": {
     "UAP,Version=v10.0": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -2790,7 +2790,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -5606,7 +5606,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -8461,7 +8461,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -11286,7 +11286,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -14150,7 +14150,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -16975,7 +16975,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -19840,12 +19840,12 @@
     }
   },
   "libraries": {
-    "ksemenenko.ColorThief/1.1.0.3": {
-      "sha512": "2NyUr1mCfVz+XAgQ1+LznHa/CTmw380/I6TOtBeKI8ppdi+/osC/+Oa6+I51aQ5/tlR7BLFg04RFFy9o9jhvmw==",
+    "ksemenenko.ColorThief/1.1.0.2": {
+      "sha512": "8hyWRaUFtZg/LrKn59o6T8v6YlKcmD3v4pdDYuo1taMa7Hi3XAgxf3leeyla0/e2Yvi2bz6ZyyGW54Gvb/oqOQ==",
       "type": "package",
-      "path": "ksemenenko.colorthief/1.1.0.3",
+      "path": "ksemenenko.colorthief/1.1.0.2",
       "files": [
-        "ksemenenko.colorthief.1.1.0.3.nupkg.sha512",
+        "ksemenenko.colorthief.1.1.0.2.nupkg.sha512",
         "ksemenenko.colorthief.nuspec",
         "lib/MonoAndroid10/ColorThief.Android.dll",
         "lib/MonoAndroid10/ColorThief.Android.pdb",
@@ -26809,7 +26809,7 @@
       "Microsoft.EntityFrameworkCore.Tools >= 1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
       "Newtonsoft.Json >= 10.0.2",
-      "ksemenenko.ColorThief >= 1.1.0.3"
+      "ksemenenko.ColorThief >= 1.1.0.2"
     ],
     "UAP,Version=v10.0": []
   },
@@ -26825,7 +26825,7 @@
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
-      "ksemenenko.ColorThief": "1.1.0.3",
+      "ksemenenko.ColorThief": "1.1.0.2",
       "Microsoft.EntityFrameworkCore.Sqlite": "1.1.1",
       "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",

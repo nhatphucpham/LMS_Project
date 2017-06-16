@@ -10,7 +10,7 @@
 
     <Page.Resources>
         <DataTemplate x:DataType="data:Novel" x:Key="NovelsDataTemplate">
-            <Grid Width="177" Height="255" Loaded="Grid_Loaded">
+            <Grid  Width="177" Height="255" Loaded="Grid_Loaded">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{x:Bind ImageUrl}" 
                        Stretch="UniformToFill" Margin="15"/>
                 <Grid Width="140" 
@@ -28,48 +28,47 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" Padding="5">
-        
-        <Border Margin="10,25,10,0" BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}" BorderThickness="3" MinHeight="342" Height="339" VerticalAlignment="Top">
+     
+        <Border Margin="10,10,10,0" BorderBrush="{ThemeResource SystemControlForegroundAccentBrush}" BorderThickness="3" MinHeight="342" Height="339" VerticalAlignment="Top">
+       
             <Grid x:Name="grid" Margin="0">
-                <TextBlock Text="Mới Nhất" Margin="30,25,0,0" FontSize="25" Foreground="{ThemeResource SystemControlForegroundAccentBrush}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Button Content="Tất Cả" FontSize="25" 
-                    HorizontalAlignment="Right" 
-                    VerticalAlignment="Top" Margin="0,10,10,0" Background="{ThemeResource SystemControlForegroundAccentBrush}">
+                <Grid.Background>
+                    <ImageBrush Stretch="None" ImageSource="/Assets/background.jpg" AlignmentY="Top" AlignmentX="Center"/>
+                </Grid.Background>
+                
+                <TextBlock  Name="label" Text="Mới Nhất" Margin="30,10,0,0" FontSize="25" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                
+                <Button  x:Name="button" Content="Tất Cả" FontSize="15" 
+                         HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                         Padding="5"
+                    VerticalAlignment="Top" Margin="164,10,0,0" Background="{ThemeResource SystemControlForegroundAccentBrush}" Click="Button_Click_2" Height="35">
                 </Button>
+                <AutoSuggestBox  HorizontalAlignment="Right"  Width="500" Margin="10,10,10,0" x:Name="SearchBox" VerticalAlignment="Top"  TextMemberPath="Name" QueryIcon="Find" PlaceholderText="Search..." BorderThickness="0" TextChanged="SearchBox_TextChanged" QuerySubmitted="SearchBox_QuerySubmitted" >
+                    <AutoSuggestBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock  Text="{Binding Title}"/>
+                        </DataTemplate>
+                    </AutoSuggestBox.ItemTemplate>
+                </AutoSuggestBox>
                 <ScrollViewer x:Name="scrollViewer" Loaded="scrollViewer_Loaded" Margin="30,65,30,0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" ViewChanged="scrollViewer_ViewChanged"/>
                 <ProgressRing x:Name="LoadingIndicator"></ProgressRing>
                 <Button x:Name="lButton" Content="&lt;" Margin="0,65,0,10" VerticalAlignment="Stretch" Click="Button_Click" Visibility="Collapsed"/>
                 <Button x:Name="rButton" Content=">" Margin="0,65,0,10" VerticalAlignment="Stretch" HorizontalAlignment="Right" Click="Button_Click_1"/>
             </Grid>
         </Border>
-        <StackPanel x:Name="SummanyStack" Orientation="Horizontal" MinHeight="200" Margin="0,400,0,0" Background="#FFDFDFDF" SizeChanged="StackPanel_SizeChanged">
+        <StackPanel x:Name="SummanyStack" Orientation="Horizontal" MinHeight="200" Margin="0,380,0,0" Background="#FFDFDFDF" SizeChanged="StackPanel_SizeChanged">
             <Border x:Name="SummanyBorder" Margin="0" SizeChanged="Border_SizeChanged" HorizontalAlignment="Left">
                 <Ellipse x:Name="ellipse" Margin="10" Width="200" HorizontalAlignment="Left"/>
             </Border>
-            <Grid Margin="25">
+            <Grid Margin="15">
+                <Grid.Background>
+                    <ImageBrush Stretch="None" ImageSource="/Assets/wall.jpg" AlignmentY="Top" AlignmentX="Center"/>
+                </Grid.Background>
                 <ProgressRing x:Name="prSummany" IsActive="False" HorizontalAlignment="Center" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
                 <ScrollViewer>
                     <TextBlock x:Name="SummanyTextBlock" Text="" Foreground="Black" TextWrapping="Wrap" FontSize="20" Margin="0,0,20,0" TextAlignment="Justify" />
                 </ScrollViewer>
             </Grid>
         </StackPanel>
-
-        <!--<GridView x:Name="MainGridView" ItemsSource="{Binding}" 
-                  ItemTemplate="{StaticResource NovelsDataTemplate}" 
-                  IsItemClickEnabled="true"
-                  Padding="10"
-                  ItemClick="MainGridView_ItemClick" 
-                  Loaded="MainGridView_Loaded" SizeChanged="MainGridView_SizeChanged" >
-            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="Margin" Value="0,0,20,20"/>
-                </Style>
-            </GridView.ItemContainerStyle>
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid Orientation="Horizontal" ItemWidth="420"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>-->
     </Grid>
 </Page>
