@@ -19826,16 +19826,9 @@
     "ksemenenko.ColorThief/1.1.0.2": {
       "sha512": "8hyWRaUFtZg/LrKn59o6T8v6YlKcmD3v4pdDYuo1taMa7Hi3XAgxf3leeyla0/e2Yvi2bz6ZyyGW54Gvb/oqOQ==",
       "type": "package",
-<<<<<<< HEAD
-      "path": "ksemenenko.colorthief/1.1.0.2",
-      "files": [
-        "ksemenenko.colorthief.1.1.0.2.nupkg.sha512",
-        "ksemenenko.colorthief.nuspec",
-=======
       "files": [
         "ksemenenko.ColorThief.1.1.0.2.nupkg.sha512",
         "ksemenenko.ColorThief.nuspec",
->>>>>>> origin/master
         "lib/MonoAndroid10/ColorThief.Android.dll",
         "lib/MonoAndroid10/ColorThief.Android.pdb",
         "lib/MonoAndroid10/ColorThief.Android.xml",
@@ -26800,7 +26793,6 @@
       "ksemenenko.ColorThief >= 1.1.0.2"
     ],
     "UAP,Version=v10.0": []
-<<<<<<< HEAD
   },
   "packageFolders": {
     "C:\\Users\\Mantis\\.nuget\\packages\\": {}
@@ -26814,7 +26806,7 @@
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
-      "ksemenenko.ColorThief": "1.1.0.2",
+      "ksemenenko.ColorThief": "1.1.0.3",
       "Microsoft.EntityFrameworkCore.Sqlite": "1.1.1",
       "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
@@ -26843,7 +26835,5 @@
         "#import": []
       }
     }
-=======
->>>>>>> origin/master
   }
 }
