@@ -51,13 +51,10 @@ namespace LMS_Project.Pages
             }
         }
 
-<<<<<<< HEAD
 
 
 
 
-=======
->>>>>>> origin/master
         public Waiting(string title = "Waitting")
         {
             this.title = title;
