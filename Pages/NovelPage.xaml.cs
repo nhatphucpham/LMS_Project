@@ -221,6 +221,7 @@ namespace LMS_Project.Pages
                 LoadingIndicator.IsActive = false;
                 Common.ShowDialog.getInstance().HideWaiting();
             }
+        }
 
         private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
