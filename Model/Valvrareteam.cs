@@ -676,7 +676,7 @@ namespace LMS_Project.Model
                                     return null;
                                 }
 
-                                if (name != TitleLine && name.Remove(0, 4) != TitleLine)
+                                if (name != TitleLine && ((name.Remove(0, 4) != TitleLine && name.Contains("Arc")) || name != TitleLine))
                                     name += name[name.Length - 1] == ' ' ? TitleLine : " " + TitleLine;
                                 chapters.Single(s => s.WebAddress == address).Name = name;
                                 return null;
