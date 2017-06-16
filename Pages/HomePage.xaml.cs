@@ -33,6 +33,7 @@ namespace LMS_Project.Pages
         {
             if (MainPage.cbTitle.Items.Count > 0)
             {
+                Common.ShowDialog.getInstance().ShowWaiting("Waiting...");
                 var item = (new DataManager()).WebSourses.Single(s => s.Name == (sender as Button).Name.ToString());
                 MainPage.cbTitle.SelectedIndex = item.WebId - 1;
                 Frame.Navigate(typeof(NovelPage));

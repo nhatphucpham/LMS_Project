@@ -51,10 +51,6 @@ namespace LMS_Project.Pages
             }
         }
 
-
-
-
-
         public Waiting(string title = "Waitting")
         {
             this.title = title;
