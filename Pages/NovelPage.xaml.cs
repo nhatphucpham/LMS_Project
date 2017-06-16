@@ -222,8 +222,6 @@ namespace LMS_Project.Pages
                 Common.ShowDialog.getInstance().HideWaiting();
             }
 
-        }
-
         private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (scrollViewer.HorizontalOffset == 0)
@@ -290,7 +288,6 @@ namespace LMS_Project.Pages
 
         private async void scrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 if (MainPage.WebSource != null)

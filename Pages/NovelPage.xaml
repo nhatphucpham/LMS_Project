@@ -74,6 +74,11 @@
                          Padding="5"
                     VerticalAlignment="Bottom" HorizontalAlignment="Right"  Background="{ThemeResource SystemControlForegroundAccentBrush}" Click="button3_Click" Height="35">
                 </Button>
+                <Button  x:Name="button3" Content="Chi Tiết" FontSize="15" 
+                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                          Padding="5"
+                          VerticalAlignment="Bottom" HorizontalAlignment="Right"  Background="{ThemeResource SystemControlForegroundAccentBrush}" Click="button3_Click" Height="35">
+                </Button>
             </Grid>
         </StackPanel>
     </Grid>
