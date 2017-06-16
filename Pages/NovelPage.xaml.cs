@@ -145,6 +145,7 @@ namespace LMS_Project.Pages
                 prSummany.IsActive = false;
             }
             Debug.WriteLine(novel.Summany != null ? novel.Summany : "nothing");
+            button3.Visibility = Visibility.Visible;
         }
 
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
@@ -154,11 +155,12 @@ namespace LMS_Project.Pages
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
-        {  
+        {
+            button3.Visibility = Visibility.Collapsed;
             var grid = sender as Grid;
             var image = grid.Children[0] as Image;
-                grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
-            SearchBox.ItemsSource = novels;
+            grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
+            SearchBox.ItemsSource = novels;      
             Common.ShowDialog.getInstance().HideWaiting();
         }
 
@@ -273,6 +275,19 @@ namespace LMS_Project.Pages
             }
 
         }
+
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Frame.Navigate(typeof(EpisodePage), novel);
+            }
+            catch(Exception)
+            {
+
+            }
+        }
+
         private async void scrollViewer_Loaded(object sender, RoutedEventArgs e)
         {
 
