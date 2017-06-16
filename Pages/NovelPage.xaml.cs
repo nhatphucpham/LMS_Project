@@ -39,6 +39,7 @@ namespace LMS_Project.Pages
         private List<Novel> novels;
         private Novel novel;
         private bool flag;
+        private static readonly Random rand = new Random();
 
         public NovelPage()
         {
@@ -157,7 +158,14 @@ namespace LMS_Project.Pages
             Common.ShowDialog.getInstance().ShowWaiting("Waiting...");
             var grid = sender as Grid;
             var image = grid.Children[0] as Image;
-            grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
+            if (flag == false)
+            {
+                grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
+            }
+            else
+            {
+                grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)rand.Next(), (byte)rand.Next(), (byte)rand.Next(), 255));
+            }
             SearchBox.ItemsSource = novels;
             Common.ShowDialog.getInstance().HideWaiting();
         }
@@ -205,7 +213,7 @@ namespace LMS_Project.Pages
                 else
                 {
                     flag = false;
-                    novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId);
+                    novels = NovelPage.model.GetNovels(MainPage.WebSource.WebId).ToList();
                     gv = AddNewGridView(20);
                 }
                 var lt = (gv.ItemsSource as List<Novel>);
@@ -217,8 +225,9 @@ namespace LMS_Project.Pages
             finally
             {
                 LoadingIndicator.IsActive = false;
+                Common.ShowDialog.getInstance().HideWaiting();
             }
-            Common.ShowDialog.getInstance().HideWaiting();
+
         }
 
         private void scrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)

@@ -62,7 +62,7 @@
             </Border>
             <Grid Margin="15">
                 <Grid.Background>
-                    <ImageBrush Stretch="None" ImageSource="/Assets/background.jpg" AlignmentY="Top" AlignmentX="Center"/>
+                    <ImageBrush Stretch="None" ImageSource="/Assets/wall.jpg" AlignmentY="Top" AlignmentX="Center"/>
                 </Grid.Background>
                 <ProgressRing x:Name="prSummany" IsActive="False" HorizontalAlignment="Center" VerticalAlignment="Center" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True"/>
                 <ScrollViewer>
