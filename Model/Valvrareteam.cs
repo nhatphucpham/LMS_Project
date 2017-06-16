@@ -366,6 +366,9 @@ namespace LMS_Project.Model
                                         ChapterInEpisode = NewChapterList.Where(w => w.EpisodeId == episode.EpisodeId).Count();
 
                                         chapter.NumberInEpisode = ChapterInEpisode;
+
+
+
                                         NewChapterList.Add(chapter);
                                     }
                                     AddressLine = "";
@@ -502,7 +505,7 @@ namespace LMS_Project.Model
                             SourceAnalysis.m_HTML.Add(item);
                     }
                 }
-                
+
 
                 StringHtml = "";
                 bool isContent = false;
@@ -513,12 +516,18 @@ namespace LMS_Project.Model
                 bool special = false;
 
                 string pre_item = "";
-                for(int i = 0; i < SourceAnalysis.m_HTML.Count; i++)
+                for (int i = 0; i < SourceAnalysis.m_HTML.Count; i++)
                 {
                     if (i >= 0)
                     {
+                        
                         var item = SourceAnalysis.m_HTML[i];
-
+                        //if(item.Contains("table"))
+                        //{
+                        //    SourceAnalysis.m_HTML.RemoveAt(i);
+                        //    i--;
+                        //    continue;
+                        //}
                         if (i == 0 && item.Contains("/"))
                         {
                             SourceAnalysis.m_HTML.RemoveAt(i);
@@ -558,9 +567,28 @@ namespace LMS_Project.Model
                                 continue;
                             }
 
+                            if (item.Contains("<a"))
+                            {
+                                if (item.Contains("https://goo.gl/9lNUQ7"))
+                                {
+                                    pre_item = item;
+                                    SourceAnalysis.m_HTML.RemoveAt(i);
+                                    i--;
+                                    continue;
+                                }
+                            }
+
+                            if (item.Contains("http://valvrareteam.com/wp-content/uploads/2017/06/tiki.png"))
+                            {
+                                pre_item = item;
+                                SourceAnalysis.m_HTML.RemoveAt(i);
+                                i--;
+                                continue;
+                            }
+
                             if (item.Contains("<p"))
                             {
-                                if(!item.Contains("text-align"))
+                                if (!item.Contains("text-align"))
                                 {
                                     m_HTML[i] = item.Insert(2, " style=\"text-align: justify;\" ");
                                     item = m_HTML[i];
@@ -569,7 +597,7 @@ namespace LMS_Project.Model
                             }
                             if (item.Contains("/p"))
                             {
-                                if(special && indexText != 0)
+                                if (special && indexText != 0)
                                 {
                                     m_HTML[indexText] = m_HTML[indexText].Replace("<", "＜");
                                     m_HTML[indexText] = m_HTML[indexText].Replace(">", "＞");
@@ -584,7 +612,7 @@ namespace LMS_Project.Model
                                 i--;
                                 continue;
                             }
-                            if (text && !item.Contains("<p") && !item.Contains("/p"))
+                            if (text && !item.Contains("<p") && !item.Contains("/p") && !item.Contains("td") && !item.Contains("tr"))
                             {
                                 if (item.Contains("<"))
                                 {
@@ -607,13 +635,15 @@ namespace LMS_Project.Model
                     }
                 }
 
+
+
+                m_HTML.ForEach(m => StringHtml += string.Format("{0}\n", m));
+
+                StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >\n<body leftmargin=\"10\" rightmargin=\"20\" topmargin=\"10\" bottommargin=\"10\" style=\"background-color: transparent;\">\n");
+                StringHtml = StringHtml.Insert(StringHtml.Count(), "</body>\n</html>");
+
+                chapter.Content = StringHtml;
             }
-
-            m_HTML.ForEach(m => StringHtml += string.Format("{0}\n", m));
-
-            StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >\n<body leftmargin=\"10\" rightmargin=\"20\" topmargin=\"10\" bottommargin=\"10\" style=\"background-color: transparent;\">\n");
-            StringHtml = StringHtml.Insert(StringHtml.Count(), "</body>\n</html>");
-
             return SourceAnalysis.m_HTML;
         }
 

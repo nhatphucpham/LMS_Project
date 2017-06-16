@@ -9,17 +9,19 @@
     <UseEmulator>true</UseEmulator>
   </PropertyGroup>
   <PropertyGroup>
-    <MediumTileSource>C:\Users\Mantis\Desktop\logo.png</MediumTileSource>
-    <SmallTileSource>C:\Users\Mantis\Desktop\logo.png</SmallTileSource>
-    <Source>C:\Users\Mantis\Desktop\logo.png</Source>
-    <AppIconSource>C:\Users\Mantis\Desktop\logo.png</AppIconSource>
-    <SplashScreenSource>C:\Users\Mantis\Desktop\logo.png</SplashScreenSource>
+    <MediumTileSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</MediumTileSource>
+    <SmallTileSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</SmallTileSource>
+    <Source>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</Source>
+    <AppIconSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</AppIconSource>
+    <SplashScreenSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</SplashScreenSource>
     <AppxPackageIsForStore>False</AppxPackageIsForStore>
     <AppxShowAllApps>False</AppxShowAllApps>
     <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
     <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
-    <WideTileSource>C:\Users\Mantis\Desktop\logo.png</WideTileSource>
-    <LargeTileSource>C:\Users\Mantis\Desktop\logo.png</LargeTileSource>
+    <WideTileSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</WideTileSource>
+    <LargeTileSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</LargeTileSource>
+    <BadgeLogoSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</BadgeLogoSource>
+    <PackageLogoSource>C:\Users\Mantis\Documents\GitHub\LMS_Project\Assets\Square44x44Logo.altform-unplated_targetsize-256.png</PackageLogoSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <UseSimulator>false</UseSimulator>

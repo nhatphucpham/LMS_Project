@@ -1,8 +1,9 @@
 {
+  "locked": false,
   "version": 2,
   "targets": {
     "UAP,Version=v10.0": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -825,18 +826,6 @@
           "runtimes/osx-x64/native/libsqlite3.dylib": {
             "assetType": "native",
             "rid": "osx-x64"
-          },
-          "runtimes/win10-arm/nativeassets/uap10.0/sqlite3.dll": {
-            "assetType": "native",
-            "rid": "win10-arm"
-          },
-          "runtimes/win10-x64/nativeassets/uap10.0/sqlite3.dll": {
-            "assetType": "native",
-            "rid": "win10-x64"
-          },
-          "runtimes/win10-x86/nativeassets/uap10.0/sqlite3.dll": {
-            "assetType": "native",
-            "rid": "win10-x86"
           },
           "runtimes/win7-x64/native/sqlite3.dll": {
             "assetType": "native",
@@ -2790,7 +2779,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -3818,9 +3807,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        },
-        "native": {
-          "runtimes/win10-arm/nativeassets/uap10.0/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -5606,7 +5592,7 @@
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -6673,9 +6659,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        },
-        "native": {
-          "runtimes/win10-arm/nativeassets/uap10.0/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -8461,7 +8444,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -9500,7 +9483,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x64/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x64/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -11286,7 +11269,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -12364,7 +12347,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x64/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x64/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -14150,7 +14133,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -15189,7 +15172,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x86/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x86/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -16975,7 +16958,7 @@
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
-      "ksemenenko.ColorThief/1.1.0.3": {
+      "ksemenenko.ColorThief/1.1.0.2": {
         "type": "package",
         "compile": {
           "lib/UAP10/ColorThief.UWP.dll": {}
@@ -18053,7 +18036,7 @@
           "lib/netstandard1.0/_._": {}
         },
         "native": {
-          "runtimes/win10-x86/nativeassets/uap10.0/sqlite3.dll": {}
+          "runtimes/win7-x86/native/sqlite3.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -19840,13 +19823,19 @@
     }
   },
   "libraries": {
-    "ksemenenko.ColorThief/1.1.0.3": {
-      "sha512": "2NyUr1mCfVz+XAgQ1+LznHa/CTmw380/I6TOtBeKI8ppdi+/osC/+Oa6+I51aQ5/tlR7BLFg04RFFy9o9jhvmw==",
+    "ksemenenko.ColorThief/1.1.0.2": {
+      "sha512": "8hyWRaUFtZg/LrKn59o6T8v6YlKcmD3v4pdDYuo1taMa7Hi3XAgxf3leeyla0/e2Yvi2bz6ZyyGW54Gvb/oqOQ==",
       "type": "package",
-      "path": "ksemenenko.colorthief/1.1.0.3",
+<<<<<<< HEAD
+      "path": "ksemenenko.colorthief/1.1.0.2",
       "files": [
-        "ksemenenko.colorthief.1.1.0.3.nupkg.sha512",
+        "ksemenenko.colorthief.1.1.0.2.nupkg.sha512",
         "ksemenenko.colorthief.nuspec",
+=======
+      "files": [
+        "ksemenenko.ColorThief.1.1.0.2.nupkg.sha512",
+        "ksemenenko.ColorThief.nuspec",
+>>>>>>> origin/master
         "lib/MonoAndroid10/ColorThief.Android.dll",
         "lib/MonoAndroid10/ColorThief.Android.pdb",
         "lib/MonoAndroid10/ColorThief.Android.xml",
@@ -20331,14 +20320,13 @@
       ]
     },
     "Microsoft.NETCore.UniversalWindowsPlatform/5.2.2": {
-      "sha512": "9UHv2YObWmcF8gqtBoDC4UW5gdHzFRtaZ5KtB9QKvCy+NC9LH1DMYyOI/ltupjVZlwYEulj3msjBXys9/QI6nw==",
+      "sha512": "eHccUiYTkiY8xeixRA0DV9mcFpi9GA9UzKt3v0d6NtNGrGefhmqwnb60PSWQPe49tXbxZaP0x+W0ghvj6hflHg==",
       "type": "package",
-      "path": "microsoft.netcore.universalwindowsplatform/5.2.2",
       "files": [
+        "Microsoft.NETCore.UniversalWindowsPlatform.5.2.2.nupkg.sha512",
+        "Microsoft.NETCore.UniversalWindowsPlatform.nuspec",
         "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
-        "microsoft.netcore.universalwindowsplatform.5.2.2.nupkg.sha512",
-        "microsoft.netcore.universalwindowsplatform.nuspec"
+        "dotnet_library_license.txt"
       ]
     },
     "Microsoft.NETCore.Windows.ApiSets/1.0.1": {
@@ -26809,9 +26797,10 @@
       "Microsoft.EntityFrameworkCore.Tools >= 1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.2.2",
       "Newtonsoft.Json >= 10.0.2",
-      "ksemenenko.ColorThief >= 1.1.0.3"
+      "ksemenenko.ColorThief >= 1.1.0.2"
     ],
     "UAP,Version=v10.0": []
+<<<<<<< HEAD
   },
   "packageFolders": {
     "C:\\Users\\Mantis\\.nuget\\packages\\": {}
@@ -26825,7 +26814,7 @@
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
-      "ksemenenko.ColorThief": "1.1.0.3",
+      "ksemenenko.ColorThief": "1.1.0.2",
       "Microsoft.EntityFrameworkCore.Sqlite": "1.1.1",
       "Microsoft.EntityFrameworkCore.Tools": "1.1.0",
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
@@ -26854,5 +26843,7 @@
         "#import": []
       }
     }
+=======
+>>>>>>> origin/master
   }
 }
