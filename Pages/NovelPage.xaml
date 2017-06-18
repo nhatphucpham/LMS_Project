@@ -10,7 +10,7 @@
 
     <Page.Resources>
         <DataTemplate x:DataType="data:Novel" x:Key="NovelsDataTemplate">
-            <Grid  Width="177" Height="255" Loaded="Grid_Loaded">
+            <Grid Width="177" Height="255" Loaded="Grid_Loaded">
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{x:Bind ImageUrl}" 
                        Stretch="UniformToFill" Margin="15"/>
                 <Grid Width="140" 
@@ -25,6 +25,9 @@
                 </Grid>
             </Grid>
         </DataTemplate>
+        <Storyboard x:Name ="myStoryboard">
+            <FadeOutThemeAnimation TargetName="SummanyStack" AutoReverse="True"/>
+        </Storyboard>
     </Page.Resources>
 
     <Grid Background="{ThemeResource SystemControlBackgroundAltMediumBrush}" Padding="5">

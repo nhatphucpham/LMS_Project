@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="559775ac-5e3d-4a3b-96ee-26729844446e" Publisher="CN=Mantis" Version="1.0.5.0" />
+  <Identity Name="559775ac-5e3d-4a3b-96ee-26729844446e" Publisher="CN=Mantis" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="559775ac-5e3d-4a3b-96ee-26729844446e" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>LMS_Project</DisplayName>

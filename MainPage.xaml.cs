@@ -28,6 +28,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.EntityFrameworkCore;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -40,6 +41,8 @@ namespace LMS_Project
     {
         NavMenu navMenu;
 
+        object SelectedItem;
+
         public static Frame contentFrameStatic;
         public static ComboBox cbTitle;
         public static WebSource WebSource;
@@ -51,7 +54,7 @@ namespace LMS_Project
             this.InitializeComponent();
             //&#xE700; Hamburger button
             contentFrameStatic = ContentFrame;
-            cbTitle = cbSourse;
+            cbTitle = cbSource;
             navMenu = new Model.NavMenu();
             MenuItem.ItemsSource = navMenu.MenuItems;
             MenuItem.SelectedIndex = 0;
@@ -71,7 +74,11 @@ namespace LMS_Project
                 HeaderButton.Visibility = Visibility.Collapsed;
                 MySplitView.DisplayMode = SplitViewDisplayMode.CompactInline;
             }
-
+            contentFrameStatic.ContentTransitions = new TransitionCollection
+            {
+                new NavigationThemeTransition()
+            };
+            contentFrameStatic.Content = typeof(HomePage);
             contentFrameStatic.Navigated += OnNavigated;
 
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
@@ -84,6 +91,7 @@ namespace LMS_Project
             {
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
             }
+            SelectedItem = MenuItem.SelectedItem;
         }
 
         private async void HideStatusBar()
@@ -120,25 +128,27 @@ namespace LMS_Project
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
 
-        private void MenuItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (MenuItem.SelectedIndex == -1) { return; }
-            Frame current = contentFrameStatic;
+        //private void MenuItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (MenuItem.SelectedIndex == -1) { return; }
+        //    Frame current = contentFrameStatic;
             
-            if (!current.GetType().Equals(((NavItem)MenuItem.SelectedItem).Page))
-            {
-                current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
-            }
+        //    selectedIndex = 
 
-            if(current.Content is ChapterPage || current.Content is ViewNovelPage)
-            {
-                UpdateButton.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                UpdateButton.Visibility = Visibility.Visible;
-            }
-        }
+        //    if (!current.GetType().Equals(((NavItem)MenuItem.SelectedItem).Page))
+        //    {
+        //        current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
+        //    }
+
+        //    if(current.Content is ChapterPage || current.Content is ViewNovelPage)
+        //    {
+        //        UpdateButton.Visibility = Visibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        UpdateButton.Visibility = Visibility.Visible;
+        //    }
+        //}
 
         private void MySplitView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
@@ -147,9 +157,26 @@ namespace LMS_Project
 
         private void MenuItem_ItemClick(object sender, ItemClickEventArgs e)
         {
-        //    Frame current = ContentFrame;
-        //    if(((NavItem)MenuItem.SelectedItem).Page.GetType() != current.GetType())
-        //        current.Navigate(((NavItem)MenuItem.SelectedItem).Page);
+            Frame current = contentFrameStatic;
+
+            if (SelectedItem != e.ClickedItem)
+            {
+                SelectedItem = e.ClickedItem;
+
+                if (!current.GetType().Equals(((NavItem)e.ClickedItem).Page))
+                {
+                    current.Navigate(((NavItem)e.ClickedItem).Page, new ContinuumNavigationTransitionInfo());
+                }
+
+                if (current.Content is ChapterPage || current.Content is ViewNovelPage)
+                {
+                    UpdateButton.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    UpdateButton.Visibility = Visibility.Visible;
+                }
+            }
         }
         private async void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
@@ -161,14 +188,14 @@ namespace LMS_Project
                     context.Chapters.RemoveRange(context.Chapters);
                     context.Novels.RemoveRange(context.Novels);
                     context.SaveChanges();
-                    contentFrameStatic.Navigate(typeof(NovelPage));
+                    contentFrameStatic.Navigate(typeof(NovelPage), new SlideNavigationTransitionInfo());
                 }
                 if(contentFrameStatic.Content is EpisodePage)
                 {
                     context.Episodes.RemoveRange(context.Episodes);
                     context.Chapters.RemoveRange(context.Chapters);
                     context.SaveChanges();
-                    contentFrameStatic.Navigate(typeof(EpisodePage), EpisodePage.novel);
+                    contentFrameStatic.Navigate(typeof(EpisodePage), EpisodePage.novel, new SlideNavigationTransitionInfo());
                 }
                 if(contentFrameStatic.Content is HomePage)
                 {
@@ -184,7 +211,7 @@ namespace LMS_Project
                         await CreateDB();
                         MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
                     }
-                    contentFrameStatic.Navigate(typeof(HomePage));
+                    contentFrameStatic.Navigate(typeof(HomePage), null, new SlideNavigationTransitionInfo());
                 }
             }
         }
@@ -207,8 +234,8 @@ namespace LMS_Project
                         context.SaveChanges();
                     }
                 }
-                cbSourse.ItemsSource = (new DataManager()).WebSourses.ToList();
-                cbSourse.SelectedIndex = 0;
+                cbSource.ItemsSource = (new DataManager()).WebSourses.ToList();
+                cbSource.SelectedIndex = 0;
             }
         }
 
@@ -262,21 +289,21 @@ namespace LMS_Project
         {
             if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Mobile")
             {
-                cbSourse.Width = canvas.ActualWidth - 60;
+                cbSource.Width = canvas.ActualWidth - 60;
             }
             else
             {
-                Canvas.SetLeft(cbSourse, 0);
-                cbSourse.Width = canvas.ActualWidth - 5;
+                Canvas.SetLeft(cbSource, 0);
+                cbSource.Width = canvas.ActualWidth - 5;
             }
         }
 
-        private void CbSourse_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
-            if(contentFrameStatic.Content.GetType() != typeof(HomePage))
-                contentFrameStatic.Navigate(typeof(NovelPage), MainPage.WebSource);
-        }
+        //private void CbSourse_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    MainPage.WebSource = MainPage.cbTitle.SelectedItem as WebSource;
+        //    if (contentFrameStatic.Content.GetType() != typeof(HomePage))
+        //        contentFrameStatic.Navigate(typeof(NovelPage), MainPage.WebSource);
+        //}
 
         private void AttachProgressAndCompletedHandlers(IBackgroundTaskRegistration task)
         {
@@ -303,22 +330,21 @@ namespace LMS_Project
             {
                 using (var context = new DataManager())
                 {
-                    WebSource[] sourses =
+                    if (context.WebSourses.Count() == 0)
                     {
-                       new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" },
-                       new WebSource() { Name = "Valvrareteam", Address = @"http://valvrareteam.com/" }
-                    };
-                    foreach (var sourse in sourses)
-                    {
-                        if (context.WebSourses.Where(s => s.Name == sourse.Name).Count() == 0)
-                        {
-                            context.WebSourses.Add(sourse);
-                            context.SaveChanges();
-                        }
-                    }
-                    cbSourse.ItemsSource = (new DataManager()).WebSourses.ToList();
-                    cbSourse.SelectedIndex = 0;
 
+                        WebSource[] sourses =
+                        {
+                            new WebSource() { Name = "Sublightnovel", Address = @"http://www.sublightnovel.com/p/home.html" },
+                            new WebSource() { Name = "Valvrareteam", Address = @"http://valvrareteam.com/" }
+                        };
+                        context.WebSourses.AddRange(sourses);
+                        context.SaveChanges();
+                    }
+                    cbSource.ItemsSource = (new DataManager()).WebSourses.ToList();
+                    cbSource.SelectedIndex = 0;
+                    if(!(contentFrameStatic.Content is HomePage))
+                        contentFrameStatic.Navigate(typeof(HomePage), null, new SlideNavigationTransitionInfo());
                     CurrentChapter = await GetCurrentChapter();
                 }
             }

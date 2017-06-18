@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -44,7 +45,7 @@ namespace LMS_Project.Pages
 
         private void MainListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(ViewNovelPage), e.ClickedItem);
+            Frame.Navigate(typeof(ViewNovelPage), e.ClickedItem, new ContinuumNavigationTransitionInfo());
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
@@ -52,7 +53,9 @@ namespace LMS_Project.Pages
             try
             {              
                 LoadingIndicator.IsActive = true;
-                if(episode != null)
+                if (MainPage.Menu.SelectedIndex != 1)
+                    MainPage.Menu.SelectedIndex = 1;
+                if (episode != null)
                 {
                     var list = NovelPage.model.GetChaptersFromEpisodeId(episode.EpisodeId).ToList().OrderBy(o => o.NumberInEpisode);
                     MainListView.ItemsSource = list;

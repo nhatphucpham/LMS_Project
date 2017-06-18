@@ -1,4 +1,4 @@
-﻿using ColorThiefDotNet;
+﻿//using ColorThiefDotNet;
 using LMS_Project.Data;
 using LMS_Project.Model;
 using System;
@@ -26,6 +26,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
+using Windows.UI.Xaml.Media.Animation;
 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -77,18 +78,18 @@ namespace LMS_Project.Pages
             return gridView;
         }
 
-        private async Task<Brush> GetColorFromImage(string url)
-        {
-            RandomAccessStreamReference random = RandomAccessStreamReference.CreateFromUri(new Uri(url));
-            using (IRandomAccessStream stream = await random.OpenReadAsync())
-            {
-                //Create a decoder for the image
-                var decoder = await BitmapDecoder.CreateAsync(stream);
-                var colorThief = new ColorThief();
-                var color = await colorThief.GetColor(decoder);
-                return new SolidColorBrush(Windows.UI.Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B));
-            }
-        }
+        //private async Task<Brush> GetColorFromImage(string url)
+        //{
+        //    RandomAccessStreamReference random = RandomAccessStreamReference.CreateFromUri(new Uri(url));
+        //    using (IRandomAccessStream stream = await random.OpenReadAsync())
+        //    {
+        //        //Create a decoder for the image
+        //        var decoder = await BitmapDecoder.CreateAsync(stream);
+        //        var colorThief = new ColorThief();
+        //        var color = await colorThief.GetColor(decoder);
+        //        return new SolidColorBrush(Windows.UI.Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B));
+        //    }
+        //}
 
         private async void GridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -103,7 +104,7 @@ namespace LMS_Project.Pages
                 imageBrush.ImageSource = new BitmapImage(new Uri(novel.ImageUrl));
                 imageBrush.Stretch = Stretch.UniformToFill;
 
-                SummanyBorder.Background = await GetColorFromImage(novel.ImageUrl);
+                SummanyBorder.Background = Resources["SystemControlBackgroundAccentBrush"] as SolidColorBrush;
 
                 if (SummanyBorder.Visibility == Visibility.Collapsed)
                     SummanyBorder.Visibility = Visibility.Visible;
@@ -142,6 +143,10 @@ namespace LMS_Project.Pages
                 {
                     SummanyTextBlock.Text = novel.Summany;
                 }
+                if(SummanyStack.Visibility == Visibility.Collapsed)
+                    SummanyStack.Visibility = Visibility.Visible;
+                else
+                    myStoryboard.Begin();
                 prSummany.IsActive = false;
             }
             Debug.WriteLine(novel.Summany != null ? novel.Summany : "nothing");
@@ -151,15 +156,20 @@ namespace LMS_Project.Pages
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem == (sender as GridView).SelectedItem)
-                Frame.Navigate(typeof(EpisodePage), e.ClickedItem);
+            {
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("summany", ellipse);
+                Frame.Navigate(typeof(EpisodePage), e.ClickedItem, new SuppressNavigationTransitionInfo());
+            }
         }
 
-        private async void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
             button3.Visibility = Visibility.Collapsed;
             var grid = sender as Grid;
             var image = grid.Children[0] as Image;
-            grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
+            //grid.Background = await GetColorFromImage((image.Source as BitmapImage).UriSource.OriginalString);
+       
+            grid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb((byte)(255/3), (byte)rand.Next(), (byte)rand.Next(), 255));
             SearchBox.ItemsSource = novels;      
             Common.ShowDialog.getInstance().HideWaiting();
         }
@@ -182,7 +192,7 @@ namespace LMS_Project.Pages
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Common.ShowDialog.getInstance().ShowWaiting("Waiting...");
+            //Common.ShowDialog.getInstance().ShowWaiting("Waiting...");
             try
             {
                 button.Content = button.Content.ToString().Equals("Tất Cả") ? "Mới Nhất" : "Tất Cả";
@@ -219,7 +229,7 @@ namespace LMS_Project.Pages
             finally
             {
                 LoadingIndicator.IsActive = false;
-                Common.ShowDialog.getInstance().HideWaiting();
+              //  Common.ShowDialog.getInstance().HideWaiting();
             }
         }
 
@@ -266,7 +276,7 @@ namespace LMS_Project.Pages
             try
             {
                 novel = args.ChosenSuggestion as Novel;
-                Frame.Navigate(typeof(EpisodePage), novel);
+                Frame.Navigate(typeof(EpisodePage), novel, new SlideNavigationTransitionInfo());
             }
             catch (Exception)
             {
@@ -279,7 +289,8 @@ namespace LMS_Project.Pages
         {
             try
             {
-                Frame.Navigate(typeof(EpisodePage), novel);
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("summany", ellipse);
+                Frame.Navigate(typeof(EpisodePage), novel, new SlideNavigationTransitionInfo());
             }
             catch(Exception)
             {

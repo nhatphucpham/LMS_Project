@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI;
 using Windows.Graphics.Display;
 using System.Linq;
+using Windows.UI.Xaml.Media.Animation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -82,7 +83,7 @@ namespace LMS_Project.Pages
 
         private void MainGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Frame.Navigate(typeof(ChapterPage), e.ClickedItem);
+            Frame.Navigate(typeof(ChapterPage), e.ClickedItem, new SlideNavigationTransitionInfo());
         }
 
         private async void Grid_Loaded(object sender, RoutedEventArgs e)
@@ -116,6 +117,11 @@ namespace LMS_Project.Pages
             finally
             {
                 LoadingIndicator.IsActive = false;
+                ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("summany");
+                if (imageAnimation != null)
+                {
+                    imageAnimation.TryStart(ellipse);
+                }
             }
         }
 

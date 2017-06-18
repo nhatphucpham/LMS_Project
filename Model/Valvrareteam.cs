@@ -522,12 +522,12 @@ namespace LMS_Project.Model
                     {
                         
                         var item = SourceAnalysis.m_HTML[i];
-                        //if(item.Contains("table"))
-                        //{
-                        //    SourceAnalysis.m_HTML.RemoveAt(i);
-                        //    i--;
-                        //    continue;
-                        //}
+                        if (item.Contains("table"))
+                        {
+                            SourceAnalysis.m_HTML.RemoveAt(i);
+                            i--;
+                            continue;
+                        }
                         if (i == 0 && item.Contains("/"))
                         {
                             SourceAnalysis.m_HTML.RemoveAt(i);
@@ -578,6 +578,7 @@ namespace LMS_Project.Model
                                 }
                             }
 
+                            //chữa cháy
                             if (item.Contains("http://valvrareteam.com/wp-content/uploads/2017/06/tiki.png"))
                             {
                                 pre_item = item;
@@ -619,7 +620,7 @@ namespace LMS_Project.Model
                                     special = true;
                                     indexText = i;
                                 }
-                                if (item.Contains("</"))
+                                if (item.Contains("</") || item.Contains("/>"))
                                 {
                                     special = false;
                                 }

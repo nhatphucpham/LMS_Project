@@ -153,7 +153,6 @@
                     </Button>
                     <ListView x:Name="MenuItem" 
                           IsItemClickEnabled="True"
-                          SelectionChanged="MenuItem_SelectionChanged" 
                           ItemClick="MenuItem_ItemClick" ItemContainerStyle="{StaticResource HumburgerListViewItemStyle}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -194,14 +193,14 @@
                             <StaticResource ResourceKey="HumburgerStyle"/>
                         </Button.Style>
                     </Button>
-                    <ComboBox x:Name="cbSourse" 
+                    <ComboBox x:Name="cbSource" 
                               Canvas.Left="55" Canvas.Top="5" 
                               Height="36" 
                               ItemsSource="{Binding}" 
                               HorizontalContentAlignment="Center"
                               HorizontalAlignment="Center" 
                               VerticalAlignment="Center"
-                              SelectionChanged="CbSourse_SelectionChanged" IsHitTestVisible="False" IsEnabled="False" IsTabStop="False">
+                              IsHitTestVisible="False" IsEnabled="False" IsTabStop="False">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="data:WebSource">
                                 <TextBlock Text="{x:Bind Name}"/>
