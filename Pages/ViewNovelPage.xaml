@@ -13,6 +13,6 @@
         <Grid VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="70" Background="{ThemeResource SystemControlForegroundAccentBrush}">
             <TextBlock Text="{x:Bind Title}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
         </Grid>
-        <WebView x:Name="wView" Margin="0, 0, 0, 70"/>
+        <FlipView x:Name="MainFlip" Margin="0,0,0,70" SizeChanged="MainFlip_SizeChanged"/>
     </Grid>
 </Page>

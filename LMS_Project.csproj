@@ -112,6 +112,7 @@
       <DependentUpon>20170503035354_NovelMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DataManagerModelSnapshot.cs" />
+    <Compile Include="Model\HTMLAnalyze.cs" />
     <Compile Include="Model\SourceAnalysis.cs" />
     <Compile Include="Model\Sublightnovel.cs" />
     <Compile Include="Model\Valvrareteam.cs" />

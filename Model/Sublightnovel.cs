@@ -92,12 +92,9 @@ namespace LMS_Project.Model
                     StringHtml = StringHtml.Remove(0, StringHtml.IndexOf("Tập"));
                     StringHtml = StringHtml.Remove(0, StringHtml.IndexOf("/div") + 5).Trim();
                     StringHtml = StringHtml.Remove(0, StringHtml.IndexOf("/div") + 5).Trim();
+                    StringHtml = StringHtml.Replace('\n', ' ');
 
-                    StringHtml = StringHtml.Insert(0, "<html onselectstart = \"return false;\" style = \"-ms-user-select: none;\" >\n<body leftmargin=\"10\" rightmargin=\"20\" topmargin=\"10\" bottommargin=\"10\" style=\"background-color: transparent;\">\n");
-                    StringHtml = StringHtml.Insert(StringHtml.Count(), "</body>\n</html>");
-                    
-                    chapter.Content = StringHtml;
-                    context.SaveChanges();
+
                     int begin = 0;
                     int end = 0;
 
@@ -124,17 +121,11 @@ namespace LMS_Project.Model
                                 StringHtml = StringHtml.Insert(i, "\n");
                             }
                         }
-
-                        if (StringHtml[i] == '\n')
-                            end = i;
-                        if (end > begin && !content_HTML.Contains(StringHtml.Substring(begin, end - begin)))
-                        {
-                            content_HTML.Add(StringHtml.Substring(begin, end - begin));
-                            begin = end + 1;
-                        }
                     }
 
                     httpClient.Dispose();
+                    chapter.Content = StringHtml;
+                    context.SaveChanges();
                     return content_HTML;
                 }
                 catch

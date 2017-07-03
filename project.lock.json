@@ -26814,14 +26814,14 @@
     "UAP,Version=v10.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Mantis\\.nuget\\packages\\": {}
+    "C:\\Users\\nhatp\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Users\\Mantis\\Documents\\GitHub\\LMS_Project\\LMS_Project.csproj",
+      "projectUniqueName": "C:\\Users\\nhatp\\Documents\\Git Source\\CLone\\LMS_Project\\LMS_Project.csproj",
       "projectName": "LMS_Project",
-      "projectPath": "C:\\Users\\Mantis\\Documents\\GitHub\\LMS_Project\\LMS_Project.csproj",
-      "projectJsonPath": "C:\\Users\\Mantis\\Documents\\GitHub\\LMS_Project\\project.json",
+      "projectPath": "C:\\Users\\nhatp\\Documents\\Git Source\\CLone\\LMS_Project\\LMS_Project.csproj",
+      "projectJsonPath": "C:\\Users\\nhatp\\Documents\\Git Source\\CLone\\LMS_Project\\project.json",
       "projectStyle": "ProjectJson"
     },
     "dependencies": {
